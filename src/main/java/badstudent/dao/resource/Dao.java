@@ -70,7 +70,7 @@ public class Dao{
 			
 		}
 		else{
-			System.out.println("message does not exist");
+			System.out.println("message not found");
 		}
 
 		return message;

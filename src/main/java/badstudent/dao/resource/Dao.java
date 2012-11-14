@@ -25,7 +25,6 @@ public class Dao{
 
 	/*returns a message by its identifier*/
 	public Message getMessageById(String id){
-		
 		String jsonMessage = jedis.get(id);     //get a serialized message from Redis
 		
 		//if the message is not null(exist), deserialized into Message object and return

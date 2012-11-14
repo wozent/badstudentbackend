@@ -27,7 +27,7 @@ public class Message{
 	private String content;
 	
 	//for serializer/deSerializer
-    private Message(){
+    public Message(){
     	this.id = "defaultId";
     	this.userName = "defaultUserName";
     	this.password = "defaultPassword";
@@ -38,7 +38,19 @@ public class Message{
     	this.content = "defaultContent";
     }
     
-    private Message(String userName, String password, String dateString, String location, int gender, String title, String content){
+    //this constructor is used for testing purposes only, please ignore it for any other usages
+    public Message(String id){
+    	this.id = id;
+    	this.userName = "defaultUserName";
+    	this.password = "defaultPassword";
+    	this.dateString = "defaultDataString";
+    	this.location = "defaultLocation";
+    	this.gender = 0;
+    	this.title = "defaultTitle";
+    	this.content = "defaultContent";
+    }
+    
+    public Message(String userName, String password, String dateString, String location, int gender, String title, String content){
     	this.generateId();
     	this.userName = userName;
     	this.password = password;
@@ -83,6 +95,34 @@ public class Message{
 	
 	public String getContent(){
 		return this.content;
+	}
+	
+	public void setUserName(String userName){
+		this.userName = userName;
+	}
+	
+	public void setPassword(String password){
+		this.password = password;
+	}
+	
+	public void setDateString(String dateString){
+		this.dateString = dateString;
+	}
+	
+	public void setLocation(String location){
+		this.location = location;
+	}
+	
+	public void setGender(int gender){
+		this.gender = gender;
+	}
+	
+	public void setTitle(String title){
+		this.title = title;
+	}
+	
+	public void setContent(String content){
+		this.content = content;
 	}
 	
 }

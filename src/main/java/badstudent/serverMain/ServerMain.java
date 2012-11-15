@@ -4,6 +4,8 @@ import org.restlet.Component;
 import org.restlet.Server;
 import org.restlet.data.Protocol;
 
+import badstudent.service.*;
+
 
 public class ServerMain {
 
@@ -34,9 +36,9 @@ public class ServerMain {
 
 		// Attach the sample application.
 
-		//MessageService messageService = new MessageService();
+		MessageService messageService = new MessageService();
 
-		//component.getDefaultHost().attach(messageService);
+		component.getDefaultHost().attach(messageService);
 
 		// Start the component.
 		//log.info("ready to start");

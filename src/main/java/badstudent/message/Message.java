@@ -38,7 +38,7 @@ public class Message{
     	this.content = "defaultContent";
     }
     
-    //this constructor is used for testing purposes only, please ignore it for any other usages
+    //this constructor is used for testing purposes and potentially @Options HTTP calls only, please ignore it for any other usages
     public Message(String id){
     	this.id = id;
     	this.userName = "defaultUserName";
@@ -61,7 +61,19 @@ public class Message{
     	this.content = content;
     }
 	
+    public Message(String id, String userName, String password, String dateString, String location, int gender, String title, String content){
+    	this.id = id;
+    	this.userName = userName;
+    	this.password = password;
+    	this.dateString = dateString;
+    	this.location = location;
+    	this.gender = gender;
+    	this.title = title;
+    	this.content = content;
+    }
+    
 	private void generateId(){
+		this.id = "defaultId";
 		//some code to generate a unique id for each message	
 	}
 	

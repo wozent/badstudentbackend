@@ -7,7 +7,8 @@ import java.util.Set;
 
 import redis.clients.jedis.*;
 
-import badstudent.message.*;
+import badstudent.Common.NLog;
+import badstudent.model.*;
 
 import flexjson.JSONDeserializer;
 import flexjson.JSONSerializer;
@@ -46,7 +47,7 @@ public class Dao{
 			jedis.set(messageId, jsonMessage);		//store the key-value pair into Redis
 
 		} catch (Exception e) {
-			System.out.println(e.getStackTrace());	//catch JSON exception and print stack trace
+			e.printStackTrace();	//catch JSON exception and print stack trace
 		}
 
 		return message;
@@ -70,7 +71,7 @@ public class Dao{
 			
 		}
 		else{
-			System.out.println("message not found");
+			NLog.d("message not found");
 		}
 
 		return message;
@@ -95,7 +96,7 @@ public class Dao{
 			Message message = new JSONDeserializer<Message>().deserialize(jsonMessage);
 			messages.add(message);
 		}
-		//System.out.println("Dao::getMessages");
+		//NLog.d("Dao::getMessages");
 		return messages;
 	}
 	

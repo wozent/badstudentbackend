@@ -12,8 +12,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-import badstudent.message.*;
+import badstudent.Common.NLog;
 import badstudent.dao.service.*;
+import badstudent.model.*;
 
 public class MessageResourceId extends ServerResource{
 
@@ -31,11 +32,11 @@ public class MessageResourceId extends ServerResource{
 			e.printStackTrace();
 		}
 
-		System.out.println("@PutWithID::receive jsonMessage: " +  jsonMessage.toString());
+		NLog.d("@PutWithID::receive jsonMessage: " +  jsonMessage.toString());
 
 		Message message = null;
 		try {
-			message = new Message(jsonMessage.getString("id"), jsonMessage.getString("userName"), jsonMessage.getString("password"),jsonMessage.getString("dateString"),jsonMessage.getString("location"),jsonMessage.getInt("gender"),jsonMessage.getString("title"),jsonMessage.getString("content"));
+			message = new Message(jsonMessage.getString("id"), jsonMessage.getString("userName"), jsonMessage.getString("password"),jsonMessage.getString("dateString"),new location(jsonMessage.getString("location")),jsonMessage.getBoolean("isMale"),jsonMessage.getString("title"),jsonMessage.getString("content"));
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		} catch (JSONException e) {
@@ -77,7 +78,11 @@ public class MessageResourceId extends ServerResource{
 		} 
 
 		Representation result = new JsonRepresentation(jsonArray);
-		System.out.println(result);
+		try {
+            NLog.d(result.getText());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 		return result;
 	}
 
@@ -96,7 +101,7 @@ public class MessageResourceId extends ServerResource{
 		
 		setStatus(Status.SUCCESS_OK);
 		JSONObject newJsonMessage = new JSONObject(message);
-		System.out.println("@Put::resources::updateMessage: newJsonMessage" + newJsonMessage.toString());
+		NLog.d("@Put::resources::updateMessage: newJsonMessage" + newJsonMessage.toString());
 		result = new JsonRepresentation(newJsonMessage);
 
 
@@ -124,7 +129,7 @@ public class MessageResourceId extends ServerResource{
 		else{
 			setStatus(Status.SUCCESS_OK);
 		}
-		System.out.println("@Delete with id: " + id);
+		NLog.d("@Delete with id: " + id);
 
 		/*set the response header*/
 		Form responseHeaders = MessageResource.addHeader((Form) getResponse().getAttributes().get("org.restlet.http.headers")); 

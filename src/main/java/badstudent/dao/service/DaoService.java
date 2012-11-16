@@ -3,7 +3,7 @@ package badstudent.dao.service;
 import java.util.List;
 import java.util.Set;
 
-import badstudent.message.*;
+import badstudent.model.*;
 import badstudent.dao.resource.*;
 
 public class DaoService{

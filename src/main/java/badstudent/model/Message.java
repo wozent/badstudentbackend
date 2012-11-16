@@ -1,9 +1,9 @@
-package badstudent.message;
+package badstudent.model;
 
 /**
  * The main data model
  * 
- * Fields of userName, password, dataString, location, gender, title, content should be sent from front end, Id should be generate by backend
+ * Fields of userName, password, dataString, location, isMale, title, content should be sent from front end, Id should be generate by backend
  */
 
 public class Message{
@@ -18,9 +18,9 @@ public class Message{
 	
 	private String dateString;
 	
-	private String location;
+	private location location;
 	
-	private int gender;
+	private boolean isMale;
 	
 	private String title;
 	
@@ -32,8 +32,8 @@ public class Message{
     	this.userName = "defaultUserName";
     	this.password = "defaultPassword";
     	this.dateString = "defaultDataString";
-    	this.location = "defaultLocation";
-    	this.gender = 0;
+    	this.location = new location("dafault dafault default dafault");
+    	this.isMale = true;
     	this.title = "defaultTitle";
     	this.content = "defaultContent";
     }
@@ -44,30 +44,30 @@ public class Message{
     	this.userName = "defaultUserName";
     	this.password = "defaultPassword";
     	this.dateString = "defaultDataString";
-    	this.location = "defaultLocation";
-    	this.gender = 0;
+    	this.location = new location("dafault dafault default dafault");
+    	this.isMale = true;
     	this.title = "defaultTitle";
     	this.content = "defaultContent";
     }
     
-    public Message(String userName, String password, String dateString, String location, int gender, String title, String content){
+    public Message(String userName, String password, String dateString, location location, boolean isMale, String title, String content){
     	this.generateId();
     	this.userName = userName;
     	this.password = password;
     	this.dateString = dateString;
     	this.location = location;
-    	this.gender = gender;
+    	this.isMale = isMale;
     	this.title = title;
     	this.content = content;
     }
 	
-    public Message(String id, String userName, String password, String dateString, String location, int gender, String title, String content){
+    public Message(String id, String userName, String password, String dateString, location location, boolean isMale, String title, String content){
     	this.id = id;
     	this.userName = userName;
     	this.password = password;
     	this.dateString = dateString;
     	this.location = location;
-    	this.gender = gender;
+    	this.isMale = isMale;
     	this.title = title;
     	this.content = content;
     }
@@ -94,11 +94,11 @@ public class Message{
 	}
 	
 	public String getLocation(){
-		return this.location;
+		return this.location.toString();
 	}
 	
-	public int getGender(){
-		return this.gender;
+	public boolean isMale(){
+		return this.isMale;
 	}
 	
 	public String getTitle(){
@@ -122,11 +122,11 @@ public class Message{
 	}
 	
 	public void setLocation(String location){
-		this.location = location;
+		this.location = new location(location);
 	}
 	
-	public void setGender(int gender){
-		this.gender = gender;
+	public void setToMale(boolean isMale){
+		this.isMale = isMale;
 	}
 	
 	public void setTitle(String title){

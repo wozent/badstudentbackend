@@ -30,7 +30,7 @@ public class location {
         }else{
             this.region = null;
         }
-        this.school = result[4];
+        this.school = result[3];
     }
 
     public String getCity() {

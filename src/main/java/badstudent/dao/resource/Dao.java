@@ -19,7 +19,16 @@ import flexjson.JSONSerializer;
  * @author @Matthew
  */
 public class Dao{
-	private Jedis jedis = new Jedis("localhost");
+	private static Jedis jedis = new Jedis("localhost");
+	
+	public static String generateId(){
+	    if(jedis.get("idGenerator")==null){
+	        jedis.set("idGenerator","1");
+	    }else{
+	        jedis.incr("idGenerator");
+	    }
+	    return jedis.get("idGenerator");
+	}
 	
 	//private static Log log = LogFactory.getLog(Dao.class);
 	//private static final String TABLE_PREFIX = Dao.class.getName() + "_";
@@ -92,6 +101,9 @@ public class Dao{
 		Set<String> keys = jedis.keys("*");    //O(n), this is actually a bad way but it works just fine
 		for (String key : keys) {
 			//for each key, extract the Message and add it into the messages list
+		    if(key.equals("idGenerator")){
+		        continue;
+		    }
 			String jsonMessage = jedis.get(key);
 			Message message = new JSONDeserializer<Message>().deserialize(jsonMessage);
 			messages.add(message);

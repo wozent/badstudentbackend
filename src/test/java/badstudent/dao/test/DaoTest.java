@@ -18,6 +18,11 @@ public class DaoTest {
 	Jedis jedis = new Jedis("localhost");
 	
 	@Test
+	public void initDaoTest(){
+	    //Dao.generateId();
+	}
+	
+	@Test
 	public void createMessageTest() {
 		Message msg = new Message("Matthew");
 		

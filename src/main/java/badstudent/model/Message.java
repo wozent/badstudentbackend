@@ -1,5 +1,7 @@
 package badstudent.model;
 
+import badstudent.dao.resource.Dao;
+
 /**
  * The main data model
  * 
@@ -73,8 +75,9 @@ public class Message{
     }
     
 	private void generateId(){
-		this.id = "defaultId";
+		this.id = Dao.generateId();
 		//some code to generate a unique id for each message	
+		
 	}
 	
 	public String getId(){

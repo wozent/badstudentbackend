@@ -1,5 +1,8 @@
 package badstudent.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import badstudent.Common.Common;
 import badstudent.Common.Constants;
 import badstudent.dao.resource.Dao;
@@ -39,15 +42,15 @@ public class Message{
     private String content;
 
     private String email;
-    
+
     private String phone;
-    
+
     private String qq;
 
     private String selfDefined;
-    
+
     private double price;
-    
+
     private int type;
 
     //for serializer/deSerializer
@@ -92,6 +95,18 @@ public class Message{
         this.location = location;
         this.isMale = isMale;
         this.content = content;
+        if(email.length()<3){
+            email = email + "   ";
+        }
+        if(phone.length()<3){
+            phone = phone + "   ";
+        }
+        if(qq.length()<3){
+            qq = qq + "   ";
+        }
+        if(selfDefined.length()<3){
+            selfDefined = selfDefined + "   ";
+        }
         this.email = email;
         this.phone = phone;
         this.qq = qq;
@@ -110,6 +125,18 @@ public class Message{
         this.location = location;
         this.isMale = isMale;
         this.content = content;
+        if(email.length()<3){
+            email = email + "   ";
+        }
+        if(phone.length()<3){
+            phone = phone + "   ";
+        }
+        if(qq.length()<3){
+            qq = qq + "   ";
+        }
+        if(selfDefined.length()<3){
+            selfDefined = selfDefined + "   ";
+        }
         this.email = email;
         this.phone = phone;
         this.qq = qq;
@@ -119,7 +146,7 @@ public class Message{
     }
 
     private void generateId(){
-        String newId = Constants.message_prefix + "-" + this.email.substring(0,3) + "-" +
+        String newId = Constants.message_prefix + this.email.substring(0,3) + "-" +
                 this.phone.substring(this.phone.length()-3) + "-" + this.qq.substring(this.phone.length()-3) + "-" + this.selfDefined.substring(this.phone.length()-3) + "-" + this.type + "-" + Dao.generateId() ;
         this.id = newId;
         Common.d(newId);
@@ -218,7 +245,7 @@ public class Message{
     public void setPhone(String phone) {
         this.phone = phone;
     }
-    
+
     public String getQq() {
         return qq;
     }

@@ -10,7 +10,7 @@ import badstudent.dao.resource.Dao;
  * id: unique id for each message
  * userName:   User-defined
  * password:   User-defined
- * dateString: Undefined
+ * date: long. time since 1970
  * location:   Area
  * isMale:     gender
  * content:    User-defined
@@ -30,7 +30,7 @@ public class Message{
 
     private String password;
 
-    private String dateString;
+    private long date;
 
     private Location location;
 
@@ -55,7 +55,7 @@ public class Message{
         this.id = "defaultId";
         this.userName = "defaultUserName";
         this.password = "defaultPassword";
-        this.dateString = "defaultDataString";
+        this.date = 0;
         this.location = new Location("dafault dafault default dafault");
         this.isMale = true;
         this.content = "defaultContent";
@@ -72,7 +72,7 @@ public class Message{
         this.id = Constants.message_prefix+id;
         this.userName = "defaultUserName";
         this.password = "defaultPassword";
-        this.dateString = "defaultDataString";
+        this.date = 0;
         this.location = new Location("dafault dafault default dafault");
         this.isMale = true;
         this.content = "defaultContent";
@@ -84,11 +84,11 @@ public class Message{
         this.type = Constants.type_ask;
     }
 
-    public Message(String userName,String password,String dateString,Location location,boolean isMale,String content,String email,
+    public Message(String userName,String password,long date,Location location,boolean isMale,String content,String email,
             String phone,String qq,String selfDefined,double price,int type){
         this.userName = userName;
         this.password = password;
-        this.dateString = dateString;
+        this.date = date;
         this.location = location;
         this.isMale = isMale;
         this.content = content;
@@ -101,12 +101,12 @@ public class Message{
         this.generateId();    //this has to be placed at the bottom of the constructor to avoid NullPointerException
     }
 
-    public Message(String id,String userName,String password,String dateString,Location location,boolean isMale,String content,String email,
+    public Message(String id,String userName,String password,long date,Location location,boolean isMale,String content,String email,
             String phone,String qq,String selfDefined,double price,int type){
         this.id = id;
         this.userName = userName;
         this.password = password;
-        this.dateString = dateString;
+        this.date = date;
         this.location = location;
         this.isMale = isMale;
         this.content = content;
@@ -137,8 +137,8 @@ public class Message{
         return this.password;
     }
 
-    public String getDateString(){
-        return this.dateString;
+    public long getDate(){
+        return this.date;
     }
 
     public String getLocation(){
@@ -166,8 +166,8 @@ public class Message{
         this.password = password;
     }
 
-    public void setDateString(String dateString){
-        this.dateString = dateString;
+    public void setDate(long date){
+        this.date = date;
     }
 
     public void setLocation(String location){

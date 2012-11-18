@@ -209,5 +209,11 @@ public class DaoService{
 		
 		return merge;
 	}
+	
+	public List<Message> sortAllMessageByDate(){
+	    List<Message> allMessages = this.getAllMessages();
+	    //TODO:add sort
+	    return allMessages;
+	}
 
 }

@@ -21,15 +21,15 @@ public class DaoServiceTest {
 	@Test
 	public void initDaoTest(){
 		Location locationUW = new Location("Ontario", "Waterloo", "UniversityofWaterloo");
-	    Message msgUW = new Message("Simon","lol","20121221",locationUW,true,"looking for girlfriend","simon@uwaterloo.ca",
+	    Message msgUW = new Message("Simon","lol",20121221,locationUW,true,"looking for girlfriend","simon@uwaterloo.ca",
 	            "519xxxxxx","123456789","SimonJiang", 19.99, 1);
 	    daoService.createMessage(msgUW);
 	    Location locationUL = new Location("Ontario", "Waterloo", "UniversityofLarier");
-	    Message msgUL = new Message("Simon","lol","20121221",locationUL,true,"looking for girlfriend","simon@uwaterloo.ca",
+	    Message msgUL = new Message("Simon","lol",201212212,locationUL,true,"looking for girlfriend","simon@uwaterloo.ca",
 	            "519xxxxxx","123456789","SimonJiang", 19.99, 0);
 	    daoService.createMessage(msgUL);
 	    Location locationUT = new Location("Ontario", "Waterloo", "UniversityofLarier");
-	    Message msgUT = new Message("Simon","lol","20121221",locationUT,true,"looking for girlfriend","simon@uwaterloo.ca",
+	    Message msgUT = new Message("Simon","lol",20121223,locationUT,true,"looking for girlfriend","simon@uwaterloo.ca",
 	            "519xxxxxx","123456789","SimonJiang", 19.99, -1);
 	    daoService.createMessage(msgUT);
 

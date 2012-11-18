@@ -6,7 +6,7 @@ import org.restlet.Context;
 import org.restlet.Restlet;
 import org.restlet.routing.Router;
 
-import badstudent.Common.NLog;
+import badstudent.Common.Common;
 import badstudent.resource.*;
 
 
@@ -22,7 +22,7 @@ public class MessageService extends Application {
 	
 	//@Override
 	public synchronized Restlet createInboundRoot(){
-		NLog.d("initiaing router");
+		Common.d("initiaing router");
 		Router router = new Router(getContext());
 		String applicationPrefix = "/api/badstudent";
 		String versionPrefix = "/v0.9";

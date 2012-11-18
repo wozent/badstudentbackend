@@ -4,7 +4,7 @@ import org.restlet.Component;
 import org.restlet.Server;
 import org.restlet.data.Protocol;
 
-import badstudent.Common.NLog;
+import badstudent.Common.Common;
 import badstudent.service.*;
 
 
@@ -43,7 +43,7 @@ public class ServerMain {
 
 		// Start the component.
 		//log.info("ready to start");
-		NLog.d("ready to start");
+		Common.d("ready to start");
 		component.start();
 
 	}
@@ -66,7 +66,7 @@ public class ServerMain {
 
 
 	public static void main(String... args) throws Exception {
-		NLog.d("Excuting");
+		Common.d("Excuting");
 		// Load server logic
 		try {
 			ServerMain.getInstance().init(args);

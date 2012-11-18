@@ -7,7 +7,8 @@ import java.util.Set;
 
 import redis.clients.jedis.*;
 
-import badstudent.Common.NLog;
+import badstudent.Common.Common;
+import badstudent.Common.Constants;
 import badstudent.model.*;
 
 import flexjson.JSONDeserializer;
@@ -28,6 +29,7 @@ public class Dao{
 	        jedis.incr("idGenerator");
 	    }
 	    return jedis.get("idGenerator");
+	    
 	}
 	
 	//private static Log log = LogFactory.getLog(Dao.class);
@@ -80,7 +82,7 @@ public class Dao{
 			
 		}
 		else{
-			NLog.d("message not found");
+			Common.d("message not found");
 		}
 
 		return message;
@@ -88,22 +90,22 @@ public class Dao{
 
 	/*deletes a single message*/
 	public boolean deleteMessage(String messageId) {
-
-		jedis.del(messageId);
-		return true;
+	    //delete if it exsit.
+	    if(jedis.get(messageId)!=null){
+	        jedis.del(messageId);
+	        return true;
+	    }
+		return false;
 	}
 
 	/*return all messaes*/
-	public List<Message> getMessages() {
+	public List<Message> getAllMessages() {
 		List<Message> messages = new ArrayList<Message>();
 		
 		//use a Set to store all the keys in Redis
-		Set<String> keys = jedis.keys("*");    //O(n), this is actually a bad way but it works just fine
+		Set<String> keys = jedis.keys(Constants.message_prefix+"*");    //O(n), this is actually a bad way but it works just fine
 		for (String key : keys) {
 			//for each key, extract the Message and add it into the messages list
-		    if(key.equals("idGenerator")){
-		        continue;
-		    }
 			String jsonMessage = jedis.get(key);
 			Message message = new JSONDeserializer<Message>().deserialize(jsonMessage);
 			messages.add(message);
@@ -113,7 +115,7 @@ public class Dao{
 	}
 	
 	//return all the ids with the Message prefix, may be needed later on with different data models
-	public Set<String> getIds(){
-		return jedis.keys(Message.prefix + "*");  
+	public Set<String> getAllIds(){
+		return jedis.keys(Constants.message_prefix + "*");  
 	}
 }

@@ -3,6 +3,7 @@ package badstudent.dao.test;
 import static org.junit.Assert.*;
 
 import badstudent.Common.Common;
+import badstudent.Common.Constants;
 import badstudent.dao.resource.*;
 import badstudent.model.*;
 
@@ -19,7 +20,41 @@ public class DaoTest {
 	
 	@Test
 	public void initDaoTest(){
-	    //Dao.generateId();
+		Location locationUW = new Location("Ontario", "Waterloo", "UniversityofWaterloo");
+	    Message msgUW = new Message("Simon","lol","20121221",locationUW,true,"looking for girlfriend","simon@uwaterloo.ca",
+	            "519xxxxxx","123456789","SimonJiang", 19.99, 1);
+	    dao.createMessage(msgUW);
+	    Location locationUL = new Location("Ontario", "Waterloo", "UniversityofLarier");
+	    Message msgUL = new Message("Simon","lol","20121221",locationUL,true,"looking for girlfriend","simon@uwaterloo.ca",
+	            "519xxxxxx","123456789","SimonJiang", 19.99, 0);
+	    dao.createMessage(msgUL);
+	    Location locationUT = new Location("Ontario", "Waterloo", "UniversityofLarier");
+	    Message msgUT = new Message("Simon","lol","20121221",locationUT,true,"looking for girlfriend","simon@uwaterloo.ca",
+	            "519xxxxxx","123456789","SimonJiang", 19.99, -1);
+	    dao.createMessage(msgUT);
+
+	    assertTrue(Integer.parseInt(jedis.get(Constants.idGenerator)) == 3);
+	    
+	    Message returnMsgUW = dao.getMessageById(msgUW.getId());
+	    Message returnMsgUT = dao.getMessageById(msgUT.getId());
+	    Message returnMsgUL = dao.getMessageById(msgUL.getId());
+	    System.out.println("daoTest::initDaoTest() -> initial msgUW location " + msgUW.getLocation());
+	    System.out.println("daoTest::initDaoTest() -> retuerned msgUW location " + returnMsgUW.getLocation());
+	    assertTrue(returnMsgUW.getLocation().compareTo(msgUW.getLocation()) == 0);
+	    assertTrue(returnMsgUT.getLocation().compareTo(msgUT.getLocation()) == 0);
+	    assertTrue(returnMsgUL.getLocation().compareTo(msgUL.getLocation()) == 0);
+	    
+	    dao.deleteMessage(msgUT.getId());
+	    dao.deleteMessage(msgUW.getId());
+	    dao.deleteMessage(msgUL.getId());
+	    assertTrue(Integer.parseInt(jedis.get(Constants.idGenerator)) == 3);
+	    
+	    List<Message> msgs = dao.getAllMessages();
+		assertTrue(msgs.size() == 0);				//make sure the database is totally cleared, no memory has occurred in the above operations
+		
+		jedis.del(Constants.idGenerator);
+		assertNull(jedis.get(Constants.idGenerator));
+	    assertTrue(dao.getEverything().size() == 0);
 	}
 	
 	@Test

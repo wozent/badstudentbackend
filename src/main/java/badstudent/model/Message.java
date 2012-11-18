@@ -32,7 +32,7 @@ public class Message{
 
     private String dateString;
 
-    private location location;
+    private Location location;
 
     private boolean isMale;
 
@@ -56,13 +56,13 @@ public class Message{
         this.userName = "defaultUserName";
         this.password = "defaultPassword";
         this.dateString = "defaultDataString";
-        this.location = new location("dafault dafault default dafault");
+        this.location = new Location("dafault dafault default dafault");
         this.isMale = true;
         this.content = "defaultContent";
         this.email = "defaultEmail@default.com";
         this.phone = "1383838438";
         this.qq = "1234567890";
-        this.selfDefined = "dafultselfDefiend";
+        this.selfDefined = "dafultSelfDefiend";
         this.price = 0.0;
         this.type = Constants.type_ask;
     }
@@ -73,7 +73,7 @@ public class Message{
         this.userName = "defaultUserName";
         this.password = "defaultPassword";
         this.dateString = "defaultDataString";
-        this.location = new location("dafault dafault default dafault");
+        this.location = new Location("dafault dafault default dafault");
         this.isMale = true;
         this.content = "defaultContent";
         this.email = "defaultEmail@default.com";
@@ -84,9 +84,8 @@ public class Message{
         this.type = Constants.type_ask;
     }
 
-    public Message(String userName,String password,String dateString,location location,boolean isMale,String content,String email,
+    public Message(String userName,String password,String dateString,Location location,boolean isMale,String content,String email,
             String phone,String qq,String selfDefined,double price,int type){
-        this.generateId();
         this.userName = userName;
         this.password = password;
         this.dateString = dateString;
@@ -99,9 +98,10 @@ public class Message{
         this.selfDefined = selfDefined;
         this.price = price;
         this.type = type;
+        this.generateId();    //this has to be placed at the bottom of the constructor to avoid NullPointerException
     }
 
-    public Message(String id,String userName,String password,String dateString,location location,boolean isMale,String content,String email,
+    public Message(String id,String userName,String password,String dateString,Location location,boolean isMale,String content,String email,
             String phone,String qq,String selfDefined,double price,int type){
         this.id = id;
         this.userName = userName;
@@ -120,7 +120,7 @@ public class Message{
 
     private void generateId(){
         String newId = Constants.message_prefix + "-" + this.email.substring(0,3) + "-" +
-                this.phone.substring(this.phone.length()-3) + "-" + this.qq.substring(this.phone.length()-3) + "-" + this.selfDefined.substring(this.phone.length()-3) + "-" + Dao.generateId() ;
+                this.phone.substring(this.phone.length()-3) + "-" + this.qq.substring(this.phone.length()-3) + "-" + this.selfDefined.substring(this.phone.length()-3) + "-" + this.type + "-" + Dao.generateId() ;
         this.id = newId;
         Common.d(newId);
     }
@@ -171,7 +171,7 @@ public class Message{
     }
 
     public void setLocation(String location){
-        this.location = new location(location);
+        this.location = new Location(location);
     }
 
     public void setToMale(boolean isMale){

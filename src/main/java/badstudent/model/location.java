@@ -1,27 +1,39 @@
 package badstudent.model;
 
-public class location {
+/**
+ * Important: please note, each entry here much not contain white space
+ */
+
+
+public class Location {
     private String province;
     private String city;
     private String region;
     private String school;
-
-    public location(String province, String city ,String region ,String school){
+    
+    public Location(){
+    	this.province = "province";
+        this.city = "city";
+        this.region = "region";
+        this.school = "schoolofblablabla";
+    }
+    
+    public Location(String province, String city ,String region ,String school){
         this.province = province;
         this.city = city;
         this.region = region;
-        this.school = school;
+        this.school = school.replaceAll(" ", "");
     }
 
     //for locations that does not have region
-    public location(String province, String city ,String school){
+    public Location(String province, String city ,String school){
         this.province = province;
         this.city = city;
         this.region = null;
-        this.school = school;
+        this.school = school.replaceAll(" ", "");
     }
 
-    public location(String locationString){
+    public Location(String locationString){
         String result[] = locationString.split(" ");
         this.province = result[0];
         this.city = result[1];
@@ -30,7 +42,7 @@ public class location {
         }else{
             this.region = null;
         }
-        this.school = result[3];
+        this.school = result[3].replaceAll(" ", "");
     }
 
     public String getCity() {

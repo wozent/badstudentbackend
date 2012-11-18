@@ -7,18 +7,18 @@ import java.util.Set;
 import flexjson.JSONDeserializer;
 
 import badstudent.model.*;
-
+import badstudent.Common.*;
 import badstudent.dao.resource.*;
 
 public class DaoService{
-	
+
 	//private static Log log = LogFactory.getLog(ScheduleResource.class);
 	private Dao dao;
-	
+
 	public DaoService(){
 		this.dao = new Dao();
 	}
-	
+
 	/*checks if the id exist in Redis*/
 	public boolean checkExistance(String id){
 		if (dao.getMessageById(id) == null){
@@ -26,12 +26,12 @@ public class DaoService{
 		}
 		return true;
 	}
-	
-	
+
+
 	public Message getMessageById(String id){
 		return dao.getMessageById(id);
 	}
-	
+
 	/*create non-existing messages, return null if the message was already in the database(same Id), return the message entity if the message was not in existence and now created*/
 	public Message createMessage(Message message){
 		if (checkExistance(message.getId()) ){
@@ -44,7 +44,7 @@ public class DaoService{
 			return dao.createMessage(message);
 		}
 	}
-	
+
 	/*update message*/
 	public Message updateMessage(Message message, String id){
 		if (checkExistance(id) ){
@@ -57,9 +57,9 @@ public class DaoService{
 			dao.createMessage(message);
 			return null;
 		}
-		
+
 	}
-	
+
 	/*delete existing messages, return true if the message existed and now deleted, return false if the message was not found*/
 	public boolean deleteMessage(String id){
 		if (checkExistance(id) ){
@@ -72,17 +72,25 @@ public class DaoService{
 			return false;
 		}
 	}
-	
-	
-	public List<Message> getMessages(){
+
+
+	public List<Message> getAllMessages(){
 		return dao.getAllMessages();
 	}
-	
+
 	public Set<String> getIds(){
 		return dao.getAllIds();
 	}
 	
-	public List<Message> GeneralGontactInfoSearch(String contactInfoPiece){
+	public Set<String> getPartialIds(String targetPattern){
+		return dao.getPartialIds(Constants.message_prefix + "*" + targetPattern + "*");
+	}
+	
+	public Set<String> getEverything(){
+		return dao.getEverything();  
+	}
+
+	public List<Message> generalGontactInfoSearch(String contactInfoPiece){
 		Set<String> keys = dao.getPartialIds(contactInfoPiece);
 		List<Message> matchedMessages = new ArrayList<Message>();
 		for (String key : keys) {
@@ -93,11 +101,11 @@ public class DaoService{
 				}
 			}
 		}
-		
+
 		return matchedMessages;
 	}
-	
-	
+
+
 	public List<Message> emailInfoSearch(String emailInfoPiece){
 		Set<String> keys = dao.getPartialIds(emailInfoPiece);
 		List<Message> matchedMessages = new ArrayList<Message>();
@@ -109,10 +117,10 @@ public class DaoService{
 				}
 			}
 		}
-		
+
 		return matchedMessages;
 	}
-	
+
 	public List<Message> phoneInfoSearch(String phoneInfoPiece){
 		Set<String> keys = dao.getPartialIds(phoneInfoPiece);
 		List<Message> matchedMessages = new ArrayList<Message>();
@@ -124,10 +132,10 @@ public class DaoService{
 				}
 			}
 		}
-		
+
 		return matchedMessages;
 	}
-	
+
 	public List<Message> qqInfoSearch(String qqInfoPiece){
 		Set<String> keys = dao.getPartialIds(qqInfoPiece);
 		List<Message> matchedMessages = new ArrayList<Message>();
@@ -139,10 +147,10 @@ public class DaoService{
 				}
 			}
 		}
-		
+
 		return matchedMessages;
 	}
-	
+
 	public List<Message> selfDefinedInfoSearch(String selfDefinedInfoPiece){
 		Set<String> keys = dao.getPartialIds(selfDefinedInfoPiece);
 		List<Message> matchedMessages = new ArrayList<Message>();
@@ -154,8 +162,52 @@ public class DaoService{
 				}
 			}
 		}
-		
+
 		return matchedMessages;
 	}
-	
+
+	public List<Message> multipeSearch(String phone, String email, String qq, String selfDefined){
+		List<Message> merge = new ArrayList<Message>();
+
+		//adding each of the search results into the merge List
+		if(phone.compareTo("") != 0){
+			List<Message> searchByPhone = phoneInfoSearch(phone);
+			for (int i = 0; i < searchByPhone.size(); i++){
+				Message temp = searchByPhone.get(i);
+				if (!merge.contains(temp)){
+					merge.add(temp);
+				}
+			}
+		}
+		if (email.compareTo("") != 0){
+			List<Message> searchByEmail = emailInfoSearch(email);
+			for (int i = 0; i < searchByEmail.size(); i++){
+				Message temp = searchByEmail.get(i);
+				if (!merge.contains(temp)){
+					merge.add(temp);
+				}
+			}
+		}
+		if (qq.compareTo("") != 0){
+			List<Message> searchByQq = qqInfoSearch(qq);
+			for (int i = 0; i < searchByQq.size(); i++){
+				Message temp = searchByQq.get(i);
+				if (!merge.contains(temp)){
+					merge.add(temp);
+				}
+			}
+		}
+		if (selfDefined.compareTo("") != 0){
+			List<Message> searchBySelfDefined = selfDefinedInfoSearch(selfDefined);
+			for (int i = 0; i < searchBySelfDefined.size(); i++){
+				Message temp = searchBySelfDefined.get(i);
+				if (!merge.contains(temp)){
+					merge.add(temp);
+				}
+			}
+		}	
+		
+		return merge;
+	}
+
 }

@@ -23,12 +23,12 @@ public class Dao{
 	private static Jedis jedis = new Jedis("localhost");
 	
 	public static String generateId(){
-	    if(jedis.get("idGenerator")==null){
-	        jedis.set("idGenerator","1");
+	    if(jedis.get(Constants.idGenerator)==null){
+	        jedis.set(Constants.idGenerator,"1");
 	    }else{
-	        jedis.incr("idGenerator");
+	        jedis.incr(Constants.idGenerator);
 	    }
-	    return jedis.get("idGenerator");
+	    return jedis.get(Constants.idGenerator);
 	    
 	}
 	
@@ -122,5 +122,9 @@ public class Dao{
 	
 	public Set<String> getPartialIds(String targetPattern){
 		return jedis.keys(Constants.message_prefix + "*" + targetPattern + "*");
+	}
+	
+	public Set<String> getEverything(){
+		return jedis.keys("*");  
 	}
 }

@@ -52,7 +52,7 @@ public class MessageResource extends ServerResource{
 		Message message = null;
 		try {
 			message = new Message(jsonMessage.getString("userName"), jsonMessage.getString("password"),
-			        jsonMessage.getString("dateString"),new location(jsonMessage.getString("location")),
+			        jsonMessage.getString("dateString"),new Location(jsonMessage.getString("location")),
 			        jsonMessage.getBoolean("isMale"),jsonMessage.getString("content"),
 			        jsonMessage.getString("email"),jsonMessage.getString("phone"),
 			        jsonMessage.getString("qq"),jsonMessage.getString("selfDefiend"),
@@ -110,26 +110,16 @@ public class MessageResource extends ServerResource{
 		String email = getQuery().getValues("email");
 		String qq = getQuery().getValues("qq");
 		String selfDefined = getQuery().getValues("selfDefined");
+		String queryType = getQuery().getValues("type");
+		try{
+			int type = Integer.parseInt(queryType);
+		}
+		catch (NumberFormatException e){
+			Common.d("MessageResource::@GET  NumberFormatException with queryType: " + queryType);
+			e.printStackTrace();
+		}
 		
-		List<Message> searchByPhone = daoService.phoneInfoSearch(phone);
-		List<Message> searchByEmail = daoService.emailInfoSearch(email);
-		List<Message> searchByQq = daoService.qqInfoSearch(qq);
-		List<Message> searchBySelfDefined = daoService.selfDefinedInfoSearch(selfDefined);
-		
-		List<Message> merge = new ArrayList<Message>();
-		
-		for (int i = 0; i < searchByPhone.size(); i++){
-			merge.add(searchByPhone.get(i));
-		}
-		for (int i = 0; i < searchByEmail.size(); i++){
-			merge.add(searchByEmail.get(i));
-		}
-		for (int i = 0; i < searchByQq.size(); i++){
-			merge.add(searchByQq.get(i));
-		}
-		for (int i = 0; i < searchBySelfDefined.size(); i++){
-			merge.add(searchBySelfDefined.get(i));
-		}
+		List<Message> merge = daoService.multipeSearch(phone, email, qq, selfDefined);	
 		
 		JSONArray jsonArray = new JSONArray(merge);
 		

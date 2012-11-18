@@ -37,7 +37,7 @@ public class MessageResourceId extends ServerResource{
         Message message = null;
         try {
             message = new Message(jsonMessage.getString("id"),jsonMessage.getString("userName"), jsonMessage.getString("password"),
-                    jsonMessage.getString("dateString"),new location(jsonMessage.getString("location")),
+                    jsonMessage.getString("dateString"),new Location(jsonMessage.getString("location")),
                     jsonMessage.getBoolean("isMale"),jsonMessage.getString("content"),
                     jsonMessage.getString("email"),jsonMessage.getString("phone"),
                     jsonMessage.getString("qq"),jsonMessage.getString("selfDefiend"),

@@ -223,4 +223,23 @@ public class DaoServiceTest {
         assertNull(jedis.get(Constants.idGenerator));
         assertTrue(daoService.getEverything().size() == 0);
     }
+    
+    @Test
+    public void sortMessageTest(){
+        Location locationUW = new Location("Ontario", "Waterloo", "UniversityofWaterloo");
+        Message msgUW = new Message("Simon","lol",2353267342050L,locationUW,true,"looking for girlfriend","simon@uwaterloo.ca",
+                "519xxxxxx","123456789","SimonJiang", 19.99, 1);
+        daoService.createMessage(msgUW);
+        Location locationUL = new Location("Ontario", "Waterloo", "UniversityofLarier");
+        Message msgUL = new Message("Simon","lol",1353267342050L,locationUL,true,"looking for girlfriend","simon@uwaterloo.ca",
+                "519xxxxxx","123456788","SimonJiang", 19.99, 0);
+        daoService.createMessage(msgUL);
+        Location locationUT = new Location("Ontario", "Waterloo", "UniversityofLarier");
+        Message msgUT = new Message("Simon","lol",3353267342050L,locationUT,true,"looking for girlfriend","mic@uwaterloo.ca",
+                "516xxxxxx","123456789","SimonJian", 19.99, -1);
+        daoService.createMessage(msgUT);
+        daoService.sortAllMessageByDate();
+        daoService.clearDatabase();
+        
+    }
 }

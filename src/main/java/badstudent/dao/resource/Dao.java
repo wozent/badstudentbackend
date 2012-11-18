@@ -127,4 +127,8 @@ public class Dao{
 	public Set<String> getEverything(){
 		return jedis.keys("*");  
 	}
+	
+	public static void clearDatabase(){
+	    jedis.flushAll();
+	}
 }

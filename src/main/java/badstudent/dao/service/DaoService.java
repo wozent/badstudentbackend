@@ -3,9 +3,6 @@ package badstudent.dao.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
-import flexjson.JSONDeserializer;
-
 import badstudent.model.*;
 import badstudent.Common.*;
 import badstudent.dao.resource.*;
@@ -228,8 +225,28 @@ public class DaoService{
 
     public List<Message> sortAllMessageByDate(){
         List<Message> allMessages = this.getAllMessages();
+        for(Message msg : allMessages){
+            Common.d("Before sort:"+msg.getDate()/Constants.miliSecPerDay);
+        }
+        for(int b=1;b<allMessages.size();b++){
+            for(int a=0;a<allMessages.size()-b;a++){
+                Message msg1 = allMessages.get(a);
+                Message msg2 = allMessages.get(a+1);
+                if(Common.isMessageBefore(msg1,msg2)){
+                    allMessages.set(a, msg2);
+                    allMessages.set(a+1, msg1);
+                }
+            }
+        }
+        for(Message msg : allMessages){
+            Common.d("After sort:"+msg.getDate()/Constants.miliSecPerDay);
+        }
         //TODO:add sort
         return allMessages;
+    }
+    
+    public void clearDatabase(){
+        Dao.clearDatabase();
     }
 
 }

@@ -1,5 +1,6 @@
 package badstudent.model;
 
+import badstudent.Common.Common;
 import badstudent.Common.Constants;
 import badstudent.dao.resource.Dao;
 
@@ -77,7 +78,7 @@ public class Message{
 
     //this constructor is used for testing purposes and potentially @Options HTTP calls only, please ignore it for any other usages
     public Message(String id){
-        this.id = id;
+        this.id = Constants.message_prefix+id;
         this.userName = "defaultUserName";
         this.password = "defaultPassword";
         this.dateString = "defaultDataString";
@@ -130,6 +131,7 @@ public class Message{
         String newId = Constants.message_prefix + "-" + Dao.generateId() + "-" + this.email.substring(0,3) + "-" +
                 this.phone.substring(0,3) + "-" + this.qq.substring(0,3) + "-" + this.selfDefined.substring(0,3);
         this.id = newId;
+        Common.d(newId);
     }
 
     public String getId(){

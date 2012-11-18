@@ -103,12 +103,9 @@ public class Dao{
 		List<Message> messages = new ArrayList<Message>();
 		
 		//use a Set to store all the keys in Redis
-		Set<String> keys = jedis.keys("*");    //O(n), this is actually a bad way but it works just fine
+		Set<String> keys = jedis.keys(Constants.message_prefix+"*");    //O(n), this is actually a bad way but it works just fine
 		for (String key : keys) {
 			//for each key, extract the Message and add it into the messages list
-		    if(key.equals("idGenerator")){
-		        continue;
-		    }
 			String jsonMessage = jedis.get(key);
 			Message message = new JSONDeserializer<Message>().deserialize(jsonMessage);
 			messages.add(message);

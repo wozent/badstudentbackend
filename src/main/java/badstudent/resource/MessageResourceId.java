@@ -123,7 +123,7 @@ public class MessageResourceId extends ServerResource{
 		*boolean exist = daoService.deleteMessage(id);
 		*/
 		
-		if (exist){
+		if (!exist){
 			setStatus(Status.CLIENT_ERROR_CONFLICT );
 		}
 		else{

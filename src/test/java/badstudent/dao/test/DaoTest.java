@@ -35,7 +35,7 @@ public class DaoTest {
 		
 		assertNull(jedis.get(msgId));
 		
-		List<Message> msgs = dao.getMessages();
+		List<Message> msgs = dao.getAllMessages();
 		assertTrue(msgs.size() == 0);				//make sure the database is totally cleared, no memory has occurred in the above operations
 	}
 	
@@ -54,7 +54,7 @@ public class DaoTest {
 		Message newReturned = dao.getMessageById(message.getId());
 		
 		assertNull(newReturned);
-		List<Message> messages = dao.getMessages();
+		List<Message> messages = dao.getAllMessages();
 		assertTrue(messages.size() == 0);			//make sure the database is totally cleared, no memory has occurred in the above operations
 	}
 	
@@ -76,7 +76,7 @@ public class DaoTest {
 		jedis.del(message.getId());
 		assertNull(dao.getMessageById(message.getId()));   //check if new message has been deleted
 		
-		List<Message> messages = dao.getMessages();
+		List<Message> messages = dao.getAllMessages();
 		assertTrue(messages.size() == 0);
 	}
 	
@@ -96,7 +96,7 @@ public class DaoTest {
 		dao.deleteMessage(message.getId());
 		assertNull(dao.getMessageById(messageIdentifier));		//make sure the message now is being deleted
 		
-		List<Message> messages = dao.getMessages();
+		List<Message> messages = dao.getAllMessages();
 		assertTrue(messages.size() == 0);				//make sure the database is totally cleared, no memory has occurred in the above operations
 	}
 	
@@ -114,7 +114,7 @@ public class DaoTest {
 		Common.d( "daoTest::getCurrentMessagesTest -> retuerned messagesigma" + jedis.get(messageSigma.getId()) );
 		
 		
-		List<Message> messages = dao.getMessages();
+		List<Message> messages = dao.getAllMessages();
 		Common.d( "daoTest::getMessagesTest -> retuerned messages size" + messages.size() );
 		assertTrue(messages.size() == 3);
 		
@@ -122,7 +122,7 @@ public class DaoTest {
 		dao.deleteMessage(messageBeta.getId());
 		dao.deleteMessage(messageSigma.getId());
 		
-		messages = dao.getMessages();
+		messages = dao.getAllMessages();
 		assertTrue(messages.size() == 0);
 	}
 	

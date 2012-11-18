@@ -30,7 +30,6 @@ public class Dao{
 	    }
 	    return jedis.get("idGenerator");
 	    
-	    
 	}
 	
 	//private static Log log = LogFactory.getLog(Dao.class);
@@ -91,13 +90,16 @@ public class Dao{
 
 	/*deletes a single message*/
 	public boolean deleteMessage(String messageId) {
-
-		jedis.del(messageId);
-		return true;
+	    //delete if it exsit.
+	    if(jedis.get(messageId)!=null){
+	        jedis.del(messageId);
+	        return true;
+	    }
+		return false;
 	}
 
 	/*return all messaes*/
-	public List<Message> getMessages() {
+	public List<Message> getAllMessages() {
 		List<Message> messages = new ArrayList<Message>();
 		
 		//use a Set to store all the keys in Redis
@@ -116,7 +118,7 @@ public class Dao{
 	}
 	
 	//return all the ids with the Message prefix, may be needed later on with different data models
-	public Set<String> getIds(){
+	public Set<String> getAllIds(){
 		return jedis.keys(Constants.message_prefix + "*");  
 	}
 }

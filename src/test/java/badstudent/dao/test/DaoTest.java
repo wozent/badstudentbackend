@@ -2,7 +2,7 @@ package badstudent.dao.test;
 
 import static org.junit.Assert.*;
 
-import badstudent.Common.NLog;
+import badstudent.Common.Common;
 import badstudent.dao.resource.*;
 import badstudent.model.*;
 
@@ -109,13 +109,13 @@ public class DaoTest {
 		dao.createMessage(messageAlpha);
 		dao.createMessage(messageBeta);
 		dao.createMessage(messageSigma);
-		NLog.d( "daoTest::getCurrentMessagesTest -> retuerned messagealpha" + jedis.get(messageAlpha.getId()) );
-		NLog.d( "daoTest::getCurrentMessagesTest -> retuerned messagebeta" + jedis.get(messageBeta.getId()) );
-		NLog.d( "daoTest::getCurrentMessagesTest -> retuerned messagesigma" + jedis.get(messageSigma.getId()) );
+		Common.d( "daoTest::getCurrentMessagesTest -> retuerned messagealpha" + jedis.get(messageAlpha.getId()) );
+		Common.d( "daoTest::getCurrentMessagesTest -> retuerned messagebeta" + jedis.get(messageBeta.getId()) );
+		Common.d( "daoTest::getCurrentMessagesTest -> retuerned messagesigma" + jedis.get(messageSigma.getId()) );
 		
 		
 		List<Message> messages = dao.getMessages();
-		NLog.d( "daoTest::getMessagesTest -> retuerned messages size" + messages.size() );
+		Common.d( "daoTest::getMessagesTest -> retuerned messages size" + messages.size() );
 		assertTrue(messages.size() == 3);
 		
 		dao.deleteMessage(messageAlpha.getId());      //redis duplicate keys problem

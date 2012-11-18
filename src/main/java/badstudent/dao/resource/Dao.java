@@ -7,7 +7,8 @@ import java.util.Set;
 
 import redis.clients.jedis.*;
 
-import badstudent.Common.NLog;
+import badstudent.Common.Common;
+import badstudent.Common.Constants;
 import badstudent.model.*;
 
 import flexjson.JSONDeserializer;
@@ -28,6 +29,8 @@ public class Dao{
 	        jedis.incr("idGenerator");
 	    }
 	    return jedis.get("idGenerator");
+	    
+	    
 	}
 	
 	//private static Log log = LogFactory.getLog(Dao.class);
@@ -80,7 +83,7 @@ public class Dao{
 			
 		}
 		else{
-			NLog.d("message not found");
+			Common.d("message not found");
 		}
 
 		return message;
@@ -114,6 +117,6 @@ public class Dao{
 	
 	//return all the ids with the Message prefix, may be needed later on with different data models
 	public Set<String> getIds(){
-		return jedis.keys(Message.prefix + "*");  
+		return jedis.keys(Constants.message_prefix + "*");  
 	}
 }

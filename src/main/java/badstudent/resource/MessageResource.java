@@ -14,7 +14,7 @@ import org.json.JSONObject;
 
 
 import badstudent.model.*;
-import badstudent.Common.NLog;
+import badstudent.Common.Common;
 import badstudent.dao.service.*;
 
 public class MessageResource extends ServerResource{
@@ -45,11 +45,16 @@ public class MessageResource extends ServerResource{
 			e.printStackTrace();
 		}
 
-		NLog.d("@Post::receive jsonMessage: " +  jsonMessage.toString());
+		Common.d("@Post::receive jsonMessage: " +  jsonMessage.toString());
 
 		Message message = null;
 		try {
-			message = new Message(jsonMessage.getString("userName"), jsonMessage.getString("password"),jsonMessage.getString("dateString"),new location(jsonMessage.getString("location")),jsonMessage.getBoolean("isMale"),jsonMessage.getString("title"),jsonMessage.getString("content") );
+			message = new Message(jsonMessage.getString("userName"), jsonMessage.getString("password"),
+			        jsonMessage.getString("dateString"),new location(jsonMessage.getString("location")),
+			        jsonMessage.getBoolean("isMale"),jsonMessage.getString("content"),
+			        jsonMessage.getString("email"),jsonMessage.getString("phone"),
+			        jsonMessage.getString("qq"),jsonMessage.getString("selfDefiend"),
+			        jsonMessage.getDouble("price"),jsonMessage.getInt("type"));
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		} catch (JSONException e) {
@@ -85,12 +90,12 @@ public class MessageResource extends ServerResource{
 		setStatus(Status.SUCCESS_OK);
 		
 		try {
-			NLog.d(result.getText() );
+			Common.d(result.getText() );
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		NLog.d("@Get::resources:getCurrentMessages");
+		Common.d("@Get::resources:getCurrentMessages");
 		
 		/*set the response header*/
 		Form responseHeaders = addHeader((Form) getResponse().getAttributes().get("org.restlet.http.headers")); 
@@ -113,10 +118,10 @@ public class MessageResource extends ServerResource{
 		*/
 		setStatus(Status.SUCCESS_OK);
 
-		NLog.d("@Post::resources::createMessage: available: " + message.getUserName() + message.getPassword());
+		Common.d("@Post::resources::createMessage: available: " + message.getUserName() + message.getPassword());
 
 		JSONObject newJsonMessage = new JSONObject(message);
-		NLog.d("@Post::resources::createMessage: newJsonMessage" + newJsonMessage.toString());
+		Common.d("@Post::resources::createMessage: newJsonMessage" + newJsonMessage.toString());
 		result = new JsonRepresentation(newJsonMessage);
 
 

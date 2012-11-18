@@ -43,15 +43,6 @@ public class Message{
     private String phone;
     
     private String qq;
-    
-    public String getQq() {
-        return qq;
-    }
-
-    public void setQq(String qq) {
-        this.qq = qq;
-    }
-
 
     private String selfDefined;
     
@@ -128,8 +119,8 @@ public class Message{
     }
 
     private void generateId(){
-        String newId = Constants.message_prefix + "-" + Dao.generateId() + "-" + this.email.substring(0,3) + "-" +
-                this.phone.substring(0,3) + "-" + this.qq.substring(0,3) + "-" + this.selfDefined.substring(0,3);
+        String newId = Constants.message_prefix + "-" + this.email.substring(0,3) + "-" +
+                this.phone.substring(this.phone.length()-3) + "-" + this.qq.substring(this.phone.length()-3) + "-" + this.selfDefined.substring(this.phone.length()-3) + "-" + Dao.generateId() ;
         this.id = newId;
         Common.d(newId);
     }
@@ -227,5 +218,14 @@ public class Message{
     public void setPhone(String phone) {
         this.phone = phone;
     }
+    
+    public String getQq() {
+        return qq;
+    }
+
+    public void setQq(String qq) {
+        this.qq = qq;
+    }
+
 }
 

@@ -57,11 +57,8 @@ public class MessageResourceId extends ServerResource{
 
         JSONArray jsonArray = null;
         try {
-            jsonArray = new JSONArray();
-
-            /**
-             * jsonArray = new JSONArray(daoService.getMessageById(id));
-             */
+            
+            jsonArray = new JSONArray(daoService.getMessageById(id));
 
         } catch (Exception e1) {
             e1.printStackTrace();
@@ -100,9 +97,9 @@ public class MessageResourceId extends ServerResource{
         Representation result = null;
         //if available, update the message
 
-        /**
-         *daoService.updateMessage(message, id);
-         */
+        
+        daoService.updateMessage(message, id);
+         
 
         setStatus(Status.SUCCESS_OK);
         JSONObject newJsonMessage = new JSONObject(message);
@@ -123,10 +120,8 @@ public class MessageResourceId extends ServerResource{
     public Representation deleteMessage() {
         String id = (String)this.getRequestAttributes().get("id");
 
-        boolean exist = true;
-        /**
-         *boolean exist = daoService.deleteMessage(id);
-         */
+        boolean exist = daoService.deleteMessage(id);
+        
 
         if (exist){
             setStatus(Status.CLIENT_ERROR_CONFLICT );

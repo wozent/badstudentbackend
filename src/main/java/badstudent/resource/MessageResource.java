@@ -66,15 +66,10 @@ public class MessageResource extends ServerResource{
 
 	@Get
 	public Representation getCurrentMessages() {
-		//get query parameter _startTime
-		String startTimeString = getQuery().getValues("startTime");
 		
 		
-		JSONArray jsonArray = new JSONArray();
+		JSONArray jsonArray = new JSONArray(daoService.getMessages());
 		
-		/** change this once the daoService is fully implemented
-		 * JSONArray jsonArray = new JSONArray(daoService.getCurrentMessages());
-		 */
 		
 		try{
 			for (int i = 0; i < jsonArray.length(); i++){
@@ -104,6 +99,13 @@ public class MessageResource extends ServerResource{
 		} 
 		return result;
 	}
+	
+	
+	
+	
+	
+	
+	
 	
 	
 

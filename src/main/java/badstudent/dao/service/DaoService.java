@@ -1,5 +1,6 @@
 package badstudent.dao.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -74,25 +75,87 @@ public class DaoService{
 	
 	
 	public List<Message> getMessages(){
-		return dao.getMessages();
+		return dao.getAllMessages();
 	}
 	
 	public Set<String> getIds(){
-		return dao.getIds();
+		return dao.getAllIds();
 	}
 	
 	public List<Message> GeneralGontactInfoSearch(String contactInfoPiece){
-		Set<String> keys = dao.getIds();
-		List<Message> matchedMessages;
+		Set<String> keys = dao.getPartialIds(contactInfoPiece);
+		List<Message> matchedMessages = new ArrayList<Message>();
 		for (String key : keys) {
-			if (key.indexOf(key.substring(0, 3), 7) != -1 || key.indexOf(key.substring(key.length()-3)) != -1){
+			if (key.indexOf(contactInfoPiece.substring(0, 3), 7) != -1 || key.indexOf(contactInfoPiece.substring(contactInfoPiece.length()-3),7) != -1){
 				Message testMessage = dao.getMessageById(key);
-				
+				if (testMessage.getPhone().equalsIgnoreCase(contactInfoPiece) || testMessage.getEmail().equalsIgnoreCase(contactInfoPiece) || testMessage.getQq().equalsIgnoreCase(contactInfoPiece) ||  testMessage.getSelfDefined().equalsIgnoreCase(contactInfoPiece)){
+					matchedMessages.add(testMessage);
+				}
 			}
 		}
 		
-		return null;
+		return matchedMessages;
 	}
 	
+	
+	public List<Message> emailInfoSearch(String emailInfoPiece){
+		Set<String> keys = dao.getPartialIds(emailInfoPiece);
+		List<Message> matchedMessages = new ArrayList<Message>();
+		for (String key : keys) {
+			if (key.indexOf(emailInfoPiece.substring(0,3), 7) != -1){
+				Message testMessage = dao.getMessageById(key);
+				if (testMessage.getEmail().equalsIgnoreCase(emailInfoPiece)){
+					matchedMessages.add(testMessage);
+				}
+			}
+		}
+		
+		return matchedMessages;
+	}
+	
+	public List<Message> phoneInfoSearch(String phoneInfoPiece){
+		Set<String> keys = dao.getPartialIds(phoneInfoPiece);
+		List<Message> matchedMessages = new ArrayList<Message>();
+		for (String key : keys) {
+			if (key.indexOf(phoneInfoPiece.substring(phoneInfoPiece.length()-3), 7) != -1){
+				Message testMessage = dao.getMessageById(key);
+				if (testMessage.getPhone().equalsIgnoreCase(phoneInfoPiece)){
+					matchedMessages.add(testMessage);
+				}
+			}
+		}
+		
+		return matchedMessages;
+	}
+	
+	public List<Message> qqInfoSearch(String qqInfoPiece){
+		Set<String> keys = dao.getPartialIds(qqInfoPiece);
+		List<Message> matchedMessages = new ArrayList<Message>();
+		for (String key : keys) {
+			if (key.indexOf(qqInfoPiece.substring(qqInfoPiece.length() -3), 7) != -1){
+				Message testMessage = dao.getMessageById(key);
+				if (testMessage.getQq().equalsIgnoreCase(qqInfoPiece)){
+					matchedMessages.add(testMessage);
+				}
+			}
+		}
+		
+		return matchedMessages;
+	}
+	
+	public List<Message> selfDefinedInfoSearch(String selfDefinedInfoPiece){
+		Set<String> keys = dao.getPartialIds(selfDefinedInfoPiece);
+		List<Message> matchedMessages = new ArrayList<Message>();
+		for (String key : keys) {
+			if (key.indexOf(selfDefinedInfoPiece.substring(selfDefinedInfoPiece.length() -3), 7) != -1){
+				Message testMessage = dao.getMessageById(key);
+				if (testMessage.getSelfDefined().equalsIgnoreCase(selfDefinedInfoPiece)){
+					matchedMessages.add(testMessage);
+				}
+			}
+		}
+		
+		return matchedMessages;
+	}
 	
 }

@@ -118,4 +118,9 @@ public class Dao{
 	public Set<String> getAllIds(){
 		return jedis.keys(Constants.message_prefix + "*");  
 	}
+	
+	
+	public Set<String> getPartialIds(String targetPattern){
+		return jedis.keys(Constants.message_prefix + "*" + targetPattern + "*");
+	}
 }

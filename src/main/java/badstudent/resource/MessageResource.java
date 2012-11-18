@@ -1,6 +1,8 @@
 package badstudent.resource;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.representation.Representation;
@@ -63,10 +65,10 @@ public class MessageResource extends ServerResource{
 
 		return message;
 	}
-
+	
+	/*genearal GET handlder, can be used to testing Server and DB
 	@Get
 	public Representation getCurrentMessages() {
-		
 		
 		JSONArray jsonArray = new JSONArray(daoService.getMessages());
 		
@@ -92,6 +94,65 @@ public class MessageResource extends ServerResource{
 		
 		Common.d("@Get::resources:getCurrentMessages");
 		
+		//set the response header
+		Form responseHeaders = addHeader((Form) getResponse().getAttributes().get("org.restlet.http.headers")); 
+		if (responseHeaders != null){
+			getResponse().getAttributes().put("org.restlet.http.headers", responseHeaders); 
+		} 
+		return result;
+	}
+	*/
+	
+	@Get
+	public Representation searchMessages() {
+		//get query parameter _phone _email _qq _selfDefined
+		String phone = getQuery().getValues("phone");
+		String email = getQuery().getValues("email");
+		String qq = getQuery().getValues("qq");
+		String selfDefined = getQuery().getValues("selfDefined");
+		
+		List<Message> searchByPhone = daoService.phoneInfoSearch(phone);
+		List<Message> searchByEmail = daoService.emailInfoSearch(email);
+		List<Message> searchByQq = daoService.qqInfoSearch(qq);
+		List<Message> searchBySelfDefined = daoService.selfDefinedInfoSearch(selfDefined);
+		
+		List<Message> merge = new ArrayList<Message>();
+		
+		for (int i = 0; i < searchByPhone.size(); i++){
+			merge.add(searchByPhone.get(i));
+		}
+		for (int i = 0; i < searchByEmail.size(); i++){
+			merge.add(searchByEmail.get(i));
+		}
+		for (int i = 0; i < searchByQq.size(); i++){
+			merge.add(searchByQq.get(i));
+		}
+		for (int i = 0; i < searchBySelfDefined.size(); i++){
+			merge.add(searchBySelfDefined.get(i));
+		}
+		
+		JSONArray jsonArray = new JSONArray(merge);
+		
+		try{
+			for (int i = 0; i < jsonArray.length(); i++){
+				jsonArray.getJSONObject(i).remove("messageIdentifier");
+			}
+		}
+		catch (JSONException e){
+			e.printStackTrace();
+		}
+		
+		Representation result = new JsonRepresentation(jsonArray);
+		//set status
+		setStatus(Status.SUCCESS_OK);
+		
+		try {
+			System.out.println(result.getText() );
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println("@Get::resources:searchMessages: query parameters: phone " + phone + " email " + email + " qq " + qq + " selfDefined" + selfDefined);
+		
 		/*set the response header*/
 		Form responseHeaders = addHeader((Form) getResponse().getAttributes().get("org.restlet.http.headers")); 
 		if (responseHeaders != null){
@@ -99,14 +160,7 @@ public class MessageResource extends ServerResource{
 		} 
 		return result;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 
 	@Post

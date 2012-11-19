@@ -16,7 +16,7 @@ import org.junit.Test;
 public class DaoTest {
 	
 	Dao dao = new Dao();
-	Jedis jedis = new Jedis("localhost");
+	Jedis jedis = new Jedis("localhost", 6379);
 	
 	@Test
 	public void initDaoTest(){

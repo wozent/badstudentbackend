@@ -16,7 +16,7 @@ import badstudent.model.Message;
 public class DaoServiceTest {
 
     DaoService daoService = new DaoService();
-    Jedis jedis = new Jedis("localhost");
+    Jedis jedis = new Jedis("localhost", 6379);
 
     @Test
     public void initDaoTest(){

@@ -20,7 +20,7 @@ import flexjson.JSONSerializer;
  * @author @Matthew
  */
 public class Dao{
-	private static Jedis jedis = new Jedis("localhost");
+	private static Jedis jedis = new Jedis("localhost", 6379);
 	
 	public static String generateId(){
 	    if(jedis.get(Constants.idGenerator)==null){

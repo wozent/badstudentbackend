@@ -179,8 +179,8 @@ public class Message{
         return this.date;
     }
 
-    public String getLocation(){
-        return this.location.toString();
+    public Location getLocation(){
+        return this.location;
     }
 
     public boolean isMale(){

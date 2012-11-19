@@ -40,9 +40,9 @@ public class DaoServiceTest {
         Message returnMsgUL = daoService.getMessageById(msgUL.getId());
         System.out.println("daoServiceTest::initDaoTest() -> initial msgUW location " + msgUW.getLocation());
         System.out.println("daoServiceTest::initDaoTest() -> retuerned msgUW location " + returnMsgUW.getLocation());
-        assertTrue(returnMsgUW.getLocation().compareTo(msgUW.getLocation()) == 0);
-        assertTrue(returnMsgUT.getLocation().compareTo(msgUT.getLocation()) == 0);
-        assertTrue(returnMsgUL.getLocation().compareTo(msgUL.getLocation()) == 0);
+        assertTrue(returnMsgUW.getLocation().toString().compareTo(msgUW.getLocation().toString()) == 0);
+        assertTrue(returnMsgUT.getLocation().toString().compareTo(msgUT.getLocation().toString()) == 0);
+        assertTrue(returnMsgUL.getLocation().toString().compareTo(msgUL.getLocation().toString()) == 0);
 
         daoService.deleteMessage(msgUT.getId());
         daoService.deleteMessage(msgUW.getId());

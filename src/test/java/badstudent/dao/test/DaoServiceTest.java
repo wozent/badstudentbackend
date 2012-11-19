@@ -7,9 +7,9 @@ import java.util.List;
 import org.junit.Test;
 
 import redis.clients.jedis.Jedis;
-import badstudent.Common.Common;
-import badstudent.Common.Constants;
-import badstudent.dao.service.*;
+import badstudent.common.Common;
+import badstudent.common.Constants;
+import badstudent.dbservice.*;
 import badstudent.model.Location;
 import badstudent.model.Message;
 

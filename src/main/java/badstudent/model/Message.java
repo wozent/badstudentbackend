@@ -3,9 +3,9 @@ package badstudent.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import badstudent.Common.Common;
-import badstudent.Common.Constants;
-import badstudent.dao.resource.Dao;
+import badstudent.common.Common;
+import badstudent.common.Constants;
+import badstudent.database.DaoMessage;
 
 /**
  * The main data model
@@ -34,6 +34,7 @@ public class Message{
     private String password;
 
     private long date;
+    //TODO: switch format to "YYYY MM DD"
 
     private Location location;
 
@@ -147,7 +148,7 @@ public class Message{
 
     private void generateId(){
         String newId = Constants.message_prefix + this.email.substring(0,3) + "-" +
-                this.phone.substring(this.phone.length()-3) + "-" + this.qq.substring(this.phone.length()-3) + "-" + this.selfDefined.substring(this.phone.length()-3) + "-" + this.type + "-" + Dao.generateId() ;
+                this.phone.substring(this.phone.length()-3) + "-" + this.qq.substring(this.phone.length()-3) + "-" + this.selfDefined.substring(this.phone.length()-3) + "-" + this.type + "-" + DaoMessage.generateId() ;
         this.id = newId;
         Common.d(newId);
     }

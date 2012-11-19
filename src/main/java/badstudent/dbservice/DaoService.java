@@ -1,19 +1,19 @@
-package badstudent.dao.service;
+package badstudent.dbservice;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import badstudent.model.*;
-import badstudent.Common.*;
-import badstudent.dao.resource.*;
+import badstudent.common.*;
+import badstudent.database.*;
 
 public class DaoService{
 
     //private static Log log = LogFactory.getLog(ScheduleResource.class);
-    private Dao dao;
+    private DaoMessage dao;
 
     public DaoService(){
-        this.dao = new Dao();
+        this.dao = new DaoMessage();
     }
 
     /*checks if the id exist in Redis*/
@@ -244,7 +244,7 @@ public class DaoService{
     }
     
     public void clearDatabase(){
-        Dao.clearDatabase();
+        DaoMessage.clearDatabase();
     }
 
 }

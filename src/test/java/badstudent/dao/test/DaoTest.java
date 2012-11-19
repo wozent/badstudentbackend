@@ -2,9 +2,9 @@ package badstudent.dao.test;
 
 import static org.junit.Assert.*;
 
-import badstudent.Common.Common;
-import badstudent.Common.Constants;
-import badstudent.dao.resource.*;
+import badstudent.common.Common;
+import badstudent.common.Constants;
+import badstudent.database.*;
 import badstudent.model.*;
 
 import java.util.*;
@@ -15,7 +15,7 @@ import org.junit.Test;
 
 public class DaoTest {
 	
-	Dao dao = new Dao();
+	DaoMessage dao = new DaoMessage();
 	Jedis jedis = new Jedis("localhost");
 	
 	@Test

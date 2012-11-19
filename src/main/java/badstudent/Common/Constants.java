@@ -1,4 +1,4 @@
-package badstudent.Common;
+package badstudent.common;
 
 public class Constants {
     public static final int type_ask = 0;

@@ -6,7 +6,7 @@ import org.restlet.Context;
 import org.restlet.Restlet;
 import org.restlet.routing.Router;
 
-import badstudent.Common.Common;
+import badstudent.common.Common;
 import badstudent.resource.*;
 
 

@@ -12,8 +12,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
-import badstudent.Common.Common;
-import badstudent.dao.service.*;
+import badstudent.common.Common;
+import badstudent.dbservice.*;
 import badstudent.model.*;
 
 public class MessageResourceId extends ServerResource{

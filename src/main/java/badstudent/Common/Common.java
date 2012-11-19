@@ -1,4 +1,4 @@
-package badstudent.Common;
+package badstudent.common;
 
 import badstudent.model.Message;
 

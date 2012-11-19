@@ -40,7 +40,7 @@ public class MessageResourceId extends ServerResource{
                     jsonMessage.getLong("date"),new Location(jsonMessage.getString("location")),
                     jsonMessage.getBoolean("isMale"),jsonMessage.getString("content"),
                     jsonMessage.getString("email"),jsonMessage.getString("phone"),
-                    jsonMessage.getString("qq"),jsonMessage.getString("selfDefiend"),
+                    jsonMessage.getString("qq"),jsonMessage.getString("selfDefined"),
                     jsonMessage.getDouble("price"),jsonMessage.getInt("type"));
         } catch (NumberFormatException e) {
             e.printStackTrace();
@@ -54,23 +54,17 @@ public class MessageResourceId extends ServerResource{
     @Get 
     public Representation getCurrentMessagesById() {
         String id = (String)this.getRequestAttributes().get("id");
-
-        JSONArray jsonArray = null;
+        Common.d(id);
+        Common.d(daoService.getMessageById(id).toString());
+        JSONObject jsonObject = null;
         try {
-            
-            jsonArray = new JSONArray(daoService.getMessageById(id));
+        	Common.d(daoService.getMessageById(id).toString());
+            jsonObject = new JSONObject(daoService.getMessageById(id));
 
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        try{
-            for (int i = 0; i < jsonArray.length(); i++){
-                jsonArray.getJSONObject(i).remove("messageIdentifier");
-            }
-        }
-        catch (JSONException e){
-            e.printStackTrace();
-        }
+        jsonObject.remove("messageIdentifier");
 
 
         /*set the response header*/
@@ -79,7 +73,7 @@ public class MessageResourceId extends ServerResource{
             getResponse().getAttributes().put("org.restlet.http.headers", responseHeaders); 
         } 
 
-        Representation result = new JsonRepresentation(jsonArray);
+        Representation result = new JsonRepresentation(jsonObject);
         try {
             Common.d(result.getText());
         } catch (IOException e) {

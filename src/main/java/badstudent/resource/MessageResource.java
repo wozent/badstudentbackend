@@ -55,7 +55,7 @@ public class MessageResource extends ServerResource{
 			        jsonMessage.getLong("date"),new Location(jsonMessage.getString("location")),
 			        jsonMessage.getBoolean("isMale"),jsonMessage.getString("content"),
 			        jsonMessage.getString("email"),jsonMessage.getString("phone"),
-			        jsonMessage.getString("qq"),jsonMessage.getString("selfDefiend"),
+			        jsonMessage.getString("qq"),jsonMessage.getString("selfDefined"),
 			        jsonMessage.getDouble("price"),jsonMessage.getInt("type"));
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
@@ -159,9 +159,8 @@ public class MessageResource extends ServerResource{
 		Message message = parseJSON(entity);
 		Representation result =  null;
 		//if available, add the message
-		/**change this once the daoService is fully implemented
-		*daoService.createMessage(message);
-		*/
+		daoService.createMessage(message);
+		
 		setStatus(Status.SUCCESS_OK);
 
 		Common.d("@Post::resources::createMessage: available: " + message.getUserName() + message.getPassword());

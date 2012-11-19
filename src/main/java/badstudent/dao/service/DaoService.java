@@ -37,7 +37,6 @@ public class DaoService{
         }
         else{
             System.out.println("@createSchedule::id does not exist, creating message with id: " + message.getId());
-            dao.createMessage(message);
             return dao.createMessage(message);
         }
     }
@@ -46,8 +45,7 @@ public class DaoService{
     public Message updateMessage(Message message, String id){
         if (checkExistance(id) ){
             System.out.println("@updateMessage::id exist, updating message with id: " + id);
-            dao.updateMessage(message);
-            return message;
+            return dao.updateMessage(message);
         }
         else{
             System.out.println("@updateSchedule::***warning***id does not exist, creating new message with id: " + id);

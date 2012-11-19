@@ -56,7 +56,8 @@ public class Dao{
 			String messageId = message.getId();		//Redis use key-value pairs, here the key is the id of each Message, the value if the JSON String representation of the Message object
 
 			jedis.set(messageId, jsonMessage);		//store the key-value pair into Redis
-
+			
+			Common.d("Dao::createMessage, creating message with message id: " + messageId);
 		} catch (Exception e) {
 			e.printStackTrace();	//catch JSON exception and print stack trace
 		}

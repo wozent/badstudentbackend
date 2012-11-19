@@ -224,7 +224,7 @@ public class DaoService{
     public List<Message> sortAllMessageByDate(){
         List<Message> allMessages = this.getAllMessages();
         for(Message msg : allMessages){
-            Common.d("Before sort:"+msg.getDate()/Constants.miliSecPerDay);
+            Common.d("Before sort:"+msg.getDate());
         }
         for(int b=1;b<allMessages.size();b++){
             for(int a=0;a<allMessages.size()-b;a++){
@@ -237,7 +237,7 @@ public class DaoService{
             }
         }
         for(Message msg : allMessages){
-            Common.d("After sort:"+msg.getDate()/Constants.miliSecPerDay);
+            Common.d("After sort:"+msg.getDate());
         }
         //TODO:add sort
         return allMessages;

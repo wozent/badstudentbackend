@@ -21,15 +21,15 @@ public class DaoServiceTest {
     @Test
     public void initDaoTest(){
         Location locationUW = new Location("Ontario", "Waterloo", "UniversityofWaterloo");
-        Message msgUW = new Message("Simon","lol",20121221,locationUW,true,"looking for girlfriend","simon@uwaterloo.ca",
+        Message msgUW = new Message("Simon","lol","2012 12 21",locationUW,true,"looking for girlfriend","simon@uwaterloo.ca",
                 "519xxxxxx","123456789","SimonJiang", 19.99, 1);
         daoService.createMessage(msgUW);
         Location locationUL = new Location("Ontario", "Waterloo", "UniversityofLarier");
-        Message msgUL = new Message("Simon","lol",201212212,locationUL,true,"looking for girlfriend","simon@uwaterloo.ca",
+        Message msgUL = new Message("Simon","lol","2012 12 22",locationUL,true,"looking for girlfriend","simon@uwaterloo.ca",
                 "519xxxxxx","123456789","SimonJiang", 19.99, 0);
         daoService.createMessage(msgUL);
         Location locationUT = new Location("Ontario", "Waterloo", "UniversityofLarier");
-        Message msgUT = new Message("Simon","lol",20121223,locationUT,true,"looking for girlfriend","simon@uwaterloo.ca",
+        Message msgUT = new Message("Simon","lol","2012 12 23",locationUT,true,"looking for girlfriend","simon@uwaterloo.ca",
                 "519xxxxxx","123456789","SimonJiang", 19.99, -1);
         daoService.createMessage(msgUT);
 
@@ -177,15 +177,15 @@ public class DaoServiceTest {
     @Test
     public void SearchMessageTest(){
         Location locationUW = new Location("Ontario", "Waterloo", "UniversityofWaterloo");
-        Message msgUW = new Message("Simon","lol",20121221,locationUW,true,"looking for girlfriend","simon@uwaterloo.ca",
+        Message msgUW = new Message("Simon","lol","2012 12 21",locationUW,true,"looking for girlfriend","simon@uwaterloo.ca",
                 "519xxxxxx","123456789","SimonJiang", 19.99, 1);
         daoService.createMessage(msgUW);
         Location locationUL = new Location("Ontario", "Waterloo", "UniversityofLarier");
-        Message msgUL = new Message("Simon","lol",201212212,locationUL,true,"looking for girlfriend","simon@uwaterloo.ca",
+        Message msgUL = new Message("Simon","lol","2012 12 22",locationUL,true,"looking for girlfriend","simon@uwaterloo.ca",
                 "519xxxxxx","123456788","SimonJiang", 19.99, 0);
         daoService.createMessage(msgUL);
         Location locationUT = new Location("Ontario", "Waterloo", "UniversityofLarier");
-        Message msgUT = new Message("Simon","lol",20121223,locationUT,true,"looking for girlfriend","mic@uwaterloo.ca",
+        Message msgUT = new Message("Simon","lol","2012 12 23",locationUT,true,"looking for girlfriend","mic@uwaterloo.ca",
                 "516xxxxxx","123456789","SimonJian", 19.99, -1);
         daoService.createMessage(msgUT);
         
@@ -227,15 +227,15 @@ public class DaoServiceTest {
     @Test
     public void sortMessageTest(){
         Location locationUW = new Location("Ontario", "Waterloo", "UniversityofWaterloo");
-        Message msgUW = new Message("Simon","lol",2353267342050L,locationUW,true,"looking for girlfriend","simon@uwaterloo.ca",
+        Message msgUW = new Message("Simon","lol","2353 26 73",locationUW,true,"looking for girlfriend","simon@uwaterloo.ca",
                 "519xxxxxx","123456789","SimonJiang", 19.99, 1);
         daoService.createMessage(msgUW);
         Location locationUL = new Location("Ontario", "Waterloo", "UniversityofLarier");
-        Message msgUL = new Message("Simon","lol",1353267342050L,locationUL,true,"looking for girlfriend","simon@uwaterloo.ca",
+        Message msgUL = new Message("Simon","lol","1353 26 73",locationUL,true,"looking for girlfriend","simon@uwaterloo.ca",
                 "519xxxxxx","123456788","SimonJiang", 19.99, 0);
         daoService.createMessage(msgUL);
         Location locationUT = new Location("Ontario", "Waterloo", "UniversityofLarier");
-        Message msgUT = new Message("Simon","lol",3353267342050L,locationUT,true,"looking for girlfriend","mic@uwaterloo.ca",
+        Message msgUT = new Message("Simon","lol","3353 26 73",locationUT,true,"looking for girlfriend","mic@uwaterloo.ca",
                 "516xxxxxx","123456789","SimonJian", 19.99, -1);
         daoService.createMessage(msgUT);
         daoService.sortAllMessageByDate();

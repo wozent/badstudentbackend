@@ -10,7 +10,7 @@ public class Common {
     
     //Determine sequence of messages in time order
     public static boolean isMessageBefore(Message msg1, Message msg2){
-        if(msg1.getDate()>msg2.getDate()){
+        if(msg1.getDate().before(msg2.getDate())){
             return false;
         }
         return true;

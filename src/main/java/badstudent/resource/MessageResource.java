@@ -15,9 +15,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
+import badstudent.common.Common;
+import badstudent.dbservice.*;
 import badstudent.model.*;
-import badstudent.Common.Common;
-import badstudent.dao.service.*;
 
 public class MessageResource extends ServerResource{
 
@@ -52,7 +52,7 @@ public class MessageResource extends ServerResource{
 		Message message = null;
 		try {
 			message = new Message(jsonMessage.getString("userName"), jsonMessage.getString("password"),
-			        jsonMessage.getLong("date"),new Location(jsonMessage.getString("location")),
+			        jsonMessage.getString("date"),new Location(jsonMessage.getString("location")),
 			        jsonMessage.getBoolean("isMale"),jsonMessage.getString("content"),
 			        jsonMessage.getString("email"),jsonMessage.getString("phone"),
 			        jsonMessage.getString("qq"),jsonMessage.getString("selfDefined"),

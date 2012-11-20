@@ -1,11 +1,14 @@
 package badstudent.model;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-import badstudent.Common.Common;
-import badstudent.Common.Constants;
-import badstudent.dao.resource.Dao;
+import badstudent.common.Common;
+import badstudent.common.Constants;
+import badstudent.database.DaoMessage;
 
 /**
  * The main data model
@@ -13,7 +16,7 @@ import badstudent.dao.resource.Dao;
  * id: unique id for each message
  * userName:   User-defined
  * password:   User-defined
- * date: long. time since 1970
+ * date: in strict format "YYYY MM DD"
  * location:   Area
  * isMale:     gender
  * content:    User-defined
@@ -33,7 +36,7 @@ public class Message{
 
     private String password;
 
-    private long date;
+    private Date date;
 
     private Location location;
 
@@ -58,7 +61,7 @@ public class Message{
         this.id = "defaultId";
         this.userName = "defaultUserName";
         this.password = "defaultPassword";
-        this.date = 0;
+        this.date = new Date();
         this.location = new Location("dafault dafault default dafault");
         this.isMale = true;
         this.content = "defaultContent";
@@ -75,7 +78,7 @@ public class Message{
         this.id = Constants.message_prefix+id;
         this.userName = "defaultUserName";
         this.password = "defaultPassword";
-        this.date = 0;
+        this.date = new Date();
         this.location = new Location("dafault dafault default dafault");
         this.isMale = true;
         this.content = "defaultContent";
@@ -87,11 +90,15 @@ public class Message{
         this.type = Constants.type_ask;
     }
 
-    public Message(String userName,String password,long date,Location location,boolean isMale,String content,String email,
+    public Message(String userName,String password,String date,Location location,boolean isMale,String content,String email,
             String phone,String qq,String selfDefined,double price,int type){
         this.userName = userName;
         this.password = password;
-        this.date = date;
+        try {
+            this.date = new SimpleDateFormat("yyyy MM dd").parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         this.location = location;
         this.isMale = isMale;
         this.content = content;
@@ -116,12 +123,16 @@ public class Message{
         this.generateId();    //this has to be placed at the bottom of the constructor to avoid NullPointerException
     }
 
-    public Message(String id,String userName,String password,long date,Location location,boolean isMale,String content,String email,
+    public Message(String id,String userName,String password,String date,Location location,boolean isMale,String content,String email,
             String phone,String qq,String selfDefined,double price,int type){
         this.id = id;
         this.userName = userName;
         this.password = password;
-        this.date = date;
+        try {
+            this.date = new SimpleDateFormat("yyyy MM dd").parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         this.location = location;
         this.isMale = isMale;
         this.content = content;
@@ -147,7 +158,7 @@ public class Message{
 
     private void generateId(){
         String newId = Constants.message_prefix + this.email.substring(0,3) + "-" +
-                this.phone.substring(this.phone.length()-3) + "-" + this.qq.substring(this.phone.length()-3) + "-" + this.selfDefined.substring(this.phone.length()-3) + "-" + this.type + "-" + Dao.generateId() ;
+                this.phone.substring(this.phone.length()-3) + "-" + this.qq.substring(this.phone.length()-3) + "-" + this.selfDefined.substring(this.phone.length()-3) + "-" + this.type + "-" + DaoMessage.generateId() ;
         this.id = newId;
         Common.d(newId);
     }
@@ -164,12 +175,12 @@ public class Message{
         return this.password;
     }
 
-    public long getDate(){
+    public Date getDate(){
         return this.date;
     }
 
-    public String getLocation(){
-        return this.location.toString();
+    public Location getLocation(){
+        return this.location;
     }
 
     public boolean isMale(){
@@ -193,7 +204,7 @@ public class Message{
         this.password = password;
     }
 
-    public void setDate(long date){
+    public void setDate(Date date){
         this.date = date;
     }
 

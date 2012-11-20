@@ -4,7 +4,7 @@ import org.restlet.Component;
 import org.restlet.Server;
 import org.restlet.data.Protocol;
 
-import badstudent.Common.Common;
+import badstudent.common.Common;
 import badstudent.service.*;
 
 

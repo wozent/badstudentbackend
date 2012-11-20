@@ -1,20 +1,20 @@
-package badstudent.dao.service;
+package badstudent.dbservice;
 
 import java.util.ArrayList;
 import java.sql.*;
 import java.util.List;
 import java.util.Set;
 import badstudent.model.*;
-import badstudent.Common.*;
-import badstudent.dao.resource.*;
+import badstudent.common.*;
+import badstudent.database.*;
 
 public class DaoService{
 
     //private static Log log = LogFactory.getLog(ScheduleResource.class);
-    private Dao dao;
+    private DaoMessage dao;
 
     public DaoService(){
-        this.dao = new Dao();
+        this.dao = new DaoMessage();
     }
 
     /*checks if the id exist in Redis*/
@@ -225,7 +225,7 @@ public class DaoService{
     public List<Message> sortAllMessageByDate(){
         List<Message> allMessages = this.getAllMessages();
         for(Message msg : allMessages){
-            Common.d("Before sort:"+msg.getDate()/Constants.miliSecPerDay);
+            Common.d("Before sort:"+msg.getDate());
         }
         for(int b=1;b<allMessages.size();b++){
             for(int a=0;a<allMessages.size()-b;a++){
@@ -238,14 +238,14 @@ public class DaoService{
             }
         }
         for(Message msg : allMessages){
-            Common.d("After sort:"+msg.getDate()/Constants.miliSecPerDay);
+            Common.d("After sort:"+msg.getDate());
         }
         //TODO:add sort
         return allMessages;
     }
     
     public void clearDatabase(){
-        Dao.clearDatabase();
+        DaoMessage.clearDatabase();
     }
 
 }

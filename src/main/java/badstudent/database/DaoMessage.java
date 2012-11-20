@@ -1,4 +1,4 @@
-package badstudent.dao.resource;
+package badstudent.database;
 
 
 import java.util.ArrayList;
@@ -7,8 +7,8 @@ import java.util.Set;
 
 import redis.clients.jedis.*;
 
-import badstudent.Common.Common;
-import badstudent.Common.Constants;
+import badstudent.common.Common;
+import badstudent.common.Constants;
 import badstudent.model.*;
 
 import flexjson.JSONDeserializer;
@@ -19,8 +19,8 @@ import flexjson.JSONSerializer;
  * 
  * @author @Matthew
  */
-public class Dao{
-	private static Jedis jedis = new Jedis("localhost", 6379);
+public class DaoMessage{
+	private static Jedis jedis = new Jedis("localhost");
 	
 	public static String generateId(){
 	    if(jedis.get(Constants.idGenerator)==null){

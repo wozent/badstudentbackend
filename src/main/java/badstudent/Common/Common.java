@@ -3,7 +3,7 @@ package badstudent.common;
 import badstudent.model.Message;
 
 public class Common {
-    
+    //lol
     public static void d(String message){
         System.out.println("DEBUG MESSAGE BY BAD STUDENT " + message);
     }

@@ -221,8 +221,7 @@ public class DaoService{
         return merge;
     }
 
-    public List<Message> sortAllMessageByDate(){
-        List<Message> allMessages = this.getAllMessages();
+    public List<Message> sortMessageByDate(List<Message> allMessages){
         for(Message msg : allMessages){
             Common.d("Before sort:"+msg.getDate());
         }

@@ -227,7 +227,7 @@ public class DaoServiceTest {
     @Test
     public void sortMessageTest(){
         Location locationUW = new Location("Ontario", "Waterloo", "UniversityofWaterloo");
-        Message msgUW = new Message("Simon","lol","2353 26 73",locationUW,true,"looking for girlfriend","simon@uwaterloo.ca",
+        Message msgUW = new Message("Simon","lol","6353 26 73",locationUW,true,"looking for girlfriend","simon@uwaterloo.ca",
                 "519xxxxxx","123456789","SimonJiang", 19.99, 1);
         daoService.createMessage(msgUW);
         Location locationUL = new Location("Ontario", "Waterloo", "UniversityofLarier");
@@ -238,7 +238,7 @@ public class DaoServiceTest {
         Message msgUT = new Message("Simon","lol","3353 26 73",locationUT,true,"looking for girlfriend","mic@uwaterloo.ca",
                 "516xxxxxx","123456789","SimonJian", 19.99, -1);
         daoService.createMessage(msgUT);
-        daoService.sortAllMessageByDate();
+        daoService.sortMessageByDate(daoService.getAllMessages());
         daoService.clearDatabase();
         
     }

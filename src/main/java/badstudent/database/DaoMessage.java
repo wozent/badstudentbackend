@@ -23,12 +23,12 @@ public class DaoMessage{
 	private static Jedis jedis = new Jedis("localhost");
 	
 	public static String generateId(){
-	    if(jedis.get(Constants.idGenerator)==null){
-	        jedis.set(Constants.idGenerator,"1");
+	    if(jedis.get(Constants.key_idGenerator)==null){
+	        jedis.set(Constants.key_idGenerator,"1");
 	    }else{
-	        jedis.incr(Constants.idGenerator);
+	        jedis.incr(Constants.key_idGenerator);
 	    }
-	    return jedis.get(Constants.idGenerator);
+	    return jedis.get(Constants.key_idGenerator);
 	    
 	}
 	
@@ -104,7 +104,7 @@ public class DaoMessage{
 		List<Message> messages = new ArrayList<Message>();
 		
 		//use a Set to store all the keys in Redis
-		Set<String> keys = jedis.keys(Constants.message_prefix+"*");    //O(n), this is actually a bad way but it works just fine
+		Set<String> keys = jedis.keys(Constants.key_message_prefix+"*");    //O(n), this is actually a bad way but it works just fine
 		for (String key : keys) {
 			//for each key, extract the Message and add it into the messages list
 			String jsonMessage = jedis.get(key);
@@ -117,12 +117,12 @@ public class DaoMessage{
 	
 	//return all the ids with the Message prefix, may be needed later on with different data models
 	public Set<String> getAllIds(){
-		return jedis.keys(Constants.message_prefix + "*");  
+		return jedis.keys(Constants.key_message_prefix + "*");  
 	}
 	
 	
 	public Set<String> getPartialIds(String targetPattern){
-		return jedis.keys(Constants.message_prefix + "*" + targetPattern + "*");
+		return jedis.keys(Constants.key_message_prefix + "*" + targetPattern + "*");
 	}
 	
 	public Set<String> getEverything(){

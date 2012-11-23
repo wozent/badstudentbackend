@@ -33,7 +33,7 @@ public class DaoTest {
 	            "519xxxxxx","123456789","SimonJiang", 19.99, -1);
 	    dao.createMessage(msgUT);
 
-	    assertTrue(Integer.parseInt(jedis.get(Constants.idGenerator)) == 3);
+	    assertTrue(Integer.parseInt(jedis.get(Constants.key_idGenerator)) == 3);
 	    
 	    Message returnMsgUW = dao.getMessageById(msgUW.getId());
 	    Message returnMsgUT = dao.getMessageById(msgUT.getId());
@@ -47,13 +47,13 @@ public class DaoTest {
 	    dao.deleteMessage(msgUT.getId());
 	    dao.deleteMessage(msgUW.getId());
 	    dao.deleteMessage(msgUL.getId());
-	    assertTrue(Integer.parseInt(jedis.get(Constants.idGenerator)) == 3);
+	    assertTrue(Integer.parseInt(jedis.get(Constants.key_idGenerator)) == 3);
 	    
 	    List<Message> msgs = dao.getAllMessages();
 		assertTrue(msgs.size() == 0);				//make sure the database is totally cleared, no memory has occurred in the above operations
 		
-		jedis.del(Constants.idGenerator);
-		assertNull(jedis.get(Constants.idGenerator));
+		jedis.del(Constants.key_idGenerator);
+		assertNull(jedis.get(Constants.key_idGenerator));
 	    assertTrue(dao.getEverything().size() == 0);
 	}
 	

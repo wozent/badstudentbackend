@@ -17,7 +17,7 @@ public class DaoServiceTest {
 
     DaoService daoService = new DaoService();
     Jedis jedis = new Jedis("localhost", 6379);
-
+    
     @Test
     public void initDaoTest(){
         Location locationUW = new Location("Ontario", "Waterloo", "UniversityofWaterloo");
@@ -33,7 +33,7 @@ public class DaoServiceTest {
                 "519xxxxxx","123456789","SimonJiang", 19.99, -1);
         daoService.createMessage(msgUT);
 
-        assertTrue(Integer.parseInt(jedis.get(Constants.idGenerator)) == 3);
+        assertTrue(Integer.parseInt(jedis.get(Constants.key_idGenerator)) == 3);
 
         Message returnMsgUW = daoService.getMessageById(msgUW.getId());
         Message returnMsgUT = daoService.getMessageById(msgUT.getId());
@@ -47,13 +47,13 @@ public class DaoServiceTest {
         daoService.deleteMessage(msgUT.getId());
         daoService.deleteMessage(msgUW.getId());
         daoService.deleteMessage(msgUL.getId());
-        assertTrue(Integer.parseInt(jedis.get(Constants.idGenerator)) == 3);
+        assertTrue(Integer.parseInt(jedis.get(Constants.key_idGenerator)) == 3);
 
         List<Message> msgs = daoService.getAllMessages();
         assertTrue(msgs.size() == 0);				//make sure the database is totally cleared, no memory has occurred in the above operations
 
-        jedis.del(Constants.idGenerator);
-        assertNull(jedis.get(Constants.idGenerator));
+        jedis.del(Constants.key_idGenerator);
+        assertNull(jedis.get(Constants.key_idGenerator));
         assertTrue(daoService.getEverything().size() == 0);
     }
 
@@ -214,13 +214,13 @@ public class DaoServiceTest {
         daoService.deleteMessage(msgUT.getId());
         daoService.deleteMessage(msgUW.getId());
         daoService.deleteMessage(msgUL.getId());
-        assertTrue(Integer.parseInt(jedis.get(Constants.idGenerator)) == 3);
+        assertTrue(Integer.parseInt(jedis.get(Constants.key_idGenerator)) == 3);
 
         List<Message> msgs = daoService.getAllMessages();
         assertTrue(msgs.size() == 0);               //make sure the database is totally cleared, no memory has occurred in the above operations
 
-        jedis.del(Constants.idGenerator);
-        assertNull(jedis.get(Constants.idGenerator));
+        jedis.del(Constants.key_idGenerator);
+        assertNull(jedis.get(Constants.key_idGenerator));
         assertTrue(daoService.getEverything().size() == 0);
     }
     

@@ -75,7 +75,7 @@ public class Message{
 
     //this constructor is used for testing purposes and potentially @Options HTTP calls only, please ignore it for any other usages
     public Message(String id){
-        this.id = Constants.message_prefix+id;
+        this.id = Constants.key_message_prefix+id;
         this.userName = "defaultUserName";
         this.password = "defaultPassword";
         this.date = new Date();
@@ -157,7 +157,7 @@ public class Message{
     }
 
     private void generateId(){
-        String newId = Constants.message_prefix + this.email.substring(0,3) + "-" +
+        String newId = Constants.key_message_prefix + this.email.substring(0,3) + "-" +
                 this.phone.substring(this.phone.length()-3) + "-" + this.qq.substring(this.phone.length()-3) + "-" + this.selfDefined.substring(this.phone.length()-3) + "-" + this.type + "-" + DaoMessage.generateId() ;
         this.id = newId;
         Common.d(newId);

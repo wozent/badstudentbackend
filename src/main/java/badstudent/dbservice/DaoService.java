@@ -79,7 +79,7 @@ public class DaoService{
     }
 
     public Set<String> getPartialIds(String targetPattern){
-        return dao.getPartialIds(Constants.message_prefix + "*" + targetPattern + "*");
+        return dao.getPartialIds(Constants.key_message_prefix + "*" + targetPattern + "*");
     }
 
     public Set<String> getEverything(){
@@ -230,7 +230,7 @@ public class DaoService{
             for(int a=0;a<allMessages.size()-b;a++){
                 Message msg1 = allMessages.get(a);
                 Message msg2 = allMessages.get(a+1);
-                if(Common.isMessageBefore(msg1,msg2)){
+                if(msg1.getDate().before(msg2.getDate())){
                     allMessages.set(a, msg2);
                     allMessages.set(a+1, msg1);
                 }
@@ -239,7 +239,6 @@ public class DaoService{
         for(Message msg : allMessages){
             Common.d("After sort:"+msg.getDate());
         }
-        //TODO:add sort
         return allMessages;
     }
     

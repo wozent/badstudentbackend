@@ -1,5 +1,8 @@
 package badstudent.common;
 
+import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
+
 import badstudent.model.Message;
 
 public class Common {
@@ -8,11 +11,13 @@ public class Common {
         System.out.println("DEBUG MESSAGE BY BAD STUDENT " + message);
     }
     
-    //Determine sequence of messages in time order
-    public static boolean isMessageBefore(Message msg1, Message msg2){
-        if(msg1.getDate().before(msg2.getDate())){
-            return false;
+    public static void d_Chinese(String message){
+        try {
+            PrintStream ps = new PrintStream(System.out, true, "UTF-8");
+            ps.println(message);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
-        return true;
     }
+    
 }

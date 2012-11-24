@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import mappings.provinceMappings;
 
 
+import badstudent.mappings.provinceMappings;
 import badstudent.model.Location;
 import badstudent.model.Message;
 import redis.clients.jedis.Jedis;

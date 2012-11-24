@@ -1,4 +1,4 @@
-package mappings;
+package badstudent.mappings;
 
 public class provinceMappings {
     

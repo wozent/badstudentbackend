@@ -1,7 +1,13 @@
 package badstudent.mappings;
 
-public class provinceMappings {
-    
+import java.util.HashMap;
+
+import badstudent.mappings.上海.ShanghaiProvinceMappings;
+import badstudent.mappings.北京.BeijingProvinceMappings;
+import badstudent.mappings.江苏省.JiangsuProvinceMappings;
+
+public class AllProvinceMappings {
+
     public static final String beijing_province = "北京";
     public static final String shanghai_province = "上海";
     public static final String tianjing_province = "天津";
@@ -33,13 +39,19 @@ public class provinceMappings {
     public static final String anhui_province = "安徽省";
     public static final String zhejiang_province = "浙江省";
     public static final String fujian_province = "福建省";
-    
-    
-    public static final String[] Allprovince = {beijing_province,shanghai_province,tianjing_province,chongqing_province,
-        heilongjiang_province,jiling_province,liaoning_province,shandong_province,shanxi_tone1_province,shanxi_tone3_province,
-        hebei_province,hubei_province,hunan_province,hainan_province,jiangsu_province,jiangxi_province,guangdong_province,
-        guangxi_province,yunnan_province,guizhou_province,sichuan_province,neimenggu_province,ningxia_province,
-        gansu_province,qinghai_province,xizang_province,xingjiang_province,anhui_province,zhejiang_province,fujian_province};
-    
-    //public static final Set<String> beijing_
+
+    public static final String[] Allprovince = { beijing_province, shanghai_province, tianjing_province, chongqing_province, heilongjiang_province, jiling_province, liaoning_province,
+            shandong_province, shanxi_tone1_province, shanxi_tone3_province, hebei_province, hubei_province, hunan_province, hainan_province, jiangsu_province, jiangxi_province, guangdong_province,
+            guangxi_province, yunnan_province, guizhou_province, sichuan_province, neimenggu_province, ningxia_province, gansu_province, qinghai_province, xizang_province, xingjiang_province,
+            anhui_province, zhejiang_province, fujian_province };
+
+    public static final HashMap<String, MappingBase> provinceToCityMappings = new HashMap<String, MappingBase>() {
+        private static final long serialVersionUID = 1L;
+        {
+            put(beijing_province, new BeijingProvinceMappings());
+            put(shanghai_province,new ShanghaiProvinceMappings());
+            put(jiangsu_province,new JiangsuProvinceMappings());
+        }
+    };
+
 }

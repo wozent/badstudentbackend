@@ -6,7 +6,7 @@ import java.util.Set;
 
 
 
-import badstudent.mappings.provinceMappings;
+import badstudent.mappings.AllProvinceMappings;
 import badstudent.model.Location;
 import badstudent.model.Message;
 import redis.clients.jedis.Jedis;
@@ -17,20 +17,15 @@ public class DaoLocation {
     
     
     public static String[] getAllProvince(){
-        return provinceMappings.Allprovince;
+        return AllProvinceMappings.Allprovince;
     }
     
-    public static Set<String> getAllCity(String province){
-        return jedis.smembers(province);
+    public static String[] getAllCity(String province){
+        return AllProvinceMappings.provinceToCityMappings.get(province).getAllSubArea();
     }
     
-    public static Set<String> getAllSchool(String city){
-        Set<String> regions = jedis.smembers(city);
-        //Set<String> schools = ;
-        for(String region : regions){
-            //schools.addAll(jedis.smembers(region));
-        }
-        return jedis.smembers(city);
+    public static String[] getAllRegion(String province,String city){
+        return AllProvinceMappings.provinceToCityMappings.get(province).getSubAreaMappings(city).getAllSubArea();
     }
         
     

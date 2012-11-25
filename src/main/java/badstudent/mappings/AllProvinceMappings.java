@@ -2,9 +2,9 @@ package badstudent.mappings;
 
 import java.util.HashMap;
 
-import badstudent.mappings.上海.ShanghaiProvinceMappings;
-import badstudent.mappings.北京.BeijingProvinceMappings;
-import badstudent.mappings.江苏省.JiangsuProvinceMappings;
+import badstudent.mappings.上海.上海Mappings;
+import badstudent.mappings.北京.北京Mappings;
+import badstudent.mappings.江苏省.江苏省Mappings;
 
 public class AllProvinceMappings implements MappingBase {
 
@@ -45,9 +45,9 @@ public class AllProvinceMappings implements MappingBase {
     private final HashMap<String, MappingBase> provinceToCityMappings = new HashMap<String, MappingBase>() {
         private static final long serialVersionUID = 1L;
         {
-            put(北京, new BeijingProvinceMappings());
-            put(上海, new ShanghaiProvinceMappings());
-            put(江苏省, new JiangsuProvinceMappings());
+            put(北京, new 北京Mappings());
+            put(上海, new 上海Mappings());
+            put(江苏省, new 江苏省Mappings());
         }
     };
 

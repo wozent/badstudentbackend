@@ -158,7 +158,7 @@ public class Message{
 
     private void generateId(){
         String newId = Constants.key_message_prefix + this.email.substring(0,3) + "-" +
-                this.phone.substring(this.phone.length()-3) + "-" + this.qq.substring(this.phone.length()-3) + "-" + this.selfDefined.substring(this.phone.length()-3) + "-" + this.type + "-" + DaoMessage.generateId() ;
+                this.phone.substring(this.phone.length()-3) + "-" + this.qq.substring(this.qq.length()-3) + "-" + this.selfDefined.substring(this.selfDefined.length()-3) + "-" + this.type + "-" + DaoMessage.generateId() ;
         this.id = newId;
         Common.d(newId);
     }

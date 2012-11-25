@@ -7,6 +7,7 @@ import java.util.Set;
 
 
 import badstudent.mappings.AllProvinceMappings;
+import badstudent.mappings.MappingBase;
 import badstudent.model.Location;
 import badstudent.model.Message;
 import redis.clients.jedis.Jedis;
@@ -17,15 +18,40 @@ public class DaoLocation {
     
     
     public static String[] getAllProvince(){
-        return AllProvinceMappings.Allprovince;
+        return new AllProvinceMappings().getAllSubArea();
+    }
+    
+    private static MappingBase getProvinceMapping(String province){
+        MappingBase retVal;
+        try{
+           retVal = new AllProvinceMappings().getSubAreaMappings(province);
+           return retVal;
+        }catch(NullPointerException e){
+            return null;
+        }
     }
     
     public static String[] getAllCity(String province){
-        return AllProvinceMappings.provinceToCityMappings.get(province).getAllSubArea();
+        MappingBase provinceMapping = getProvinceMapping(province);
+        if(provinceMapping!=null){
+            return provinceMapping.getAllSubArea();
+        }else{
+            return null;
+        }
     }
     
     public static String[] getAllRegion(String province,String city){
-        return AllProvinceMappings.provinceToCityMappings.get(province).getSubAreaMappings(city).getAllSubArea();
+        MappingBase provinceMapping = getProvinceMapping(province);
+        if(provinceMapping!=null){
+            MappingBase cityMapping = provinceMapping.getSubAreaMappings(city);
+            if(cityMapping!=null){
+                return cityMapping.getAllSubArea();
+            }else{
+                return null;
+            }
+        }else{
+            return null;
+        }
     }
         
     

@@ -8,49 +8,46 @@ import badstudent.mappings.江苏省.JiangsuProvinceMappings;
 
 public class AllProvinceMappings implements MappingBase {
 
-    public final String beijing_province = "北京";
-    public final String shanghai_province = "上海";
-    public final String tianjing_province = "天津";
-    public final String chongqing_province = "重庆";
-    public final String heilongjiang_province = "黑龙江省";
-    public final String jiling_province = "吉林省";
-    public final String liaoning_province = "辽宁省";
-    public final String shandong_province = "山东省";
-    public final String shanxi_tone1_province = "山西省";
-    public final String shanxi_tone3_province = "陕西省";
-    public final String hebei_province = "河北省";
-    public final String henan_province = "河南省";
-    public final String hubei_province = "湖北省";
-    public final String hunan_province = "湖南省";
-    public final String hainan_province = "海南省";
-    public final String jiangsu_province = "江苏省";
-    public final String jiangxi_province = "江西省";
-    public final String guangdong_province = "广东省";
-    public final String guangxi_province = "广西省";
-    public final String yunnan_province = "云南省";
-    public final String guizhou_province = "贵州省";
-    public final String sichuan_province = "四川省";
-    public final String neimenggu_province = "内蒙古省";
-    public final String ningxia_province = "宁夏省";
-    public final String gansu_province = "甘肃省";
-    public final String qinghai_province = "青海省";
-    public final String xizang_province = "西藏省";
-    public final String xingjiang_province = "新疆省";
-    public final String anhui_province = "安徽省";
-    public final String zhejiang_province = "浙江省";
-    public final String fujian_province = "福建省";
+    public final String 北京 = "北京";
+    public final String 上海 = "上海";
+    public final String 天津 = "天津";
+    public final String 重庆 = "重庆";
+    public final String 黑龙江省 = "黑龙江省";
+    public final String 吉林省 = "吉林省";
+    public final String 辽宁省 = "辽宁省";
+    public final String 山东省 = "山东省";
+    public final String 山西省 = "山西省";
+    public final String 陕西省 = "陕西省";
+    public final String 河北省 = "河北省";
+    public final String 河南省 = "河南省";
+    public final String 湖北省 = "湖北省";
+    public final String 湖南省 = "湖南省";
+    public final String 海南省 = "海南省";
+    public final String 江苏省 = "江苏省";
+    public final String 江西省 = "江西省";
+    public final String 广东省 = "广东省";
+    public final String 广西省 = "广西省";
+    public final String 云南省 = "云南省";
+    public final String 贵州省 = "贵州省";
+    public final String 四川省 = "四川省";
+    public final String 内蒙古省 = "内蒙古省";
+    public final String 宁夏省 = "宁夏省";
+    public final String 甘肃省 = "甘肃省";
+    public final String 青海省 = "青海省";
+    public final String 西藏省 = "西藏省";
+    public final String 新疆省 = "新疆省";
+    public final String 安徽省 = "安徽省";
+    public final String 浙江省 = "浙江省";
+    public final String 福建省 = "福建省";
 
-    private final String[] Allprovince = { beijing_province, shanghai_province, tianjing_province, chongqing_province, heilongjiang_province, jiling_province, liaoning_province,
-            shandong_province, shanxi_tone1_province, shanxi_tone3_province, hebei_province, hubei_province, hunan_province, hainan_province, jiangsu_province, jiangxi_province, guangdong_province,
-            guangxi_province, yunnan_province, guizhou_province, sichuan_province, neimenggu_province, ningxia_province, gansu_province, qinghai_province, xizang_province, xingjiang_province,
-            anhui_province, zhejiang_province, fujian_province };
+    private final String[] Allprovince = { 北京, 上海, 天津, 重庆, 黑龙江省, 吉林省, 辽宁省, 山东省, 山西省, 陕西省, 河北省, 湖北省, 湖南省, 海南省, 江苏省, 江西省, 广东省, 广西省, 云南省, 贵州省, 四川省, 内蒙古省, 宁夏省, 甘肃省, 青海省, 西藏省, 新疆省, 安徽省, 浙江省, 福建省 };
 
     private final HashMap<String, MappingBase> provinceToCityMappings = new HashMap<String, MappingBase>() {
         private static final long serialVersionUID = 1L;
         {
-            put(beijing_province, new BeijingProvinceMappings());
-            put(shanghai_province,new ShanghaiProvinceMappings());
-            put(jiangsu_province,new JiangsuProvinceMappings());
+            put(北京, new BeijingProvinceMappings());
+            put(上海, new ShanghaiProvinceMappings());
+            put(江苏省, new JiangsuProvinceMappings());
         }
     };
 

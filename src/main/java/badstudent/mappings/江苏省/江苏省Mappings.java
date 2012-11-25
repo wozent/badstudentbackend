@@ -3,9 +3,9 @@ package badstudent.mappings.江苏省;
 import java.util.HashMap;
 
 import badstudent.mappings.MappingBase;
-import badstudent.mappings.江苏省.南京市.nanjingCityMappings;
+import badstudent.mappings.江苏省.南京市.南京市Mappings;
 
-public class JiangsuProvinceMappings implements MappingBase {
+public class 江苏省Mappings implements MappingBase {
     private final String 南京市 = "南京市";
     private final String 常州市 = "常州市";
     private final String 淮安市 = "淮安市";
@@ -25,7 +25,7 @@ public class JiangsuProvinceMappings implements MappingBase {
     private final HashMap<String, MappingBase> CityToRegionMappings = new HashMap<String, MappingBase>() {
         private static final long serialVersionUID = 1L;
         {
-            put(南京市, new nanjingCityMappings());
+            put(南京市, new 南京市Mappings());
         }
     };
     

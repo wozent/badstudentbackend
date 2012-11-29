@@ -24,6 +24,7 @@ public class DaoMessage{
 	
 	public static String generateId(){
 	    if(jedis.get(Constants.key_idGenerator)==null){
+	        Common.d("Init id Geneartor.");
 	        jedis.set(Constants.key_idGenerator,"1");
 	    }else{
 	        jedis.incr(Constants.key_idGenerator);

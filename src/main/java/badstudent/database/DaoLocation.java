@@ -24,12 +24,6 @@ public class DaoLocation {
         return jedis.smembers(school);
     }
     
-    public static void addMessageToSchool(Message msg){
-        String messageId = msg.getId();
-        String school = msg.getLocation().getSchool();
-        jedis.sadd(school, messageId);
-    }
-    
     public static Set<String> getMessageIdByRegion(String province, String city, String region){
         Set<String> schoolSet = new HashSet<String>();
         if(MappingManager.getRegionMappings(province, city, region)==null) return null;
@@ -38,6 +32,20 @@ public class DaoLocation {
         }
         return schoolSet;
     }
+    
+    public static void addMessageToSchool(Message msg){
+        String messageId = msg.getId();
+        String school = msg.getLocation().getSchool();
+        jedis.sadd(school, messageId);
+    }
+    
+    public static boolean deleteMessageFromSchool(Message msg){
+        String messageId = msg.getId();
+        String school = msg.getLocation().getSchool();
+        return jedis.srem(school, messageId).equals(1);
+    }
+    
+
     
     public static void addNewMessage(Message msg){
         Location location = msg.getLocation();

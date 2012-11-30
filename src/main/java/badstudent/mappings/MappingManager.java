@@ -18,7 +18,7 @@ public class MappingManager {
         }
     }
     
-    public static MappingBase getRegionMappings(String province,String city,String region){
+    private static MappingBase getRegionMappings(String province,String city,String region){
         MappingBase cityMappings = getCityMappings(province, city);
         if(cityMappings!=null){
             return cityMappings.getSubAreaMappings(region);
@@ -27,25 +27,42 @@ public class MappingManager {
         }
     }
     
+
+    
+    
     public static Set<String> getAllProvince(){
         return (new AllProvinceMappings()).getAllSubArea();
     }
     
     public static Set<String> getAllCity(String province){
-        return getProvinceMappings(province).getAllSubArea();
+        MappingBase provinceMappings = getProvinceMappings(province);
+        if(provinceMappings!=null){
+            return provinceMappings.getAllSubArea();
+        }else{
+            return null;
+        }
     }
     
-    
-    /*
-    public static String[] getAllRegion(String province,String city){
+    public static Set<String> getAllRegion(String province,String city){
         MappingBase cityMappings = getCityMappings(province, city);
         if(cityMappings!=null){
             return cityMappings.getAllSubArea();
         }else{
             return null;
         }
-    }*/
+    }
     
+    //Searching purpose
+    public static Set<String> getAllSchools(String province,String city,String region){
+        MappingBase regionMappings = getRegionMappings(province, city, region);
+        if(regionMappings!=null){
+            return regionMappings.getAllSubArea();
+        }else{
+            return null;
+        }
+    }
+    
+    //populating purpose
     public static Set<String> getAllSchools(String province,String city){
         MappingBase cityMapping = getCityMappings(province, city);
         if(cityMapping==null) return null;

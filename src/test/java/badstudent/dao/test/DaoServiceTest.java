@@ -22,15 +22,15 @@ public class DaoServiceTest {
     public void initDaoTest(){
         Location locationUW = new Location("Ontario", "Waterloo", "UniversityofWaterloo");
         Message msgUW = new Message("Simon","lol","2012 12 21",locationUW,true,"looking for girlfriend","simon@uwaterloo.ca",
-                "519xxxxxx","123456789","SimonJiang", 19.99, 1);
+                "519xxxxxx","123456789","twit","SimonJiang", 19.99, 1);
         daoService.createMessage(msgUW);
         Location locationUL = new Location("Ontario", "Waterloo", "UniversityofLarier");
         Message msgUL = new Message("Simon","lol","2012 12 22",locationUL,true,"looking for girlfriend","simon@uwaterloo.ca",
-                "519xxxxxx","123456789","SimonJiang", 19.99, 0);
+                "519xxxxxx","123456789","twit","SimonJiang", 19.99, 0);
         daoService.createMessage(msgUL);
         Location locationUT = new Location("Ontario", "Waterloo", "UniversityofLarier");
         Message msgUT = new Message("Simon","lol","2012 12 23",locationUT,true,"looking for girlfriend","simon@uwaterloo.ca",
-                "519xxxxxx","123456789","SimonJiang", 19.99, -1);
+                "519xxxxxx","123456789","twit","SimonJiang", 19.99, -1);
         daoService.createMessage(msgUT);
 
         assertTrue(Integer.parseInt(jedis.get(Constants.key_idGenerator)) == 3);
@@ -178,18 +178,23 @@ public class DaoServiceTest {
     public void SearchMessageTest(){
         Location locationUW = new Location("Ontario", "Waterloo", "UniversityofWaterloo");
         Message msgUW = new Message("Simon","lol","2012 12 21",locationUW,true,"looking for girlfriend","simon@uwaterloo.ca",
-                "519xxxxxx","123456789","SimonJiang", 19.99, 1);
+                "519xxxxxx","123456789","test","SimonJiang", 19.99, 1);
         daoService.createMessage(msgUW);
         Location locationUL = new Location("Ontario", "Waterloo", "UniversityofLarier");
         Message msgUL = new Message("Simon","lol","2012 12 22",locationUL,true,"looking for girlfriend","simon@uwaterloo.ca",
-                "519xxxxxx","123456788","SimonJiang", 19.99, 0);
+                "519xxxxxx","123456788","twit","test", 19.99, 0);
         daoService.createMessage(msgUL);
         Location locationUT = new Location("Ontario", "Waterloo", "UniversityofLarier");
         Message msgUT = new Message("Simon","lol","2012 12 23",locationUT,true,"looking for girlfriend","mic@uwaterloo.ca",
-                "516xxxxxx","123456789","SimonJian", 19.99, -1);
+                "516xxxxxx","123456789","twit","SimonJian", 19.99, -1);
         daoService.createMessage(msgUT);
+
+        Message msgLucas = new Message("Lucas","lol","2012 12 23",locationUW,true,"looking for girlfriend","qqb@me.com",
+                "226xxxxxx","987654321","twitter","LucasWang", 19.99, -1);
+        daoService.createMessage(msgLucas);
         
-        assertTrue(daoService.generalGontactInfoSearch("SimonJiang").size() == 2);
+        assertTrue(daoService.generalGontactInfoSearch("test").size() == 2);
+        assertTrue(daoService.generalGontactInfoSearch("SimonJiang").size() == 1);
         assertTrue(daoService.generalGontactInfoSearch("516xxxxxx").size() == 1);
         assertTrue(daoService.generalGontactInfoSearch("BullShit").size() == 0);
         
@@ -205,16 +210,23 @@ public class DaoServiceTest {
         assertTrue(daoService.qqInfoSearch("123456788").size() == 1);
         assertTrue(daoService.qqInfoSearch("BullShit").size() == 0);
         
-        assertTrue(daoService.selfDefinedInfoSearch("SimonJiang").size() == 2);
+        assertTrue(daoService.twitterInfoSearch("test").size() == 1);
+        assertTrue(daoService.twitterInfoSearch("twitter").size() == 1);
+        assertTrue(daoService.twitterInfoSearch("twit").size() == 2);
+        
+        assertTrue(daoService.selfDefinedInfoSearch("SimonJiang").size() == 1);
+        assertTrue(daoService.selfDefinedInfoSearch("test").size() == 1);
         assertTrue(daoService.selfDefinedInfoSearch("SimonJian").size() == 1);
         assertTrue(daoService.selfDefinedInfoSearch("BullShit").size() == 0);
         
-        assertTrue(daoService.multipeSearch("519xxxxxx", "mic@uwaterloo.ca", "", "Bla").size() == 3);
-                
+        //2*519xxxxxx, 1* mic@uwaterloo,ca, 1*twitter
+        assertTrue(daoService.multipeSearch("519xxxxxx", "mic@uwaterloo.ca", "", "twitter", "Bla").size() == 4);
+        
         daoService.deleteMessage(msgUT.getId());
         daoService.deleteMessage(msgUW.getId());
         daoService.deleteMessage(msgUL.getId());
-        assertTrue(Integer.parseInt(jedis.get(Constants.key_idGenerator)) == 3);
+        daoService.deleteMessage(msgLucas.getId());
+        assertTrue(Integer.parseInt(jedis.get(Constants.key_idGenerator)) == 4);
 
         List<Message> msgs = daoService.getAllMessages();
         assertTrue(msgs.size() == 0);               //make sure the database is totally cleared, no memory has occurred in the above operations
@@ -228,15 +240,15 @@ public class DaoServiceTest {
     public void sortMessageTest(){
         Location locationUW = new Location("Ontario", "Waterloo", "UniversityofWaterloo");
         Message msgUW = new Message("Simon","lol","6353 26 73",locationUW,true,"looking for girlfriend","simon@uwaterloo.ca",
-                "519xxxxxx","123456789","SimonJiang", 19.99, 1);
+                "519xxxxxx","123456789","twit","SimonJiang", 19.99, 1);
         daoService.createMessage(msgUW);
         Location locationUL = new Location("Ontario", "Waterloo", "UniversityofLarier");
         Message msgUL = new Message("Simon","lol","1353 26 73",locationUL,true,"looking for girlfriend","simon@uwaterloo.ca",
-                "519xxxxxx","123456788","SimonJiang", 19.99, 0);
+                "519xxxxxx","123456788","twit","SimonJiang", 19.99, 0);
         daoService.createMessage(msgUL);
         Location locationUT = new Location("Ontario", "Waterloo", "UniversityofLarier");
         Message msgUT = new Message("Simon","lol","3353 26 73",locationUT,true,"looking for girlfriend","mic@uwaterloo.ca",
-                "516xxxxxx","123456789","SimonJian", 19.99, -1);
+                "516xxxxxx","123456789","twit","SimonJian", 19.99, -1);
         daoService.createMessage(msgUT);
         daoService.sortMessageByDate(daoService.getAllMessages());
         daoService.clearDatabase();

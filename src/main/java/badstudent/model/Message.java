@@ -49,6 +49,8 @@ public class Message{
     private String phone;
 
     private String qq;
+    
+    private String twitter;
 
     private String selfDefined;
 
@@ -68,6 +70,7 @@ public class Message{
         this.email = "defaultEmail@default.com";
         this.phone = "1383838438";
         this.qq = "1234567890";
+        this.twitter = "defaultTwitter";
         this.selfDefined = "dafultSelfDefiend";
         this.price = 0.0;
         this.type = Constants.type_ask;
@@ -85,13 +88,14 @@ public class Message{
         this.email = "defaultEmail@default.com";
         this.phone = "1383838438";
         this.qq = "1234567890";
+        this.twitter = "defaultTwitter";
         this.selfDefined = "dafultselfDefiend";
         this.price = 0.0;
         this.type = Constants.type_ask;
     }
 
     public Message(String userName,String password,String date,Location location,boolean isMale,String content,String email,
-            String phone,String qq,String selfDefined,double price,int type){
+            String phone,String qq, String twitter, String selfDefined,double price,int type){
         this.userName = userName;
         this.password = password;
         try {
@@ -111,12 +115,16 @@ public class Message{
         if(qq.length()<3){
             qq = qq + "   ";
         }
+        if(twitter.length()<3){
+            twitter = twitter + "   ";
+        }
         if(selfDefined.length()<3){
             selfDefined = selfDefined + "   ";
         }
         this.email = email;
         this.phone = phone;
         this.qq = qq;
+        this.twitter = twitter;
         this.selfDefined = selfDefined;
         this.price = price;
         this.type = type;
@@ -124,7 +132,7 @@ public class Message{
     }
 
     public Message(String id,String userName,String password,String date,Location location,boolean isMale,String content,String email,
-            String phone,String qq,String selfDefined,double price,int type){
+            String phone,String qq, String twitter, String selfDefined,double price,int type){
         this.id = id;
         this.userName = userName;
         this.password = password;
@@ -145,12 +153,16 @@ public class Message{
         if(qq.length()<3){
             qq = qq + "   ";
         }
+        if(twitter.length()<3){
+            twitter = twitter + "   ";
+        }
         if(selfDefined.length()<3){
             selfDefined = selfDefined + "   ";
         }
         this.email = email;
         this.phone = phone;
         this.qq = qq;
+        this.twitter = twitter;
         this.selfDefined = selfDefined;
         this.price = price;
         this.type = type;
@@ -158,7 +170,7 @@ public class Message{
 
     private void generateId(){
         String newId = Constants.key_message_prefix + extend(this.email).substring(0,3) + "-" +
-                extend(this.phone).substring(this.phone.length()-3) + "-" + extend(this.qq).substring(this.qq.length()-3) + "-" + extend(this.selfDefined).substring(this.selfDefined.length()-3) + "-" + this.type + "-" + DaoMessage.generateId() ;
+                extend(this.phone).substring(this.phone.length()-3) + "-" + extend(this.qq).substring(this.qq.length()-3) + "-" + extend(this.twitter).substring(this.twitter.length()-3)  + "-" + extend(this.selfDefined).substring(this.selfDefined.length()-3) + "-" + this.type + "-" + DaoMessage.generateId() ;
         this.id = newId;
         Common.d(newId);
     }
@@ -169,12 +181,17 @@ public class Message{
     			shitYouAreTooShort.concat(" ");
     		}
     	}
-    	return shitYouAreTooShort;
+    	return shitYouAreTooShort;  //Michael, solving first world male problems once for all!!
     }
     
-    //test if the this message is on the same day as target date
+    //test if this message is on the same day as target date
     public boolean sameDay(Date date){
     	return (this.date.compareTo(date)==0);
+    }
+    
+    //test if this message is at the same location as target location 
+    public boolean sameLocation(Location location){
+    	return (this.location.toString().compareTo(location.toString()) == 0);
     }
     
     public String getId(){
@@ -277,6 +294,14 @@ public class Message{
 
     public void setQq(String qq) {
         this.qq = qq;
+    }
+    
+    public String getTwitter(){
+    	return twitter;
+    }
+    
+    public void setTwitter(String twitter){
+    	this.twitter = twitter;
     }
 
 }

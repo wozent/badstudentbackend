@@ -41,7 +41,7 @@ public class MessageResourceId extends ServerResource{
                     jsonMessage.getString("date"),new Location(jsonMessage.getString("location")),
                     jsonMessage.getBoolean("isMale"),jsonMessage.getString("content"),
                     jsonMessage.getString("email"),jsonMessage.getString("phone"),
-                    jsonMessage.getString("qq"),jsonMessage.getString("selfDefined"),
+                    jsonMessage.getString("qq"),jsonMessage.getString("twitter"),jsonMessage.getString("selfDefined"),
                     jsonMessage.getDouble("price"),jsonMessage.getInt("type"));
         } catch (NumberFormatException e) {
             e.printStackTrace();

@@ -44,7 +44,8 @@ public class Location {
         }
         this.school = result[3].replaceAll(" ", "");
     }
-
+    
+    
     public String getCity() {
         return city;
     }

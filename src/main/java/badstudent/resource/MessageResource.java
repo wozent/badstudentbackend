@@ -18,6 +18,7 @@ import org.json.JSONObject;
 import badstudent.common.Common;
 import badstudent.dbservice.*;
 import badstudent.model.*;
+import badstudent.mappings.*;
 
 public class MessageResource extends ServerResource{
 
@@ -55,7 +56,7 @@ public class MessageResource extends ServerResource{
 			        jsonMessage.getString("date"),new Location(jsonMessage.getString("location")),
 			        jsonMessage.getBoolean("isMale"),jsonMessage.getString("content"),
 			        jsonMessage.getString("email"),jsonMessage.getString("phone"),
-			        jsonMessage.getString("qq"),jsonMessage.getString("selfDefined"),
+			        jsonMessage.getString("qq"),jsonMessage.getString("twitter"),jsonMessage.getString("selfDefined"),
 			        jsonMessage.getDouble("price"),jsonMessage.getInt("type"));
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
@@ -109,6 +110,7 @@ public class MessageResource extends ServerResource{
 		String phone = getQuery().getValues("phone");
 		String email = getQuery().getValues("email");
 		String qq = getQuery().getValues("qq");
+		String twitter = getQuery().getValues("twitter");
 		String selfDefined = getQuery().getValues("selfDefined");
 		String queryType = getQuery().getValues("type");
 		try{
@@ -119,7 +121,7 @@ public class MessageResource extends ServerResource{
 			e.printStackTrace();
 		}
 		
-		List<Message> merge = daoService.multipeSearch(phone, email, qq, selfDefined);	
+		List<Message> merge = daoService.multipeSearch(phone, email, qq, twitter, selfDefined);	
 		
 		JSONArray jsonArray = new JSONArray(merge);
 		

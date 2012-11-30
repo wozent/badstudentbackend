@@ -1,9 +1,6 @@
 package badstudent.dbservice;
 
-import java.util.ArrayList;
-import java.sql.*;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import badstudent.model.*;
 import badstudent.common.*;
 import badstudent.database.*;
@@ -96,7 +93,7 @@ public class DaoService{
         for (String key : keys) {
             if (key.indexOf(contactInfoPiece.substring(0, 3), 7) != -1 || key.indexOf(contactInfoPiece.substring(contactInfoPiece.length()-3),7) != -1){
                 Message testMessage = dao.getMessageById(key);
-                if (testMessage.getPhone().equalsIgnoreCase(contactInfoPiece) || testMessage.getEmail().equalsIgnoreCase(contactInfoPiece) || testMessage.getQq().equalsIgnoreCase(contactInfoPiece) ||  testMessage.getSelfDefined().equalsIgnoreCase(contactInfoPiece)){
+                if (testMessage.getPhone().equalsIgnoreCase(contactInfoPiece) || testMessage.getEmail().equalsIgnoreCase(contactInfoPiece) || testMessage.getQq().equalsIgnoreCase(contactInfoPiece) || testMessage.getTwitter().equalsIgnoreCase(contactInfoPiece)|| testMessage.getSelfDefined().equalsIgnoreCase(contactInfoPiece)){
                     matchedMessages.add(testMessage);
                 }
             }
@@ -159,6 +156,25 @@ public class DaoService{
 
         return matchedMessages;
     }
+    
+    public List<Message> twitterInfoSearch(String twitterInfoPiece){
+        List<Message> matchedMessages = new ArrayList<Message>();
+        if(twitterInfoPiece == null || twitterInfoPiece.length()<3){
+            return matchedMessages;
+        }
+        Set<String> keys = dao.getPartialIds(twitterInfoPiece.substring(twitterInfoPiece.length() -3));
+        for (String key : keys) {
+            if (key.indexOf(twitterInfoPiece.substring(twitterInfoPiece.length() -3), 7) != -1){
+                Message testMessage = dao.getMessageById(key);
+                if (testMessage.getTwitter().equalsIgnoreCase(twitterInfoPiece)){
+                    matchedMessages.add(testMessage);
+                }
+            }
+        }
+
+        return matchedMessages;
+    }
+    
 
     public List<Message> selfDefinedInfoSearch(String selfDefinedInfoPiece){
         List<Message> matchedMessages = new ArrayList<Message>();
@@ -178,7 +194,7 @@ public class DaoService{
         return matchedMessages;
     }
 
-    public List<Message> multipeSearch(String phone, String email, String qq, String selfDefined){
+    public List<Message> multipeSearch(String phone, String email, String qq, String twitter ,String selfDefined){
         List<Message> merge = new ArrayList<Message>();
 
         //adding each of the search results into the merge List
@@ -204,6 +220,15 @@ public class DaoService{
             List<Message> searchByQq = qqInfoSearch(qq);
             for (int i = 0; i < searchByQq.size(); i++){
                 Message temp = searchByQq.get(i);
+                if (!merge.contains(temp)){
+                    merge.add(temp);
+                }
+            }
+        }
+        if (twitter.compareTo("") != 0){
+            List<Message> searchBytwitter = twitterInfoSearch(twitter);
+            for (int i = 0; i < searchBytwitter.size(); i++){
+                Message temp = searchBytwitter.get(i);
                 if (!merge.contains(temp)){
                     merge.add(temp);
                 }
@@ -245,5 +270,85 @@ public class DaoService{
     public void clearDatabase(){
         DaoMessage.clearDatabase();
     }
+    
+    
+    /**
+     * @param location  	target location to be searched upon
+     * @param within    	search results only within these messages	if null then search all
+     * @param without		search results excluding these messages		if null then return full result
+     * @return list of messages corresponding to target location, contained in within, not contained in without
+     */
+    public List<Message> searchByLocation(Location location, List<Message> within, List<Message> without){
+    	List<Message> searchResult = new ArrayList<Message>();
+    	
+    	//@Michael this part requires some mapping, you'd be more familiar
+    	
+    	if (within == null){
+    		//TODO
+    		//map along with location, return all the messages under this location, if any provinces/cities/regions/universities not found, return null
+    		
+    	}
+    	//if within is not null
+    	else{
+    		//store messages from within on target location into searchResult
+    		for (int i = 0; i < within.size(); i++){
+    			if (within.get(i).sameLocation(location)){
+    				searchResult.add(within.get(i));
+    			}
+    		}
+    	}
+    	if (without != null){
+    		boolean changed = searchResult.removeAll(without);
+    		if (changed){
+    			Common.d("DaoService:: searchByLocation: searchResult contains coliding messages, all messages in both result and without are wipped from result");
+    		}
+    		else{
+    			Common.d("DaoService:: searchByLocation: no message collision detected, searchResult remain same");
+    		}
+    	}
+    	return searchResult;
+    }
+    
+    
+    /**
+     * @param date		target date to be searched upon
+     * @param within	search results only within these messages   if null then search all (should never allow)
+     * @param without	search results excluding these messages		if null then return full result
+     * @return list of messages corresponding to target date, contained in within, not contained in without
+     */
+    public List<Message> searchByDate(Date date, List<Message> within, List<Message> without){
+    	List<Message> searchResult = new ArrayList<Message>();
+    	if (within == null){
+    		//store all messages on target date into searchResult
+    		List<Message> allMessages = dao.getAllMessages();
+    		for (int i = 0; i < allMessages.size(); i++){
+    			if (allMessages.get(i).sameDay(date)){
+    				searchResult.add(allMessages.get(i));
+    			}
+    		}
+    	}
+    	//if within is not full
+    	else{
+    		//store messages from within on target date into searchResult
+    		for (int i = 0; i < within.size(); i++){
+    			if (within.get(i).sameDay(date)){
+    				searchResult.add(within.get(i));
+    			}
+    		}
+    	}
+    	// eliminate all the messages contained in without
+    	if (without != null){
+    		boolean changed = searchResult.removeAll(without);
+    		if (changed){
+    			Common.d("DaoService:: searchByDate: searchResult contains coliding messages, all messages in both result and without are wipped from result");
+    		}
+    		else{
+    			Common.d("DaoService:: searchByDate: no message collision detected, search remain same");
+    		}
+    	}
+    	return searchResult;
+    }
+    
+    
 
 }

@@ -18,6 +18,7 @@ import org.json.JSONObject;
 import badstudent.common.Common;
 import badstudent.dbservice.*;
 import badstudent.model.*;
+import badstudent.mappings.*;
 
 public class MessageResource extends ServerResource{
 

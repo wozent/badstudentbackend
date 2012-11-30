@@ -26,10 +26,13 @@ public class MessageService extends Application {
 		Router router = new Router(getContext());
 		String applicationPrefix = "/api/badstudent";
 		String versionPrefix = "/v0.9";
-		String resourcesPrefix = "/messages";
-		router.attach(applicationPrefix + versionPrefix + resourcesPrefix, MessageResource.class);
-		router.attach(applicationPrefix + versionPrefix + resourcesPrefix + "/{id}", MessageResourceId.class);
-
+		String messageResourcesPrefix = "/messages";
+		router.attach(applicationPrefix + versionPrefix + messageResourcesPrefix, MessageResource.class);
+		router.attach(applicationPrefix + versionPrefix + messageResourcesPrefix + "/{id}", MessageResourceId.class);
+		
+		String searchResourcesPrefix = "/primarySearch";
+		router.attach(applicationPrefix + versionPrefix + searchResourcesPrefix, PrimarySearch.class);
+		
 		return router;
 	}
 	

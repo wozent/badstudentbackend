@@ -1,9 +1,6 @@
 package badstudent.dbservice;
 
-import java.util.ArrayList;
-import java.sql.*;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import badstudent.model.*;
 import badstudent.common.*;
 import badstudent.database.*;
@@ -245,5 +242,32 @@ public class DaoService{
     public void clearDatabase(){
         DaoMessage.clearDatabase();
     }
+    
+    
+    /**
+     * @param location  	target location to be searched upon
+     * @param within    	search results only within these messages	if null then return full result
+     * @param without		search results excluding these messages		if null then return full result
+     * @return list of messages corresponding to target location, contained in within, not contained in without
+     */
+    public List<Message> searchByLocation(Location location, List<Message> within, List<Message> without){
+    	
+    	
+    	return null;
+    }
+    
+    
+    /**
+     * @param date		target date to be searched upon
+     * @param within	search results only within these messages   if null then return full result 
+     * @param without	search results excluding these messages		if null then return full result
+     * @return list of messages corresponding to target date, contained in within, not contained in without
+     */
+    public List<Message> searchByDate(Date date, List<Message> within, List<Message> without){
+    	
+    	return null;
+    }
+    
+    
 
 }

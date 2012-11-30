@@ -171,7 +171,12 @@ public class Message{
     	}
     	return shitYouAreTooShort;
     }
-
+    
+    //test if the this message is on the same day as target date
+    public boolean sameDay(Date date){
+    	return (this.date.compareTo(date)==0);
+    }
+    
     public String getId(){
         return this.id;
     }

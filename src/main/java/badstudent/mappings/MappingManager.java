@@ -1,8 +1,7 @@
 package badstudent.mappings;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class MappingManager {
     
@@ -28,11 +27,11 @@ public class MappingManager {
         }
     }
     
-    public static String[] getAllProvince(){
+    public static Set<String> getAllProvince(){
         return (new AllProvinceMappings()).getAllSubArea();
     }
     
-    public static String[] getAllCity(String province){
+    public static Set<String> getAllCity(String province){
         return getProvinceMappings(province).getAllSubArea();
     }
     
@@ -47,14 +46,14 @@ public class MappingManager {
         }
     }*/
     
-    public static List<String> getAllSchools(String province,String city){
+    public static Set<String> getAllSchools(String province,String city){
         MappingBase cityMapping = getCityMappings(province, city);
         if(cityMapping==null) return null;
-        ArrayList<String> retVal = new ArrayList<String>();
+        Set<String> retVal = new HashSet<String>();
         for(String region: cityMapping.getAllSubArea()){
             MappingBase regionMapping = cityMapping.getSubAreaMappings(region);
             if(regionMapping==null) continue;
-            Collections.addAll(retVal, regionMapping.getAllSubArea());
+            retVal.addAll(regionMapping.getAllSubArea());
         }
         return retVal;
     }

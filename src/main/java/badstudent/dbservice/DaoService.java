@@ -288,6 +288,9 @@ public class DaoService{
             return null;
         }
         Set<String> messageIds = DaoLocation.getMessageIdBySchool(location.getSchool());
+        if(within==null){
+            within = new ArrayList<Message>();
+        }
         for(String id : messageIds){
             within.add(dao.getMessageById(id));
         }

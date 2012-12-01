@@ -23,12 +23,16 @@ import badstudent.database.DaoMessage;
  * email:      Usual email format
  * phone:      11-digit
  * qq:         10-digit 
+ * twitter:    whatever
  * selfDefined:User-defined
  * price:      double
  * type:       ask(0) or help(1) or invalid(-1)
+ * authCode:   default -1
  */
 
 public class Message{
+	
+	public static final String goofyPasswordTrickHackers = "o god you are so gay";
 
     private String id;
 
@@ -57,6 +61,8 @@ public class Message{
     private double price;
 
     private int type;
+    
+    private int authCode;
 
     //for serializer/deSerializer
     public Message(){
@@ -74,6 +80,7 @@ public class Message{
         this.selfDefined = "dafultSelfDefiend";
         this.price = 0.0;
         this.type = Constants.type_ask;
+        this.authCode = -1;
     }
 
     //this constructor is used for testing purposes and potentially @Options HTTP calls only, please ignore it for any other usages
@@ -92,6 +99,7 @@ public class Message{
         this.selfDefined = "dafultselfDefiend";
         this.price = 0.0;
         this.type = Constants.type_ask;
+        this.authCode = -1;
     }
 
     public Message(String userName,String password,String date,Location location,boolean isMale,String content,String email,
@@ -129,6 +137,7 @@ public class Message{
         this.price = price;
         this.type = type;
         this.generateId();    //this has to be placed at the bottom of the constructor to avoid NullPointerException
+        this.authCode = -1;
     }
 
     public Message(String id,String userName,String password,String date,Location location,boolean isMale,String content,String email,
@@ -166,6 +175,45 @@ public class Message{
         this.selfDefined = selfDefined;
         this.price = price;
         this.type = type;
+        this.authCode = -1;
+    }
+    
+    public Message(String id,String userName,String password,String date,Location location,boolean isMale,String content,String email,
+            String phone,String qq, String twitter, String selfDefined,double price,int type, int authCode){
+        this.id = id;
+        this.userName = userName;
+        this.password = password;
+        try {
+            this.date = new SimpleDateFormat("yyyy MM dd").parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        this.location = location;
+        this.isMale = isMale;
+        this.content = content;
+        if(email.length()<3){
+            email = email + "   ";
+        }
+        if(phone.length()<3){
+            phone = phone + "   ";
+        }
+        if(qq.length()<3){
+            qq = qq + "   ";
+        }
+        if(twitter.length()<3){
+            twitter = twitter + "   ";
+        }
+        if(selfDefined.length()<3){
+            selfDefined = selfDefined + "   ";
+        }
+        this.email = email;
+        this.phone = phone;
+        this.qq = qq;
+        this.twitter = twitter;
+        this.selfDefined = selfDefined;
+        this.price = price;
+        this.type = type;
+        this.authCode = authCode;
     }
 
     private void generateId(){
@@ -302,6 +350,18 @@ public class Message{
     
     public void setTwitter(String twitter){
     	this.twitter = twitter;
+    }
+    
+    public int getAuthCode(){
+    	return this.authCode;
+    }
+    
+    public void setAuthCode(int authCode){
+    	this.authCode = authCode;
+    }
+    
+    public void restoreAuthCode(){
+    	this.authCode = -1;
     }
 
 }

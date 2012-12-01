@@ -42,7 +42,7 @@ public class MessageResourceId extends ServerResource{
                     jsonMessage.getBoolean("isMale"),jsonMessage.getString("content"),
                     jsonMessage.getString("email"),jsonMessage.getString("phone"),
                     jsonMessage.getString("qq"),jsonMessage.getString("twitter"),jsonMessage.getString("selfDefined"),
-                    jsonMessage.getDouble("price"),jsonMessage.getInt("type"));
+                    jsonMessage.getDouble("price"),jsonMessage.getInt("type"), jsonMessage.getInt("authCode"));
         } catch (NumberFormatException e) {
             e.printStackTrace();
         } catch (JSONException e) {
@@ -51,22 +51,28 @@ public class MessageResourceId extends ServerResource{
 
         return message;
     }
+    
+    //checking both password and authCode
+    //authCode must not equal to initial authCode -1
+    public boolean authMatch(Message receivedMessage, Message dbMessage){
+    	boolean authCodeMatch = (receivedMessage.getAuthCode() == dbMessage.getAuthCode()) && (receivedMessage.getAuthCode() != -1);
+    	boolean passwordMatch = (receivedMessage.getPassword().compareTo(dbMessage.getPassword()) == 0);
+    	return  (authCodeMatch == passwordMatch);
+    }
 
     @Get 
     public Representation getCurrentMessagesById() {
         String id = (String)this.getRequestAttributes().get("id");
         Common.d(id);
-        Common.d(daoService.getMessageById(id).toString());
         JSONObject jsonObject = null;
         try {
         	Common.d(daoService.getMessageById(id).toString());
             jsonObject = new JSONObject(daoService.getMessageById(id));
+            jsonObject.remove("messageIdentifier");
 
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        jsonObject.remove("messageIdentifier");
-
 
         /*set the response header*/
         Form responseHeaders = MessageResource.addHeader((Form) getResponse().getAttributes().get("org.restlet.http.headers")); 
@@ -83,24 +89,31 @@ public class MessageResourceId extends ServerResource{
         return result;
     }
 
-
+    //if authentication passed, local model should have the correct password field, thus checking both password and authCode here, please note under other situations password on the front end would be goofypassword
+    //authCode must not equal to initial authCode -1
     @Put 
     public Representation updateMessage(Representation entity) {
         String id = (String)this.getRequestAttributes().get("id");
-
-        Message message = parseJSON(entity);
         Representation result = null;
-        //if available, update the message
-
+        Message message = parseJSON(entity);
         
-        daoService.updateMessage(message, id);
-         
-
-        setStatus(Status.SUCCESS_OK);
-        JSONObject newJsonMessage = new JSONObject(message);
-        Common.d("@Put::resources::updateMessage: newJsonMessage" + newJsonMessage.toString());
-        result = new JsonRepresentation(newJsonMessage);
-
+        if (message != null && authMatch(message, daoService.getMessageById(id))){
+            //auth-POST session ends, restore authCode to -1
+        	message.restoreAuthCode();
+        	//if available, update the message, before the password is changed to the goofy password
+            daoService.updateMessage(message, id);
+            
+            //goofy password sent to front end instead of real password
+            message.setPassword(Message.goofyPasswordTrickHackers);
+            JSONObject newJsonMessage = new JSONObject(message);
+            Common.d("@Put::resources::updateMessage: newJsonMessage" + newJsonMessage.toString());
+            result = new JsonRepresentation(newJsonMessage);
+            setStatus(Status.SUCCESS_OK);
+        }
+        else{
+        	setStatus(Status.CLIENT_ERROR_UNAUTHORIZED);
+        }
+        
 
         /*set the response header*/
         Form responseHeaders = MessageResource.addHeader((Form) getResponse().getAttributes().get("org.restlet.http.headers")); 
@@ -110,21 +123,43 @@ public class MessageResourceId extends ServerResource{
 
         return result;
     }
-
+    
+    //now front end sending delete must expose authCode as a parameter, must not equal to initial authCode -1
     @Delete
     public Representation deleteMessage() {
+    	//get query parameter _authCode
+    	String authCodeString = getQuery().getValues("authCode");
         String id = (String)this.getRequestAttributes().get("id");
-
-        boolean exist = daoService.deleteMessage(id);
         
-
-        if (!exist){
-            setStatus(Status.CLIENT_ERROR_CONFLICT );
+        try{
+        	 int authCode = Integer.parseInt(authCodeString);
+        	 Message message = daoService.getMessageById(id);
+        	 //check for authCode
+             if (message.getAuthCode() == authCode && authCode != -1){
+            	 boolean exist = daoService.deleteMessage(id);
+                 
+                 if (!exist){
+                     setStatus(Status.CLIENT_ERROR_CONFLICT );
+                 }
+                 else{
+                     setStatus(Status.SUCCESS_OK);
+                 }
+                 Common.d("@Delete with id: " + id);
+             }
+             else{
+            	 setStatus(Status.CLIENT_ERROR_UNAUTHORIZED);
+             }
+             
         }
-        else{
-            setStatus(Status.SUCCESS_OK);
+        catch(NumberFormatException e){
+        	e.printStackTrace();
+        	setStatus(Status.CLIENT_ERROR_BAD_REQUEST);
         }
-        Common.d("@Delete with id: " + id);
+        catch(NullPointerException e){
+        	e.printStackTrace();
+        	setStatus(Status.CLIENT_ERROR_CONFLICT );
+        }
+        
 
         /*set the response header*/
         Form responseHeaders = MessageResource.addHeader((Form) getResponse().getAttributes().get("org.restlet.http.headers")); 

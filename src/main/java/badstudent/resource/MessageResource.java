@@ -112,14 +112,15 @@ public class MessageResource extends ServerResource{
 		String qq = getQuery().getValues("qq");
 		String twitter = getQuery().getValues("twitter");
 		String selfDefined = getQuery().getValues("selfDefined");
-		String queryType = getQuery().getValues("type");
+		
+		/*String queryType = getQuery().getValues("type");
 		try{
 			int type = Integer.parseInt(queryType);
 		}
 		catch (NumberFormatException e){
 			Common.d("MessageResource::@GET  NumberFormatException with queryType: " + queryType);
 			e.printStackTrace();
-		}
+		}*/
 		
 		List<Message> merge = daoService.multipeSearch(phone, email, qq, twitter, selfDefined);	
 		
@@ -161,17 +162,20 @@ public class MessageResource extends ServerResource{
 		Message message = parseJSON(entity);
 		Representation result =  null;
 		//if available, add the message
-		daoService.createMessage(message);
+		if (message != null){
+			daoService.createMessage(message);
+			
+
+			Common.d("@Post::resources::createMessage: available: " + message.getUserName() + message.getPassword());
+			//password will not be exposed to the front end
+			message.setPassword(Message.goofyPasswordTrickHackers);
+			JSONObject newJsonMessage = new JSONObject(message);
+			Common.d("@Post::resources::createMessage: newJsonMessage" + newJsonMessage.toString());
+			result = new JsonRepresentation(newJsonMessage);
+
+			setStatus(Status.SUCCESS_OK);
+		}
 		
-		setStatus(Status.SUCCESS_OK);
-
-		Common.d("@Post::resources::createMessage: available: " + message.getUserName() + message.getPassword());
-
-		JSONObject newJsonMessage = new JSONObject(message);
-		Common.d("@Post::resources::createMessage: newJsonMessage" + newJsonMessage.toString());
-		result = new JsonRepresentation(newJsonMessage);
-
-
 		/*set the response header*/
 		Form responseHeaders = addHeader((Form) getResponse().getAttributes().get("org.restlet.http.headers")); 
 		if (responseHeaders != null){

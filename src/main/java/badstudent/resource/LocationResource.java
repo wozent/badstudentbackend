@@ -23,7 +23,7 @@ import badstudent.dbservice.*;
 import badstudent.model.*;
 
 
-public class PrimarySearch extends ServerResource{
+public class LocationResource extends ServerResource{
 
 	private DaoService daoService = new DaoService();
 
@@ -42,7 +42,7 @@ public class PrimarySearch extends ServerResource{
 	
 	@Get
 	public Representation searchMessages() {
-		//get query parameter _location _date
+		/*//get query parameter _location _date
 		String locationString = getQuery().getValues("location");
 		String dateString = getQuery().getValues("date");
 
@@ -80,13 +80,15 @@ public class PrimarySearch extends ServerResource{
 			e.printStackTrace();
 		}
 		System.out.println("@Get::resources::primarySearch query parameters: location: " + locationString + " date " + dateString);
+		*/
 		
 		/*set the response header*/
 		Form responseHeaders = addHeader((Form) getResponse().getAttributes().get("org.restlet.http.headers")); 
 		if (responseHeaders != null){
 			getResponse().getAttributes().put("org.restlet.http.headers", responseHeaders); 
 		} 
-		return result;
+		//TODO return result;
+		return null;
 	}
 
 

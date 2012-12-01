@@ -26,12 +26,20 @@ public class MessageService extends Application {
 		Router router = new Router(getContext());
 		String applicationPrefix = "/api/badstudent";
 		String versionPrefix = "/v0.9";
-		String messageResourcesPrefix = "/messages";
-		router.attach(applicationPrefix + versionPrefix + messageResourcesPrefix, MessageResource.class);
-		router.attach(applicationPrefix + versionPrefix + messageResourcesPrefix + "/{id}", MessageResourceId.class);
+		//   API for single messages:  /api/badstudent/v0.9/messages
+		String messageResourcePrefix = "/messages";
+		router.attach(applicationPrefix + versionPrefix + messageResourcePrefix, MessageResource.class);
+		router.attach(applicationPrefix + versionPrefix + messageResourcePrefix + "/{id}", MessageResourceId.class);
+		//   API for primary search:  /api/badstudent/v0.9/primarySearch
+		String searchResourcePrefix = "/primarySearch";
+		router.attach(applicationPrefix + versionPrefix + searchResourcePrefix, PrimarySearch.class);
+		//   API for location resources:  /api/badstudent/v0.9/location
+		String locationResourcePrefix = "/location";
+		router.attach(applicationPrefix + versionPrefix + locationResourcePrefix, LocationResource.class);
+		//   API for password authentication:  /api/badstudent/v0.9/auth,  note it is assumed that any message that would require authentication has an ID
+		String authResourcePrefix = "/auth";
+		router.attach(applicationPrefix + versionPrefix + authResourcePrefix + "/{id}", AuthResource.class);
 		
-		String searchResourcesPrefix = "/primarySearch";
-		router.attach(applicationPrefix + versionPrefix + searchResourcesPrefix, PrimarySearch.class);
 		
 		return router;
 	}

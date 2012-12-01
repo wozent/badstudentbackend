@@ -35,7 +35,7 @@ public class DaoService{
         }
         else{
             System.out.println("@createSchedule::id does not exist, creating message with id: " + message.getId());
-            return dao.createMessage(message);
+            return dao.addMessageToDatabase(message);
         }
     }
 
@@ -43,11 +43,11 @@ public class DaoService{
     public Message updateMessage(Message message, String id){
         if (checkExistance(id) ){
             System.out.println("@updateMessage::id exist, updating message with id: " + id);
-            return dao.updateMessage(message);
+            return dao.updateMessageInDatabase(message);
         }
         else{
             System.out.println("@updateSchedule::***warning***id does not exist, creating new message with id: " + id);
-            dao.createMessage(message);
+            dao.addMessageToDatabase(message);
             return null;
         }
 
@@ -57,7 +57,7 @@ public class DaoService{
     public boolean deleteMessage(String id){
         if (checkExistance(id) ){
             System.out.println("@deleteMessage::id exist, deleting message with id: " + id);
-            dao.deleteMessage(id);
+            dao.deleteMessageFromDatabase(id);
             return true;
         }
         else{
@@ -68,11 +68,11 @@ public class DaoService{
 
 
     public List<Message> getAllMessages(){
-        return dao.getAllMessages();
+        return dao.getAllMessagesInDatabase();
     }
 
     public Set<String> getIds(){
-        return dao.getAllIds();
+        return dao.getAllMessageIdInDatabase();
     }
 
     public Set<String> getPartialIds(String targetPattern){
@@ -320,7 +320,7 @@ public class DaoService{
     	List<Message> searchResult = new ArrayList<Message>();
     	if (within == null){
     		//store all messages on target date into searchResult
-    		List<Message> allMessages = dao.getAllMessages();
+    		List<Message> allMessages = dao.getAllMessagesInDatabase();
     		for (int i = 0; i < allMessages.size(); i++){
     			if (allMessages.get(i).sameDay(date)){
     				searchResult.add(allMessages.get(i));

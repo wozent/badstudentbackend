@@ -203,7 +203,7 @@ public class DaoService{
         List<Message> merge = new ArrayList<Message>();
 
         //adding each of the search results into the merge List
-        if(phone.compareTo("") != 0){
+        if(phone != null && phone.compareTo("") != 0){
             List<Message> searchByPhone = phoneInfoSearch(phone);
             for (int i = 0; i < searchByPhone.size(); i++){
                 Message temp = searchByPhone.get(i);
@@ -212,7 +212,7 @@ public class DaoService{
                 }
             }
         }
-        if (email.compareTo("") != 0){
+        if (email != null && email.compareTo("") != 0){
             List<Message> searchByEmail = emailInfoSearch(email);
             for (int i = 0; i < searchByEmail.size(); i++){
                 Message temp = searchByEmail.get(i);
@@ -221,7 +221,7 @@ public class DaoService{
                 }
             }
         }
-        if (qq.compareTo("") != 0){
+        if (qq != null && qq.compareTo("") != 0){
             List<Message> searchByQq = qqInfoSearch(qq);
             for (int i = 0; i < searchByQq.size(); i++){
                 Message temp = searchByQq.get(i);
@@ -230,7 +230,7 @@ public class DaoService{
                 }
             }
         }
-        if (twitter.compareTo("") != 0){
+        if (twitter != null && twitter.compareTo("") != 0){
             List<Message> searchBytwitter = twitterInfoSearch(twitter);
             for (int i = 0; i < searchBytwitter.size(); i++){
                 Message temp = searchBytwitter.get(i);
@@ -239,7 +239,7 @@ public class DaoService{
                 }
             }
         }
-        if (selfDefined.compareTo("") != 0){
+        if (selfDefined != null && selfDefined.compareTo("") != 0){
             List<Message> searchBySelfDefined = selfDefinedInfoSearch(selfDefined);
             for (int i = 0; i < searchBySelfDefined.size(); i++){
                 Message temp = searchBySelfDefined.get(i);

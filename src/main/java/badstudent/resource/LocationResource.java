@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.representation.Representation;
@@ -20,6 +21,7 @@ import org.json.JSONObject;
 
 import badstudent.common.Common;
 import badstudent.dbservice.*;
+import badstudent.mappings.MappingManager;
 import badstudent.model.*;
 
 
@@ -40,25 +42,46 @@ public class LocationResource extends ServerResource{
 	}
 	
 	
+	/**
+	 * take province and city from query parameter
+	 * if there is no province, return all provinces
+	 * if there is province but no city, return all cities under that province
+	 * if there are both province and city, return all schools under that city
+	 * @return
+	 */
 	@Get
 	public Representation searchLocation() {
-		//get query parameter _country _province _city
-		String country = getQuery().getValues("country");
+		//get query parameter _province _city
 		String province = getQuery().getValues("province");
 		String city = getQuery().getValues("city");
-		List<Message> searchResult = null;
+		List<String> searchResult = null;
 		
-		if (city != null && city.compareTo("") != 0){
-			//searchResult = daoService.searchByCity(city)
-			//TODO
+		if (province != null && province.compareTo("") != 0 && city != null && city.compareTo("") != 0){
+			try{
+				Set<String> schools = MappingManager.getAllSchools(province, city);
+				searchResult = new ArrayList<String>(schools);
+			}
+			catch(Exception e){
+				e.printStackTrace();
+				Common.d("invalid GETSCHOOL location query with parameter province: " + province + " city: " + city);
+			}
 		}
 		else if (province != null && province.compareTo("") != 0){
-			//searchResult = daoService.saerchByProvince(province);
-			//TODO
+			try{
+				Set<String> cities = MappingManager.getAllCity(province);
+				searchResult = new ArrayList<String>(cities);
+			}
+			catch(Exception e){
+				e.printStackTrace();
+				Common.d("invalid GETCITY location query with parameter province: " + province + " city: " + city);
+			}
 		}
-		else if (country != null && country.compareTo("") != 0){
-			//searchResult = daoService.searchByCountry();
-			//TODO
+		else if (province == null || province.compareTo("")== 0){
+			Set<String> provinces = MappingManager.getAllProvince();
+			searchResult = new ArrayList<String>(provinces);
+		}
+		else{
+			Common.d("invalid location query format with parameter province: " + province + " city: " + city);
 		}
 
 		
@@ -82,7 +105,7 @@ public class LocationResource extends ServerResource{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("@Get::resources::LocationResource query parameters: country: " + country + " province " + province + "city" + city);
+		System.out.println("@Get::resources::LocationResource query parameters: province " + province + "city" + city);
 		
 		
 		/*set the response header*/

@@ -37,12 +37,11 @@ public class Location {
         String result[] = locationString.split(" ");
         this.province = result[0];
         this.city = result[1];
-        if(result[2].equalsIgnoreCase("NULL")){
-            this.region = result[2];
-        }else{
-            this.region = null;
-        }
-        this.school = result[3].replaceAll(" ", "");
+        this.school = result[2].replaceAll(" ", "");
+    }
+    
+    public boolean sameLocation(Location location){
+    	return (this.province.compareTo(location.getProvince()) == 0) && (this.city.compareTo(location.getCity()) ==0) && (this.school.compareTo(location.getCity()) == 0);
     }
     
     

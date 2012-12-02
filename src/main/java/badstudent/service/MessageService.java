@@ -38,7 +38,11 @@ public class MessageService extends Application {
 		router.attach(applicationPrefix + versionPrefix + locationResourcePrefix, LocationResource.class);
 		//   API for password authentication:  /api/badstudent/v0.9/auth,  note it is assumed that any message that would require authentication has an ID
 		String authResourcePrefix = "/auth";
-		router.attach(applicationPrefix + versionPrefix + authResourcePrefix + "/{id}", AuthResource.class);
+		router.attach(applicationPrefix + versionPrefix + authResourcePrefix, AuthResource.class);
+		
+		String testPrefix = "/test";
+		router.attach(applicationPrefix + testPrefix, TestResource.class);
+		
 		
 		
 		return router;

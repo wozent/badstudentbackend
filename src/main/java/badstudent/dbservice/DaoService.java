@@ -284,15 +284,23 @@ public class DaoService{
      * @return list of messages corresponding to target location, contained in within, not contained in without
      */
     public List<Message> searchByLocation(Location location, List<Message> within, List<Message> without){
+    	List<Message> searchResult = new ArrayList<Message>();
         if(!MappingManager.isLocationVaild(location)){
             return null;
         }
         Set<String> messageIds = DaoLocation.getMessageIdBySchool(location.getSchool());
         if(within==null){
             within = new ArrayList<Message>();
+            for(String id : messageIds){
+                within.add(dao.getMessageById(id));
+            }
         }
-        for(String id : messageIds){
-            within.add(dao.getMessageById(id));
+        else{
+        	for (int i = 0; i < within.size(); i++){
+                if (within.get(i).getLocation().sameLocation(location)){
+                    searchResult.add(within.get(i));
+                }
+            }
         }
         if(without!=null){
             within.removeAll(without);

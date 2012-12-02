@@ -63,6 +63,10 @@ public class MessageResource extends ServerResource{
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+		  catch (NullPointerException e){
+			  e.printStackTrace();
+			  Common.d("likely invalid location string format");
+		}
 
 		return message;
 	}

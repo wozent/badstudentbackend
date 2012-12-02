@@ -23,7 +23,7 @@ import badstudent.dbservice.*;
 import badstudent.model.*;
 
 
-public class PrimarySearch extends ServerResource{
+public class TestResource extends ServerResource{
 
 	private DaoService daoService = new DaoService();
 
@@ -42,28 +42,7 @@ public class PrimarySearch extends ServerResource{
 	
 	@Get
 	public Representation searchMessages() {
-		//get query parameter _location _date
-		String locationString = getQuery().getValues("location");
-		String dateString = getQuery().getValues("date");
-		Location location = null;
-		try{
-			location = new Location(locationString);
-		}
-		catch(NullPointerException e){
-			e.printStackTrace();
-			Common.d("invalid Location String format, received locationString: " + locationString);
-		}
-		Date date = new Date();
-		try {
-			date = new SimpleDateFormat("yyyy MM dd").parse(dateString);
-		} catch (ParseException e1) {
-			e1.printStackTrace();
-			System.out.println("PrimarySearch:: @Get date string parse error: dateString: " + dateString);
-		};
-		
-		//main search part, first calls searchByLocation to get location-based messages, then test if each message is on target day
-		List<Message> searchResult = daoService.searchByLocation(location, null, null);
-		searchResult = daoService.searchByDate(date, searchResult, null);
+		List<Message> searchResult = daoService.getAllMessages();
 		
 		JSONArray jsonArray = new JSONArray(searchResult);
 		
@@ -85,7 +64,6 @@ public class PrimarySearch extends ServerResource{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("@Get::resources::primarySearch query parameters: location: " + locationString + " date " + dateString);
 		
 		/*set the response header*/
 		Form responseHeaders = addHeader((Form) getResponse().getAttributes().get("org.restlet.http.headers")); 

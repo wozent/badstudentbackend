@@ -22,7 +22,7 @@ public class DaoLocationTest {
             Common.d(""+a+MappingManager.isLocationVaild(new Location("江苏省", "南京市", "玄武区", "东南大学")));
         }
         DaoService d = new DaoService();
-        d.createMessage(new Message("1","bla", "bla", "1994-02-12", new Location("江苏省", "南京市", "玄武区", "东南大学"), true, "", "", "", "", "", "", 1, 1));
+        d.createMessage(new Message("1","bla", "bla", "1994 02 12", new Location("江苏省", "南京市", "玄武区", "东南大学"), true, "", "", "", "", "", "", 1, 1));
         //d.createMessage(new Message("22","blaa", "bla", "1994-02-12", new Location("江苏省", "南京市", "玄武区", "东大学"), true, "", "", "", "", "", "", 1, 1));
         ArrayList<Message> n = new ArrayList<Message>();
         n.add(d.getMessageById("1"));

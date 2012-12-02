@@ -41,23 +41,26 @@ public class LocationResource extends ServerResource{
 	
 	
 	@Get
-	public Representation searchMessages() {
-		/*//get query parameter _location _date
-		String locationString = getQuery().getValues("location");
-		String dateString = getQuery().getValues("date");
-
-		Location location = new Location(locationString);
-		Date date = new Date();
-		try {
-			date = new SimpleDateFormat("yyyy MM dd").parse(dateString);
-		} catch (ParseException e1) {
-			e1.printStackTrace();
-			System.out.println("PrimarySearch:: @Get date string parse error: dateString: " + dateString);
-		};
+	public Representation searchLocation() {
+		//get query parameter _country _province _city
+		String country = getQuery().getValues("country");
+		String province = getQuery().getValues("province");
+		String city = getQuery().getValues("city");
+		List<Message> searchResult = null;
 		
-		//main search part, first calls searchByLocation to get location-based messages, then test if each message is on target day
-		List<Message> searchResult = daoService.searchByLocation(location, null, null);
-		searchResult = daoService.searchByDate(date, searchResult, null);
+		if (city != null && city.compareTo("") != 0){
+			//searchResult = daoService.searchByCity(city)
+			//TODO
+		}
+		else if (province != null && province.compareTo("") != 0){
+			//searchResult = daoService.saerchByProvince(province);
+			//TODO
+		}
+		else if (country != null && country.compareTo("") != 0){
+			//searchResult = daoService.searchByCountry();
+			//TODO
+		}
+
 		
 		JSONArray jsonArray = new JSONArray(searchResult);
 		
@@ -79,8 +82,8 @@ public class LocationResource extends ServerResource{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("@Get::resources::primarySearch query parameters: location: " + locationString + " date " + dateString);
-		*/
+		System.out.println("@Get::resources::LocationResource query parameters: country: " + country + " province " + province + "city" + city);
+		
 		
 		/*set the response header*/
 		Form responseHeaders = addHeader((Form) getResponse().getAttributes().get("org.restlet.http.headers")); 

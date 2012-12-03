@@ -252,6 +252,16 @@ public class Message{
     	return (this.startDate.compareTo(date)==0);
     }
     
+    public boolean isDayInRange(Date date){
+        if(date.equals(this.endDate) || date.equals(this.startDate)){
+            return true;
+        }
+        if(date.after(this.endDate) && date.before(this.startDate)){
+            return true;
+        }
+        return false;
+    }
+    
     //test if this message is at the same location as target location 
     public boolean sameLocation(Location location){
     	return (this.location.toString().compareTo(location.toString()) == 0);

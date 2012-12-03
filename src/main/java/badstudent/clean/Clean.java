@@ -69,7 +69,7 @@ public class Clean{
 			Message message = daoService.getMessageById(key);
 			Calendar messageEndCal = dateToCalendar(message.getEndDate());
 			messageEndCal.add(Calendar.DAY_OF_YEAR, 1);    		//add an offset of 1 day since date from front end always indicates 00:00AM on the last day
-			if (messageEndCal.before(currentCal)){
+			if (messageEndCal.before(currentCal) || messageEndCal.equals(currentCal)){
 				daoService.deleteMessage(message.getId());
 				writeMessageToFile(message);
 			}

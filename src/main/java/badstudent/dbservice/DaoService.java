@@ -32,6 +32,7 @@ public class DaoService{
 
     /*create non-existing messages, return null if the message was already in the database(same Id), return the message entity if the message was not in existence and now created*/
     public Message createMessage(Message message){
+        //TODO:check date.
         if (checkExistance(message.getId()) ){
             System.out.println("@createMessage::***warning***id does exist, doing nothing");
             return null;
@@ -252,22 +253,22 @@ public class DaoService{
         return merge;
     }
 
-    public List<Message> sortMessageByDate(List<Message> allMessages){
+    public List<Message> sortMessageByEndDate(List<Message> allMessages){
         for(Message msg : allMessages){
-            Common.d("Before sort:"+msg.getDate());
+            Common.d("Before sort:"+msg.getEndDate());
         }
         for(int b=1;b<allMessages.size();b++){
             for(int a=0;a<allMessages.size()-b;a++){
                 Message msg1 = allMessages.get(a);
                 Message msg2 = allMessages.get(a+1);
-                if(msg1.getDate().before(msg2.getDate())){
+                if(msg1.getEndDate().before(msg2.getEndDate())){
                     allMessages.set(a, msg2);
                     allMessages.set(a+1, msg1);
                 }
             }
         }
         for(Message msg : allMessages){
-            Common.d("After sort:"+msg.getDate());
+            Common.d("After sort:"+msg.getEndDate());
         }
         return allMessages;
     }

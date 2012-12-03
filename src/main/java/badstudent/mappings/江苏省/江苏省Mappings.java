@@ -1,7 +1,5 @@
 package badstudent.mappings.江苏省;
 
-import java.util.HashMap;
-
 import badstudent.mappings.MappingBase;
 import badstudent.mappings.江苏省.南京市.南京市Mappings;
 

@@ -10,5 +10,6 @@ public class 上海Mappings extends MappingBase{
         subAreaMappings.put("上海市", null);
         //TODO:Missing Data
     }
+
  
 }

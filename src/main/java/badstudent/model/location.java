@@ -1,5 +1,7 @@
 package badstudent.model;
 
+import badstudent.mappings.MappingManager;
+
 /**
  * Important: please note, each entry here much not contain white space
  */
@@ -38,6 +40,7 @@ public class Location {
         this.province = result[0];
         this.city = result[1];
         this.school = result[2].replaceAll(" ", "");
+        this.region = MappingManager.determineRegionFromLocation(this);
     }
     
     public boolean sameLocation(Location location){

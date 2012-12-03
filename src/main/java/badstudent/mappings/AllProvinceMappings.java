@@ -46,5 +46,4 @@ public class AllProvinceMappings extends MappingBase {
         //TODO:Missing Data. remove constants
     }
 
-
 }

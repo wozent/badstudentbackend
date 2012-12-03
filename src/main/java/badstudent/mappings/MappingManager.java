@@ -3,6 +3,7 @@ package badstudent.mappings;
 import java.util.HashSet;
 import java.util.Set;
 
+import badstudent.common.Common;
 import badstudent.model.Location;
 
 public class MappingManager {
@@ -91,6 +92,21 @@ public class MappingManager {
             }
         }
         return false;
+    }
+    
+    public static String determineRegionFromLocation(Location location){
+        if(location.getRegion()!="NULL"){
+            Common.d("Location has already got region which is " + location.getRegion());
+            return location.getRegion();
+        }
+        for(String region : getAllRegion(location.getProvince(), location.getCity())){
+            MappingBase regionMappings = getRegionMappings(location.getProvince(), location.getCity(), region);
+            if(regionMappings.getAllSubArea().contains(location.getSchool())){
+                return regionMappings.getAreaName();
+            }
+        }
+        Common.d("Can not determine location.");
+        return location.getRegion();
     }
 
 }

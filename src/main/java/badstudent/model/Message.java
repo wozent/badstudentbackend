@@ -70,7 +70,7 @@ public class Message{
         this.userName = "defaultUserName";
         this.password = "defaultPassword";
         this.date = new Date();
-        this.location = new Location("dafault dafault default dafault");
+        this.location = new Location("江苏省 南京市 东南大学");
         this.isMale = true;
         this.content = "defaultContent";
         this.email = "defaultEmail@default.com";
@@ -89,7 +89,7 @@ public class Message{
         this.userName = "defaultUserName";
         this.password = "defaultPassword";
         this.date = new Date();
-        this.location = new Location("dafault dafault default dafault");
+        this.location = new Location("江苏省 南京市 东南大学");
         this.isMale = true;
         this.content = "defaultContent";
         this.email = "defaultEmail@default.com";

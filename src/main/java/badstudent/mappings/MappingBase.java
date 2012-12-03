@@ -14,5 +14,9 @@ public abstract class MappingBase {
     protected MappingBase() {
         initMappings();
     }
+    protected String getAreaName(){
+        String className = getClass().getSimpleName();
+        return className.substring(0,className.length()-8);
+    }
     protected abstract void initMappings();
 }

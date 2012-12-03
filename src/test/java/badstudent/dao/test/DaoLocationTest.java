@@ -7,7 +7,9 @@ import org.junit.Test;
 import badstudent.common.Common;
 import badstudent.database.DaoLocation;
 import badstudent.dbservice.DaoService;
+import badstudent.mappings.AllProvinceMappings;
 import badstudent.mappings.MappingManager;
+import badstudent.mappings.江苏省.江苏省Mappings;
 import badstudent.model.Location;
 import badstudent.model.Message;
 
@@ -27,6 +29,7 @@ public class DaoLocationTest {
         ArrayList<Message> n = new ArrayList<Message>();
         n.add(d.getMessageById("1"));
         Common.d(d.searchByLocation(new Location("江苏省", "南京市", "玄武区", "东南大学"), null, n).get(0).getUserName());
+        AllProvinceMappings a = new AllProvinceMappings();
     }
 
 }

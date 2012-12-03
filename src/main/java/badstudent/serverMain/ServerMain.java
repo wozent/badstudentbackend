@@ -75,6 +75,9 @@ public class ServerMain {
 			//log.error("Failed to start server", e);
 		}
 		
+		//clocked cleaner, clocked to run at 3:00AM, cleans schedules finished before 2:00AM
+		Thread thread = new CleanThreadService();
+		thread.start();
 	}
 
 }

@@ -307,6 +307,38 @@ public class DaoService{
         }
         return within;
     }
+    
+    public List<Message> searchByType(int type, List<Message> within, List<Message> without){
+    	List<Message> searchResult = new ArrayList<Message>();
+    	if (within == null){
+    		Set<String> keys = getPartialIds("-" + Integer.toString(type));
+    		for (String key : keys){
+    			Message message = getMessageById(key);
+    			if (type != -1 && message.getType() == type){
+    				searchResult.add(message);
+    			}
+    		}
+    	}
+    	else{
+    		for (int i = 0; i < within.size(); i++){
+    			if (type != -1 && within.get(i).getType() == type){
+    				searchResult.add(within.get(i));
+    			}
+    		}
+    	}
+    	// eliminate all the messages contained in without
+        if (without != null){
+            boolean changed = searchResult.removeAll(without);
+            if (changed){
+                Common.d("DaoService:: searchByType: searchResult contains coliding messages, all messages in both result and without are wipped from result");
+            }
+            else{
+                Common.d("DaoService:: searchByType: no message collision detected, search remain same");
+            }
+        }
+        return searchResult;
+    	
+    }
 
 
     /**

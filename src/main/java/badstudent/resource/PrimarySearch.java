@@ -45,14 +45,26 @@ public class PrimarySearch extends ServerResource{
 		//get query parameter _location _date
 		String locationString = getQuery().getValues("location");
 		String dateString = getQuery().getValues("date");
+		String typeString = getQuery().getValues("type");
+		int type = -1;
 		Location location = null;
+		
 		try{
 			location = new Location(locationString);
 		}
 		catch(NullPointerException e){
 			e.printStackTrace();
-			Common.d("invalid Location String format, received locationString: " + locationString);
+			Common.d("PrimarySearch:: @Get invalid Location String format, received locationString: " + locationString);
 		}
+
+		try{
+			type = Integer.parseInt(typeString);
+		}
+		catch (Exception e){
+			e.printStackTrace();
+			Common.d("PrimarySearch:: @Get invalid type format, received type: " + type);
+		}
+		
 		Date date = new Date();
 		try {
 			date = new SimpleDateFormat("yyyy MM dd").parse(dateString);
@@ -63,6 +75,7 @@ public class PrimarySearch extends ServerResource{
 		
 		//main search part, first calls searchByLocation to get location-based messages, then test if each message is on target day
 		List<Message> searchResult = daoService.searchByLocation(location, null, null);
+		searchResult = daoService.searchByType(type, searchResult, null);
 		searchResult = daoService.searchByDate(date, searchResult, null);
 		
 		JSONArray jsonArray = new JSONArray(searchResult);

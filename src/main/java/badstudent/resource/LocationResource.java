@@ -86,7 +86,6 @@ public class LocationResource extends ServerResource{
 
 		
 		JSONArray jsonArray = new JSONArray(searchResult);
-		
 		try{
 			for (int i = 0; i < jsonArray.length(); i++){
 				jsonArray.getJSONObject(i).remove("messageIdentifier");
@@ -113,8 +112,7 @@ public class LocationResource extends ServerResource{
 		if (responseHeaders != null){
 			getResponse().getAttributes().put("org.restlet.http.headers", responseHeaders); 
 		} 
-		//TODO return result;
-		return null;
+		return result;
 	}
 
 

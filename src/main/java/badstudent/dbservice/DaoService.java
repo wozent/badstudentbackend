@@ -32,7 +32,12 @@ public class DaoService{
 
     /*create non-existing messages, return null if the message was already in the database(same Id), return the message entity if the message was not in existence and now created*/
     public Message createMessage(Message message){
-        //TODO:check date.
+        // currently using local time zone, improvements may be added
+    	Date currentDate = new Date();
+    	if (currentDate.before(message.getStartDate()) || message.isDayInRange(currentDate)){
+    		System.out.println("@createMessage::***warning***message outdated, doing nothing. current date: " + currentDate + " endDate: " + message.getEndDate());
+    		return null;
+    	}
         if (checkExistance(message.getId()) ){
             System.out.println("@createMessage::***warning***id does exist, doing nothing");
             return null;
@@ -354,7 +359,7 @@ public class DaoService{
             //store all messages on target date into searchResult
             List<Message> allMessages = dao.getAllMessagesInDatabase();
             for (int i = 0; i < allMessages.size(); i++){
-                if (allMessages.get(i).sameDay(date)){
+                if (allMessages.get(i).isDayInRange(date)){
                     searchResult.add(allMessages.get(i));
                 }
             }
@@ -363,7 +368,7 @@ public class DaoService{
         else{
             //store messages from within on target date into searchResult
             for (int i = 0; i < within.size(); i++){
-                if (within.get(i).sameDay(date)){
+                if (within.get(i).isDayInRange(date)){
                     searchResult.add(within.get(i));
                 }
             }

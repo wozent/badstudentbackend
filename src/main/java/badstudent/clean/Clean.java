@@ -18,9 +18,13 @@ import java.util.Date;
 import java.util.Set;
 import java.util.TimeZone;
 
+import flexjson.JSONDeserializer;
+import flexjson.JSONSerializer;
+
 public class Clean{
 	private static DaoService daoService = new DaoService();
-	public static String timeZoneId = "asia/shanghai";
+	public static final String timeZoneId = "asia/shanghai";
+	public static final String fileName = "messageHistory.txt";
 
 	public static Calendar dateToCalendar(Date date){ 
 		Calendar calendar = Calendar.getInstance();
@@ -29,15 +33,25 @@ public class Clean{
 	}
 
 	public static void writeMessageToFile(Message message){
-		try{
-			// Create file 
-			FileWriter fstream = new FileWriter("messageHistory.txt");
-			BufferedWriter out = new BufferedWriter(fstream);
-			out.write("Hello lol");
-			//Close the output stream
-			out.close();
-		}catch (Exception e){//Catch exception if any
-			System.err.println("Error: " + e.getMessage());
+		BufferedWriter bw = null;
+
+		try {
+		    String jsonMessage = new JSONSerializer().serialize(message);
+		    
+		    bw = new BufferedWriter(new FileWriter(fileName, true));
+		    bw.write(jsonMessage);
+		    bw.newLine();
+		    bw.flush();
+		} catch (IOException ioe) {
+		    ioe.printStackTrace();
+		} finally { // always close the file
+		    if (bw != null) {
+		        try {
+		            bw.close();
+		        } catch (IOException e) {
+		            e.printStackTrace();
+		        }
+		    }
 		}
 	}
 
@@ -47,22 +61,22 @@ public class Clean{
 
 
 	public void cleanSchedules(){
-		/*Calendar currentCal = Calendar.getInstance(TimeZone.getTimeZone(timeZoneId));
+		Calendar currentCal = Calendar.getInstance(TimeZone.getTimeZone(timeZoneId));
 		Set<String> keys = daoService.getIds();
 
 		//go through each Message and clears outdated data, write them to a txt file
 		for (String key : keys){
 			Message message = daoService.getMessageById(key);
-			Calendar messageEndCal = dateToCalendar(message.getDate());
+			Calendar messageEndCal = dateToCalendar(message.getEndDate());
 			messageEndCal.add(Calendar.DAY_OF_YEAR, 1);    		//add an offset of 1 day since date from front end always indicates 00:00AM on the last day
 			if (messageEndCal.before(currentCal)){
 				daoService.deleteMessage(message.getId());
 				writeMessageToFile(message);
 			}
-		}*/
+		}
 		Message message = new Message();
 		writeMessageToFile(message);
-		Common.d("clean thread triggered");
+		Common.d("clean thread triggered with message: " + message.toString());
 	}
 
 

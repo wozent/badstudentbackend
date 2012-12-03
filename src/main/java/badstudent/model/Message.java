@@ -3,6 +3,7 @@ package badstudent.model;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -253,13 +254,20 @@ public class Message{
     }
     
     public boolean isDayInRange(Date date){
-        if(date.equals(this.endDate) || date.equals(this.startDate)){
-            return true;
-        }
-        if(date.after(this.endDate) && date.before(this.startDate)){
-            return true;
-        }
-        return false;
+    	
+    	if (this.startDate.equals(date) || this.endDate.equals(date)){
+    		return true;
+    	}
+    	else{
+    		boolean tooEarly = date.before(this.startDate);
+        	
+        	Calendar endCal = dateToCalendar(this.endDate);
+        	Calendar curCal = dateToCalendar(date);
+        	endCal.add(Calendar.DAY_OF_YEAR, 1);    		//add an offset of 1 day since date from front end always indicates 00:00AM on the last day
+        	boolean tooLate = (endCal.before(curCal) || endCal.equals(curCal));
+        	
+        	return !(tooEarly || tooLate);
+    	}
     }
     
     //test if this message is at the same location as target location 
@@ -405,6 +413,12 @@ public class Message{
     public void setCourseLengthInMinutes(int courseLengthInMinutes) {
         this.courseLengthInMinutes = courseLengthInMinutes;
     }
+    
+    public static Calendar dateToCalendar(Date date){ 
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		return calendar;
+	}
 
 }
 

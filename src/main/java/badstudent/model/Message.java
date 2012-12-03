@@ -16,7 +16,9 @@ import badstudent.database.DaoMessage;
  * id: unique id for each message
  * userName:   User-defined
  * password:   User-defined
- * date: in strict format "YYYY MM DD"
+ * startDate: in strict format "YYYY MM DD"
+ * endDate: in strict format "YYYY MM DD"
+ * courseLengthInMinutes: 
  * location:   Area
  * isMale:     gender
  * content:    User-defined
@@ -30,6 +32,7 @@ import badstudent.database.DaoMessage;
  * authCode:   default -1
  */
 
+
 public class Message{
 	
 	public static final String goofyPasswordTrickHackers = "o god you are so gay";
@@ -40,11 +43,15 @@ public class Message{
 
     private String password;
 
-    private Date date;
+    private Date startDate;
+    
+    private Date endDate;
+    
+    private int courseLengthInMinutes;
 
     private Location location;
 
-    private boolean isMale;
+    private int gender;
 
     private String content;
 
@@ -69,9 +76,10 @@ public class Message{
         this.id = "defaultId";
         this.userName = "defaultUserName";
         this.password = "defaultPassword";
-        this.date = new Date();
+        this.startDate = new Date();
+        this.endDate = new Date();
         this.location = new Location("江苏省 南京市 东南大学");
-        this.isMale = true;
+        this.gender = Constants.geneder_both;
         this.content = "defaultContent";
         this.email = "defaultEmail@default.com";
         this.phone = "1383838438";
@@ -88,9 +96,10 @@ public class Message{
         this.id = Constants.key_message_prefix+id;
         this.userName = "defaultUserName";
         this.password = "defaultPassword";
-        this.date = new Date();
+        this.startDate = new Date();
+        this.endDate = new Date();
         this.location = new Location("江苏省 南京市 东南大学");
-        this.isMale = true;
+        this.gender = Constants.geneder_both;
         this.content = "defaultContent";
         this.email = "defaultEmail@default.com";
         this.phone = "1383838438";
@@ -102,17 +111,19 @@ public class Message{
         this.authCode = -1;
     }
 
-    public Message(String userName,String password,String date,Location location,boolean isMale,String content,String email,
+    public Message(String userName,String password,String startDate,String endDate,int courseLengthInMinutes, Location location,int gender,String content,String email,
             String phone,String qq, String twitter, String selfDefined,double price,int type){
         this.userName = userName;
         this.password = password;
         try {
-            this.date = new SimpleDateFormat("yyyy MM dd").parse(date);
+            this.startDate = new SimpleDateFormat("yyyy MM dd").parse(startDate);
+            this.endDate = new SimpleDateFormat("yyyy MM dd").parse(endDate);
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        this.courseLengthInMinutes = courseLengthInMinutes;
         this.location = location;
-        this.isMale = isMale;
+        this.gender = gender;
         this.content = content;
         if(email.length()<3){
             email = email + "   ";
@@ -140,18 +151,20 @@ public class Message{
         this.authCode = -1;
     }
 
-    public Message(String id,String userName,String password,String date,Location location,boolean isMale,String content,String email,
+    public Message(String id,String userName,String password,String startDate,String endDate,int courseLengthInMinutes, Location location,int gender,String content,String email,
             String phone,String qq, String twitter, String selfDefined,double price,int type){
         this.id = id;
         this.userName = userName;
         this.password = password;
         try {
-            this.date = new SimpleDateFormat("yyyy MM dd").parse(date);
+            this.startDate = new SimpleDateFormat("yyyy MM dd").parse(startDate);
+            this.endDate = new SimpleDateFormat("yyyy MM dd").parse(endDate);
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        this.courseLengthInMinutes = courseLengthInMinutes;
         this.location = location;
-        this.isMale = isMale;
+        this.gender = gender;
         this.content = content;
         if(email.length()<3){
             email = email + "   ";
@@ -178,18 +191,20 @@ public class Message{
         this.authCode = -1;
     }
     
-    public Message(String id,String userName,String password,String date,Location location,boolean isMale,String content,String email,
+    public Message(String id,String userName,String password,String startDate,String endDate,int courseLengthInMinutes, Location location,int gender,String content,String email,
             String phone,String qq, String twitter, String selfDefined,double price,int type, int authCode){
         this.id = id;
         this.userName = userName;
         this.password = password;
         try {
-            this.date = new SimpleDateFormat("yyyy MM dd").parse(date);
+            this.startDate = new SimpleDateFormat("yyyy MM dd").parse(startDate);
+            this.endDate = new SimpleDateFormat("yyyy MM dd").parse(endDate);
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        this.courseLengthInMinutes = courseLengthInMinutes;
         this.location = location;
-        this.isMale = isMale;
+        this.gender = gender;
         this.content = content;
         if(email.length()<3){
             email = email + "   ";
@@ -234,7 +249,7 @@ public class Message{
     
     //test if this message is on the same day as target date
     public boolean sameDay(Date date){
-    	return (this.date.compareTo(date)==0);
+    	return (this.startDate.compareTo(date)==0);
     }
     
     //test if this message is at the same location as target location 
@@ -254,16 +269,16 @@ public class Message{
         return this.password;
     }
 
-    public Date getDate(){
-        return this.date;
+    public Date getStartDate(){
+        return this.startDate;
     }
 
     public Location getLocation(){
         return this.location;
     }
 
-    public boolean isMale(){
-        return this.isMale;
+    public int getGender(){
+        return this.gender;
     }
 
 
@@ -283,16 +298,16 @@ public class Message{
         this.password = password;
     }
 
-    public void setDate(Date date){
-        this.date = date;
+    public void setStartDate(Date date){
+        this.startDate = date;
     }
 
     public void setLocation(String location){
         this.location = new Location(location);
     }
 
-    public void setToMale(boolean isMale){
-        this.isMale = isMale;
+    public void setGender(int gender){
+        this.gender = gender;
     }
 
     public void setContent(String content){
@@ -362,6 +377,23 @@ public class Message{
     
     public void restoreAuthCode(){
     	this.authCode = -1;
+    }
+    
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+    
+
+    public int getCourseLengthInMinutes() {
+        return courseLengthInMinutes;
+    }
+
+    public void setCourseLengthInMinutes(int courseLengthInMinutes) {
+        this.courseLengthInMinutes = courseLengthInMinutes;
     }
 
 }

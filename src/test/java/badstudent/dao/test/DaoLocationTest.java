@@ -30,6 +30,7 @@ public class DaoLocationTest {
         n.add(d.getMessageById("1"));
         Common.d(d.searchByLocation(new Location("江苏省", "南京市", "玄武区", "东南大学"), null, n).get(0).getUserName());
         AllProvinceMappings a = new AllProvinceMappings();
+        Common.d_Chinese(MappingManager.determineRegionFromLocation(new Location("江苏省", "南京市", "东南大学")));
     }
 
 }

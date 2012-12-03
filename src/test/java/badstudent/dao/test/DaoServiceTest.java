@@ -98,7 +98,7 @@ public class DaoServiceTest {
         assertNotNull(returned);
         assertTrue(returned.getId().compareTo(message.getId()) == 0);
 
-        jedis.del(message.getId());
+        daoService.deleteMessage(message.getId());
         Message newReturned = daoService.getMessageById(message.getId());
 
         assertNull(newReturned);
@@ -121,7 +121,7 @@ public class DaoServiceTest {
 
         assertTrue(returned.getUserName().compareTo("jUnit") == 0);  //check if updated
 
-        jedis.del(message.getId());
+        daoService.deleteMessage(message.getId());
         assertNull(daoService.getMessageById(message.getId()));   //check if new message has been deleted
 
         List<Message> messages = daoService.getAllMessages();
@@ -233,9 +233,9 @@ public class DaoServiceTest {
 
         jedis.del(Constants.key_idGenerator);
         assertNull(jedis.get(Constants.key_idGenerator));
-        assertTrue(daoService.getEverything().size() == 1);
+        assertTrue(daoService.getEverything().size() == 0);
     }
-    /*
+    
     @Test
     public void sortMessageTest(){
         Location locationUW = new Location("Ontario", "Waterloo", "UniversityofWaterloo");
@@ -254,5 +254,5 @@ public class DaoServiceTest {
         daoService.clearDatabase();
         
     }
-    */
+    
 }

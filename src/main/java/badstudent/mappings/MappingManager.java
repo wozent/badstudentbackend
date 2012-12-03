@@ -80,17 +80,21 @@ public class MappingManager {
     public static boolean isLocationVaild(Location location) {
         String province = location.getProvince();
         String city = location.getCity();
-        String region = location.getRegion();
         String school = location.getSchool();
-        if (getProvinceMappings(province)!=null) {
-            if (getCityMappings(province, city)!=null) {
-                if (getRegionMappings(province, city, region)!=null) {
-                    if (getAllSchools(province, city, region).contains(school)) {
+        
+        MappingBase provinceMappings = getProvinceMappings(province);
+        if(provinceMappings!=null){
+            MappingBase cityMappings = getCityMappings(province, city);
+            if(cityMappings!=null){
+                for(String region : getAllRegion(province, city)){
+                    MappingBase regionMappings = getRegionMappings(province, city, region);
+                    if(regionMappings.getAllSubArea().contains(school)){
                         return true;
                     }
                 }
             }
         }
+
         return false;
     }
     
@@ -98,6 +102,10 @@ public class MappingManager {
         if(location.getRegion()!="NULL"){
             Common.d("Location has already got region which is " + location.getRegion());
             return location.getRegion();
+        }
+        if(!isLocationVaild(location)){
+            Common.d("Location is not vaild.");
+            return null;
         }
         for(String region : getAllRegion(location.getProvince(), location.getCity())){
             MappingBase regionMappings = getRegionMappings(location.getProvince(), location.getCity(), region);

@@ -53,6 +53,7 @@ public class DaoTest {
 		assertTrue(msgs.size() == 0);				//make sure the database is totally cleared, no memory has occurred in the above operations
 		
 		jedis.del(Constants.key_idGenerator);
+		jedis.del(Constants.key_recents);
 		assertNull(jedis.get(Constants.key_idGenerator));
 	    assertTrue(dao.getEverything().size() == 0);
 	}
@@ -159,6 +160,7 @@ public class DaoTest {
 		
 		messages = dao.getAllMessagesInDatabase();
 		assertTrue(messages.size() == 0);
+		jedis.flushDB();
 	}
 	
 }

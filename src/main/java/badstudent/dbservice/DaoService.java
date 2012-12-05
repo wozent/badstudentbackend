@@ -29,12 +29,16 @@ public class DaoService{
     public Message getMessageById(String id){
         return dao.getMessageById(id);
     }
+    
+    public List<Message> getRecents(){
+    	return dao.getRecents();
+    }
 
     /*create non-existing messages, return null if the message was already in the database(same Id), return the message entity if the message was not in existence and now created*/
     public Message createMessage(Message message){
         // currently using local time zone, improvements may be added
     	Date currentDate = new Date();
-    	if (currentDate.before(message.getStartDate()) || message.isDayInRange(currentDate)){
+    	if (!(currentDate.before(message.getStartDate()) || message.isDayInRange(currentDate))){
     		System.out.println("@createMessage::***warning***message outdated, doing nothing. current date: " + currentDate + " endDate: " + message.getEndDate());
     		return null;
     	}
@@ -53,10 +57,13 @@ public class DaoService{
     public Message updateMessage(Message message, String id){
         if (checkExistance(id) ){
             System.out.println("@updateMessage::id exist, updating message with id: " + id);
+            DaoLocation.deleteMessageFromSchool(dao.getMessageById(id));
+            DaoLocation.addMessageToSchool(message);
             return dao.updateMessageInDatabase(message);
         }
         else{
             System.out.println("@updateSchedule::***warning***id does not exist, creating new message with id: " + id);
+            DaoLocation.addMessageToSchool(message);
             dao.addMessageToDatabase(message);
             return null;
         }

@@ -54,6 +54,7 @@ public class DaoServiceTest {
 
         jedis.del(Constants.key_idGenerator);
         assertNull(jedis.get(Constants.key_idGenerator));
+        jedis.del(Constants.key_recents);
         assertTrue(daoService.getEverything().size() == 0);
     }
 
@@ -233,6 +234,7 @@ public class DaoServiceTest {
 
         jedis.del(Constants.key_idGenerator);
         assertNull(jedis.get(Constants.key_idGenerator));
+        jedis.del(Constants.key_recents);
         assertTrue(daoService.getEverything().size() == 0);
     }
     

@@ -33,6 +33,9 @@ public class MessageService extends Application {
 		//   API for primary search:  /api/badstudent/v0.9/primarySearch
 		String searchResourcePrefix = "/primarySearch";
 		router.attach(applicationPrefix + versionPrefix + searchResourcePrefix, PrimarySearch.class);
+		//   API for recents search:  /api/badstudent/v0.9/recentsSearch
+		String randomResourcePrefix = "/recentsSearch";
+		router.attach(applicationPrefix + versionPrefix + randomResourcePrefix, RecentsSearch.class);
 		//   API for location resources:  /api/badstudent/v0.9/location
 		String locationResourcePrefix = "/location";
 		router.attach(applicationPrefix + versionPrefix + locationResourcePrefix, LocationResource.class);

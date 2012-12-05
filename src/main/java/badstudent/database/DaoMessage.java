@@ -30,12 +30,38 @@ public class DaoMessage{
 		}
         return message;
 	}
+	
+	public List<Message> getRecents(){
+		//return the recentMessage list
+		List<String> messageStrings = jedis.lrange(Constants.key_recents, 0, Constants.max_recents);
+		List<Message> messages = new ArrayList<Message>();
+		for (int i = 0; i < messageStrings.size(); i++){
+			messages.add(new JSONDeserializer<Message>().deserialize(messageStrings.get(i)));
+		}
+		return messages;
+	}
+	
+	public boolean addRecents(String jsonMessage){
+		try {
+			//push this message to the top of the recentMessage list
+			jedis.lpush(Constants.key_recents, jsonMessage);
+			//if the recentMessage reaches its maximum length, pop off its last element
+			if (jedis.llen(Constants.key_recents) > Constants.max_recents){
+				jedis.rpop(Constants.key_recents);
+			}
+			Common.d("Dao::addRecents, add message : " + jsonMessage);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
 
 	public Message addMessageToDatabase(Message message){
 		try {
 			String jsonMessage = new JSONSerializer().serialize(message);
 			String messageId = message.getId();
 			jedis.set(messageId, jsonMessage);
+			addRecents(jsonMessage);
 			Common.d("Dao::createMessage, creating message with message id: " + messageId);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -21,7 +21,7 @@ import badstudent.database.DaoMessage;
  * endDate: in strict format "YYYY MM DD"
  * courseLengthInMinutes: 
  * location:   Area
- * isMale:     gender
+ * gender:     0:male 1:female 2:both
  * content:    User-defined
  * email:      Usual email format
  * phone:      11-digit
@@ -419,6 +419,32 @@ public class Message{
 		calendar.setTime(date);
 		return calendar;
 	}
+    
+    private static boolean isFieldNull(Message message){
+        if(message.getContent() == null || message.getEmail() == null || message.getEndDate() == null ||
+                message.getId() == null || message.getLocation() == null || message.getPassword() == null ||
+                message.getPassword() == null || message.getPhone() == null || message.getQq() == null || 
+                message.getSelfDefined() == null || message.getStartDate() == null ||
+                message.getTwitter() == null || message.getUserName() == null){
+            return false;
+        }
+        return true;
+    }
+    
+    public static boolean isMessageVaild(Message message){
+        if(isFieldNull(message)){
+            Common.d("Creation failure: One of the message field is empty.");
+            return false;
+        }
+        Date currentDate = new Date();
+        if (!(currentDate.before(message.getStartDate()) || message.isDayInRange(currentDate))){
+            Common.d("Creation failure:message outdated, doing nothing. current date: " + currentDate + " endDate: " + message.getEndDate());
+            return false;
+        }
+        
+        
+        return true;
+    }
 
 }
 

@@ -112,7 +112,9 @@ public class DaoServiceTest {
     public void updateMessageTest() {
 
         //here "test" is the original roomNumber
-        Message message = new Message("MichaelMatthew");
+        Location locationUW = new Location("江苏省", "南京市", "南京农业大学");
+        Message message = new Message("Simon","lol","2012 12 21","2012 12 21",30,locationUW,1,"looking for girlfriend","simon@uwaterloo.ca",
+                "519xxxxxx","123456789","twit","SimonJiang", 19.99, 1);
         daoService.createMessage(message);
 
         message.setUserName("jUnit");
@@ -177,6 +179,7 @@ public class DaoServiceTest {
 
     @Test
     public void SearchMessageTest(){
+        jedis.del(Constants.key_idGenerator);
         Location locationUW = new Location("江苏省", "南京市", "南京农业大学");
         Message msgUW = new Message("Simon","lol","2012 12 21","2012 12 21",30,locationUW,1,"looking for girlfriend","simon@uwaterloo.ca",
                 "519xxxxxx","123456789","test","SimonJiang", 19.99, 1);
@@ -253,7 +256,7 @@ public class DaoServiceTest {
                 "516xxxxxx","123456789","twit","SimonJian", 19.99, -1);
         daoService.createMessage(msgUT);
         daoService.sortMessageByEndDate(daoService.getAllMessages());
-        //daoService.clearDatabase();
+        daoService.clearDatabase();
         
     }
     

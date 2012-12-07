@@ -54,32 +54,29 @@ public class DaoService{
     }
 
     /*update message*/
-    public Message updateMessage(Message message, String id){
-        if (checkExistance(id) ){
-            System.out.println("@updateMessage::id exist, updating message with id: " + id);
-            DaoLocation.deleteMessageFromSchool(dao.getMessageById(id));
-            DaoLocation.addMessageToSchool(message);
-            return dao.updateMessageInDatabase(message);
+    public Message updateMessage(Message newMessage, String oldMessageId){
+        if(!newMessage.isMessageVaild()){
+            Common.d("@updateMessage:: New Message is not valid");
         }
-        else{
-            System.out.println("@updateSchedule::***warning***id does not exist, creating new message with id: " + id);
-            DaoLocation.addMessageToSchool(message);
-            dao.addMessageToDatabase(message);
+        if(checkExistance(oldMessageId) && DaoLocation.checkExistance(getMessageById(oldMessageId))){
+            Common.d("@updateMessage::id exist, updating message with id: " + oldMessageId);
+            return dao.updateMessageInDatabase(newMessage);
+        }else{
+            Common.d("@updateSchedule::***warning***id does not exist, abort.");
             return null;
         }
-
     }
 
     /*delete existing messages, return true if the message existed and now deleted, return false if the message was not found*/
     public boolean deleteMessage(String id){
-        if (checkExistance(id) ){
-            System.out.println("@deleteMessage::id exist, deleting message with id: " + id);
+        if (checkExistance(id) && DaoLocation.checkExistance(getMessageById(id))){
+            Common.d("@deleteMessage::id exist, deleting message with id: " + id);
             DaoLocation.deleteMessageFromSchool(dao.getMessageById(id));
             dao.deleteMessageFromDatabase(id);
             return true;
         }
         else{
-            System.out.println("@deleteMessage::***warning***id does not exist, doing nothing");
+            Common.d("@deleteMessage::***warning***id does not exist, doing nothing");
             return false;
         }
     }

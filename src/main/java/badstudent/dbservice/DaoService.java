@@ -11,31 +11,26 @@ import badstudent.database.*;
 public class DaoService{
 
     //private static Log log = LogFactory.getLog(ScheduleResource.class);
-    private DaoMessage dao;
-
-    public DaoService(){
-        this.dao = new DaoMessage();
-    }
 
     /*checks if the id exist in Redis*/
-    public boolean checkExistance(String id){
-        if (dao.getMessageById(id) == null){
+    public static boolean checkExistance(String id){
+        if (DaoMessage.getMessageById(id) == null){
             return false;
         }
         return true;
     }
 
 
-    public Message getMessageById(String id){
-        return dao.getMessageById(id);
+    public static Message getMessageById(String id){
+        return DaoMessage.getMessageById(id);
     }
     
-    public List<Message> getRecents(){
-    	return dao.getRecents();
+    public static List<Message> getRecents(){
+    	return DaoMessage.getRecents();
     }
 
     /*create non-existing messages, return null if the message was already in the database(same Id), return the message entity if the message was not in existence and now created*/
-    public Message createMessage(Message message){
+    public static Message createMessage(Message message){
         if(!message.isMessageVaild()){
             return null;
         }
@@ -49,18 +44,18 @@ public class DaoService{
         }
         Common.d("@createSchedule::id does not exist, creating message with id: " + message.getId());
         DaoLocation.addMessageToSchool(message);
-        dao.addMessageToDatabase(message);
+        DaoMessage.addMessageToDatabase(message);
         return message;
     }
 
     /*update message*/
-    public Message updateMessage(Message newMessage, String oldMessageId){
+    public static Message updateMessage(Message newMessage, String oldMessageId){
         if(!newMessage.isMessageVaild()){
             Common.d("@updateMessage:: New Message is not valid");
         }
         if(checkExistance(oldMessageId) && DaoLocation.checkExistance(getMessageById(oldMessageId))){
             Common.d("@updateMessage::id exist, updating message with id: " + oldMessageId);
-            return dao.updateMessageInDatabase(newMessage);
+            return DaoMessage.updateMessageInDatabase(newMessage);
         }else{
             Common.d("@updateSchedule::***warning***id does not exist, abort.");
             return null;
@@ -68,11 +63,11 @@ public class DaoService{
     }
 
     /*delete existing messages, return true if the message existed and now deleted, return false if the message was not found*/
-    public boolean deleteMessage(String id){
+    public static boolean deleteMessage(String id){
         if (checkExistance(id) && DaoLocation.checkExistance(getMessageById(id))){
             Common.d("@deleteMessage::id exist, deleting message with id: " + id);
-            DaoLocation.deleteMessageFromSchool(dao.getMessageById(id));
-            dao.deleteMessageFromDatabase(id);
+            DaoLocation.deleteMessageFromSchool(DaoMessage.getMessageById(id));
+            DaoMessage.deleteMessageFromDatabase(id);
             return true;
         }
         else{
@@ -82,32 +77,32 @@ public class DaoService{
     }
 
 
-    public List<Message> getAllMessages(){
-        return dao.getAllMessagesInDatabase();
+    public static List<Message> getAllMessages(){
+        return DaoMessage.getAllMessagesInDatabase();
     }
 
-    public Set<String> getIds(){
-        return dao.getAllMessageIdInDatabase();
+    public static Set<String> getIds(){
+        return DaoMessage.getAllMessageIdInDatabase();
     }
 
-    public Set<String> getPartialIds(String targetPattern){
-        return dao.getPartialIds(Constants.key_message_prefix + "*" + targetPattern + "*");
+    public static Set<String> getPartialIds(String targetPattern){
+        return DaoMessage.getPartialIds(Constants.key_message_prefix + "*" + targetPattern + "*");
     }
 
-    public Set<String> getEverything(){
+    public static Set<String> getEverything(){
         return DaoBasic.getWholeDatabase();  
     }
 
-    public List<Message> generalGontactInfoSearch(String contactInfoPiece){
+    public static List<Message> generalGontactInfoSearch(String contactInfoPiece){
         List<Message> matchedMessages = new ArrayList<Message>();
         if(contactInfoPiece == null || contactInfoPiece.length()<3){
             return matchedMessages;
         }
-        Set<String> keys = dao.getPartialIds(contactInfoPiece.substring(0, 3));
-        keys.addAll(dao.getPartialIds(contactInfoPiece.substring(contactInfoPiece.length()-3)));
+        Set<String> keys = DaoMessage.getPartialIds(contactInfoPiece.substring(0, 3));
+        keys.addAll(DaoMessage.getPartialIds(contactInfoPiece.substring(contactInfoPiece.length()-3)));
         for (String key : keys) {
             if (key.indexOf(contactInfoPiece.substring(0, 3), 7) != -1 || key.indexOf(contactInfoPiece.substring(contactInfoPiece.length()-3),7) != -1){
-                Message testMessage = dao.getMessageById(key);
+                Message testMessage = DaoMessage.getMessageById(key);
                 if (testMessage.getPhone().equalsIgnoreCase(contactInfoPiece) || testMessage.getEmail().equalsIgnoreCase(contactInfoPiece) || testMessage.getQq().equalsIgnoreCase(contactInfoPiece) || testMessage.getTwitter().equalsIgnoreCase(contactInfoPiece)|| testMessage.getSelfDefined().equalsIgnoreCase(contactInfoPiece)){
                     matchedMessages.add(testMessage);
                 }
@@ -118,15 +113,15 @@ public class DaoService{
     }
 
 
-    public List<Message> emailInfoSearch(String emailInfoPiece){
+    public static List<Message> emailInfoSearch(String emailInfoPiece){
         List<Message> matchedMessages = new ArrayList<Message>();
         if(emailInfoPiece == null || emailInfoPiece.length()<3){
             return matchedMessages;
         }
-        Set<String> keys = dao.getPartialIds(emailInfoPiece.substring(0,3));
+        Set<String> keys = DaoMessage.getPartialIds(emailInfoPiece.substring(0,3));
         for (String key : keys) {
             if (key.indexOf(emailInfoPiece.substring(0,3), 7) != -1){
-                Message testMessage = dao.getMessageById(key);
+                Message testMessage = DaoMessage.getMessageById(key);
                 if (testMessage.getEmail().equalsIgnoreCase(emailInfoPiece)){
                     matchedMessages.add(testMessage);
                 }
@@ -136,15 +131,15 @@ public class DaoService{
         return matchedMessages;
     }
 
-    public List<Message> phoneInfoSearch(String phoneInfoPiece){
+    public static List<Message> phoneInfoSearch(String phoneInfoPiece){
         List<Message> matchedMessages = new ArrayList<Message>();
         if(phoneInfoPiece == null || phoneInfoPiece.length()<3){
             return matchedMessages;
         }
-        Set<String> keys = dao.getPartialIds(phoneInfoPiece.substring(phoneInfoPiece.length()-3));
+        Set<String> keys = DaoMessage.getPartialIds(phoneInfoPiece.substring(phoneInfoPiece.length()-3));
         for (String key : keys) {
             if (key.indexOf(phoneInfoPiece.substring(phoneInfoPiece.length()-3), 7) != -1){
-                Message testMessage = dao.getMessageById(key);
+                Message testMessage = DaoMessage.getMessageById(key);
                 if (testMessage.getPhone().equalsIgnoreCase(phoneInfoPiece)){
                     matchedMessages.add(testMessage);
                 }
@@ -154,15 +149,15 @@ public class DaoService{
         return matchedMessages;
     }
 
-    public List<Message> qqInfoSearch(String qqInfoPiece){
+    public static List<Message> qqInfoSearch(String qqInfoPiece){
         List<Message> matchedMessages = new ArrayList<Message>();
         if(qqInfoPiece == null || qqInfoPiece.length()<3){
             return matchedMessages;
         }
-        Set<String> keys = dao.getPartialIds(qqInfoPiece.substring(qqInfoPiece.length() -3));
+        Set<String> keys = DaoMessage.getPartialIds(qqInfoPiece.substring(qqInfoPiece.length() -3));
         for (String key : keys) {
             if (key.indexOf(qqInfoPiece.substring(qqInfoPiece.length() -3), 7) != -1){
-                Message testMessage = dao.getMessageById(key);
+                Message testMessage = DaoMessage.getMessageById(key);
                 if (testMessage.getQq().equalsIgnoreCase(qqInfoPiece)){
                     matchedMessages.add(testMessage);
                 }
@@ -172,15 +167,15 @@ public class DaoService{
         return matchedMessages;
     }
 
-    public List<Message> twitterInfoSearch(String twitterInfoPiece){
+    public static List<Message> twitterInfoSearch(String twitterInfoPiece){
         List<Message> matchedMessages = new ArrayList<Message>();
         if(twitterInfoPiece == null || twitterInfoPiece.length()<3){
             return matchedMessages;
         }
-        Set<String> keys = dao.getPartialIds(twitterInfoPiece.substring(twitterInfoPiece.length() -3));
+        Set<String> keys = DaoMessage.getPartialIds(twitterInfoPiece.substring(twitterInfoPiece.length() -3));
         for (String key : keys) {
             if (key.indexOf(twitterInfoPiece.substring(twitterInfoPiece.length() -3), 7) != -1){
-                Message testMessage = dao.getMessageById(key);
+                Message testMessage = DaoMessage.getMessageById(key);
                 if (testMessage.getTwitter().equalsIgnoreCase(twitterInfoPiece)){
                     matchedMessages.add(testMessage);
                 }
@@ -191,15 +186,15 @@ public class DaoService{
     }
 
 
-    public List<Message> selfDefinedInfoSearch(String selfDefinedInfoPiece){
+    public static List<Message> selfDefinedInfoSearch(String selfDefinedInfoPiece){
         List<Message> matchedMessages = new ArrayList<Message>();
         if(selfDefinedInfoPiece == null || selfDefinedInfoPiece.length()<3){
             return matchedMessages;
         }
-        Set<String> keys = dao.getPartialIds(selfDefinedInfoPiece.substring(selfDefinedInfoPiece.length() -3));
+        Set<String> keys = DaoMessage.getPartialIds(selfDefinedInfoPiece.substring(selfDefinedInfoPiece.length() -3));
         for (String key : keys) {
             if (key.indexOf(selfDefinedInfoPiece.substring(selfDefinedInfoPiece.length() -3), 7) != -1){
-                Message testMessage = dao.getMessageById(key);
+                Message testMessage = DaoMessage.getMessageById(key);
                 if (testMessage.getSelfDefined().equalsIgnoreCase(selfDefinedInfoPiece)){
                     matchedMessages.add(testMessage);
                 }
@@ -209,7 +204,7 @@ public class DaoService{
         return matchedMessages;
     }
 
-    public List<Message> multipeSearch(String phone, String email, String qq, String twitter ,String selfDefined){
+    public static List<Message> multipeSearch(String phone, String email, String qq, String twitter ,String selfDefined){
         List<Message> merge = new ArrayList<Message>();
 
         //adding each of the search results into the merge List
@@ -262,7 +257,7 @@ public class DaoService{
         return merge;
     }
 
-    public List<Message> sortMessageByEndDate(List<Message> allMessages){
+    public static List<Message> sortMessageByEndDate(List<Message> allMessages){
         for(Message msg : allMessages){
             Common.d("Before sort:"+msg.getEndDate());
         }
@@ -282,7 +277,7 @@ public class DaoService{
         return allMessages;
     }
 
-    public void clearDatabase(){
+    public static void clearDatabase(){
         DaoBasic.clearDatabase();
     }
 
@@ -293,7 +288,7 @@ public class DaoService{
      * @param without		search results excluding these messages		if null then return full result
      * @return list of messages corresponding to target location, contained in within, not contained in without
      */
-    public List<Message> searchByLocation(Location location, List<Message> within, List<Message> without){
+    public static List<Message> searchByLocation(Location location, List<Message> within, List<Message> without){
     	List<Message> searchResult = new ArrayList<Message>();
         if(!MappingManager.isLocationVaild(location)){
             return null;
@@ -302,7 +297,7 @@ public class DaoService{
         if(within==null){
             within = new ArrayList<Message>();
             for(String id : messageIds){
-                within.add(dao.getMessageById(id));
+                within.add(DaoMessage.getMessageById(id));
             }
         }
         else{
@@ -318,7 +313,7 @@ public class DaoService{
         return within;
     }
     
-    public List<Message> searchByType(int type, List<Message> within, List<Message> without){
+    public static List<Message> searchByType(int type, List<Message> within, List<Message> without){
     	List<Message> searchResult = new ArrayList<Message>();
     	if (within == null){
     		Set<String> keys = getPartialIds("-" + Integer.toString(type));
@@ -357,11 +352,11 @@ public class DaoService{
      * @param without	search results excluding these messages		if null then return full result
      * @return list of messages corresponding to target date, contained in within, not contained in without
      */
-    public List<Message> searchByDate(Date date, List<Message> within, List<Message> without){
+    public static List<Message> searchByDate(Date date, List<Message> within, List<Message> without){
         List<Message> searchResult = new ArrayList<Message>();
         if (within == null){
             //store all messages on target date into searchResult
-            List<Message> allMessages = dao.getAllMessagesInDatabase();
+            List<Message> allMessages = DaoMessage.getAllMessagesInDatabase();
             for (int i = 0; i < allMessages.size(); i++){
                 if (allMessages.get(i).isDayInRange(date)){
                     searchResult.add(allMessages.get(i));

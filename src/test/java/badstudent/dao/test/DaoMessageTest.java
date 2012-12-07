@@ -8,7 +8,6 @@ import badstudent.model.Location;
 import badstudent.model.Message;
 
 public class DaoMessageTest {
-    private DaoService dao = new DaoService();
     
     @Test
     public void CreatMessageTest(){
@@ -18,6 +17,6 @@ public class DaoMessageTest {
                 "randomContent", "user1@random.com", "2269891234", "1145633458", "@user1", "randomself", 30, Constants.type_ask);
         Message msg2 = new Message("user2", "random2", "2013 10 11", "2013 10 13", 90, invaildLocation, Constants.geneder_female,
                 "randomContent", "user2@random.com", "2269891233", "1145633459", "@user2", "randomself", 20, Constants.type_help);
-        dao.createMessage(msg1);
+        DaoService.createMessage(msg1);
     }
 }

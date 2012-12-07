@@ -18,7 +18,7 @@ public class DaoMessage{
 	private static Jedis jedis = new Jedis("localhost");
 	
 	/*returns a message by its identifier*/
-	public Message getMessageById(String id){
+	public static Message getMessageById(String id){
 		String jsonMessage = jedis.get(id);
 		Message message = null;
 		if (jsonMessage != null){
@@ -27,7 +27,7 @@ public class DaoMessage{
         return message;
 	}
 	
-	public List<Message> getRecents(){
+	public static List<Message> getRecents(){
 		//return the recentMessage list
 		List<String> messageStrings = jedis.lrange(Constants.key_recents, 0, Constants.max_recents);
 		List<Message> messages = new ArrayList<Message>();
@@ -37,7 +37,7 @@ public class DaoMessage{
 		return messages;
 	}
 	
-	public boolean addRecents(String jsonMessage){
+	public static boolean addRecents(String jsonMessage){
 		try {
 			//push this message to the top of the recentMessage list
 			jedis.lpush(Constants.key_recents, jsonMessage);
@@ -52,7 +52,7 @@ public class DaoMessage{
 		return true;
 	}
 
-	public Message addMessageToDatabase(Message message){
+	public static Message addMessageToDatabase(Message message){
 		try {
 			String jsonMessage = new JSONSerializer().serialize(message);
 			String messageId = message.getId();
@@ -65,7 +65,7 @@ public class DaoMessage{
 		return message;
 	}
 
-	public Message updateMessageInDatabase(Message message){
+	public static Message updateMessageInDatabase(Message message){
 		String messageId = message.getId(); 
 		Message oldMessage = getMessageById(messageId);
 		if (oldMessage != null){
@@ -79,11 +79,11 @@ public class DaoMessage{
 		return message;
 	}
 
-	public boolean deleteMessageFromDatabase(String messageId) {
+	public static boolean deleteMessageFromDatabase(String messageId) {
 	    return 1==jedis.del(messageId);
 	}
 
-	public List<Message> getAllMessagesInDatabase() {
+	public static List<Message> getAllMessagesInDatabase() {
 		List<Message> messages = new ArrayList<Message>();
 		Set<String> keys = jedis.keys(Constants.key_message_prefix+"*");
 		for (String key : keys) {
@@ -95,12 +95,12 @@ public class DaoMessage{
 	}
 	
 	//return all the ids with the Message prefix, may be needed later on with different data models
-	public Set<String> getAllMessageIdInDatabase(){
+	public static Set<String> getAllMessageIdInDatabase(){
 		return jedis.keys(Constants.key_message_prefix + "*");  
 	}
 	
 	
-	public Set<String> getPartialIds(String targetPattern){
+	public static Set<String> getPartialIds(String targetPattern){
 		return jedis.keys(Constants.key_message_prefix + "*" + targetPattern + "*");
 	}
 

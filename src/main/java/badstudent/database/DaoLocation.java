@@ -36,5 +36,9 @@ public class DaoLocation {
         String school = msg.getLocation().getSchool();
         return jedis.srem(school, messageId).equals(1);
     }
+    
+    public static boolean checkExistance(Message msg){
+        return jedis.smembers(msg.getLocation().getSchool()).contains(msg.getId());
+    }
 
 }

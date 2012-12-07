@@ -10,6 +10,7 @@ import java.util.List;
 import badstudent.common.Common;
 import badstudent.common.Constants;
 import badstudent.database.DaoMessage;
+import badstudent.mappings.MappingManager;
 
 /**
  * The main data model
@@ -420,28 +421,50 @@ public class Message{
 		return calendar;
 	}
     
-    private static boolean isFieldNull(Message message){
-        if(message.getContent() == null || message.getEmail() == null || message.getEndDate() == null ||
-                message.getId() == null || message.getLocation() == null || message.getPassword() == null ||
-                message.getPassword() == null || message.getPhone() == null || message.getQq() == null || 
-                message.getSelfDefined() == null || message.getStartDate() == null ||
-                message.getTwitter() == null || message.getUserName() == null){
-            return false;
+    private boolean isFieldNull(){
+        if(this.getContent() == null || this.getEmail() == null || this.getEndDate() == null ||
+                this.getId() == null || this.getLocation() == null || this.getPassword() == null ||
+                this.getPassword() == null || this.getPhone() == null || this.getQq() == null || 
+                this.getSelfDefined() == null || this.getStartDate() == null ||
+                this.getTwitter() == null || this.getUserName() == null){
+            return true;
         }
-        return true;
+        return false;
     }
     
-    public static boolean isMessageVaild(Message message){
-        if(isFieldNull(message)){
+    public boolean isMessageVaild(){
+        if(isFieldNull()){
             Common.d("Creation failure: One of the message field is empty.");
             return false;
         }
-        Date currentDate = new Date();
-        if (!(currentDate.before(message.getStartDate()) || message.isDayInRange(currentDate))){
-            Common.d("Creation failure:message outdated, doing nothing. current date: " + currentDate + " endDate: " + message.getEndDate());
+        if(this.getStartDate().after(this.getEndDate())){
+            Common.d("Creation failure: start date is " + this.getStartDate() + ". end date is + " + this.getEndDate());
             return false;
         }
-        
+        if(Common.getCurrentDate().after(this.getEndDate())){
+            Common.d("Creation failure: current date is " + Common.getCurrentDate() + ". end date is + " + this.getEndDate());
+            return false;
+        }
+        if(this.getCourseLengthInMinutes()<=0){
+            Common.d("Creation failure: course length is less than or equal to 0");
+            return false;
+        }
+        if(!MappingManager.isLocationVaild(this.getLocation())){
+            Common.d("Creation failure: location is not vaild");
+            return false;
+        }
+        if(this.getGender()!=0 && this.getGender()!=1 && this.getGender()!=2){
+            Common.d("Creation failure: Gender Value is not correct");
+            return false;
+        }
+        if(this.getPrice()<0){
+            Common.d("Creation failure: price is less than 0");
+            return false;
+        }
+        if(this.getType()!=0 && this.getType()!=1 && this.getType()!=-1){
+            Common.d("Creation failure: Type Value is not correct");
+        }
+        //TODO:check authCode?
         
         return true;
     }

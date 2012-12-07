@@ -36,21 +36,21 @@ public class DaoService{
 
     /*create non-existing messages, return null if the message was already in the database(same Id), return the message entity if the message was not in existence and now created*/
     public Message createMessage(Message message){
-        // currently using local time zone, improvements may be added
-    	Date currentDate = new Date();
-    	if (!(currentDate.before(message.getStartDate()) || message.isDayInRange(currentDate))){
-    		System.out.println("@createMessage::***warning***message outdated, doing nothing. current date: " + currentDate + " endDate: " + message.getEndDate());
-    		return null;
-    	}
+        if(!message.isMessageVaild()){
+            return null;
+        }
         if (checkExistance(message.getId()) ){
             System.out.println("@createMessage::***warning***id does exist, doing nothing");
             return null;
         }
-        else{
-            System.out.println("@createSchedule::id does not exist, creating message with id: " + message.getId());
-            DaoLocation.addMessageToSchool(message);
-            return dao.addMessageToDatabase(message);
+        if(DaoLocation.checkExistance(message)){
+            System.out.println("@createMessage::***warning***id does exist in location, doing nothing");
+            return null;
         }
+        System.out.println("@createSchedule::id does not exist, creating message with id: " + message.getId());
+        DaoLocation.addMessageToSchool(message);
+        dao.addMessageToDatabase(message);
+        return message;
     }
 
     /*update message*/

@@ -17,10 +17,6 @@ import flexjson.JSONSerializer;
 public class DaoMessage{
 	private static Jedis jedis = new Jedis("localhost");
 	
-	public static Long generateId(){
-	    return jedis.incr(Constants.key_idGenerator);
-	}
-	
 	/*returns a message by its identifier*/
 	public Message getMessageById(String id){
 		String jsonMessage = jedis.get(id);
@@ -107,12 +103,5 @@ public class DaoMessage{
 	public Set<String> getPartialIds(String targetPattern){
 		return jedis.keys(Constants.key_message_prefix + "*" + targetPattern + "*");
 	}
-	
-	public Set<String> getEverything(){
-		return jedis.keys("*");  
-	}
-	
-	public static void clearDatabase(){
-	    jedis.flushAll();
-	}
+
 }

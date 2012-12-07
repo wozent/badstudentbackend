@@ -2,8 +2,6 @@ package badstudent.database;
 
 import java.util.HashSet;
 import java.util.Set;
-
-import badstudent.common.Common;
 import badstudent.mappings.MappingManager;
 import badstudent.model.Message;
 import redis.clients.jedis.Jedis;
@@ -24,7 +22,7 @@ public class DaoLocation {
         }
         return null;
     }
-    
+        
     public static void addMessageToSchool(Message msg){
         String messageId = msg.getId();
         String school = msg.getLocation().getSchool();

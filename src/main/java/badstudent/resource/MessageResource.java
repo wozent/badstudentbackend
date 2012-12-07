@@ -145,11 +145,11 @@ public class MessageResource extends ServerResource{
 		setStatus(Status.SUCCESS_OK);
 		
 		try {
-			System.out.println(result.getText() );
+			Common.d(result.getText() );
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("@Get::resources:searchMessages: query parameters: phone " + phone + " email " + email + " qq " + qq + " selfDefined" + selfDefined);
+		Common.d("@Get::resources:searchMessages: query parameters: phone " + phone + " email " + email + " qq " + qq + " selfDefined" + selfDefined);
 		
 		/*set the response header*/
 		Form responseHeaders = addHeader((Form) getResponse().getAttributes().get("org.restlet.http.headers")); 

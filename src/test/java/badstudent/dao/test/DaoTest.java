@@ -38,8 +38,8 @@ public class DaoTest {
 	    Message returnMsgUW = dao.getMessageById(msgUW.getId());
 	    Message returnMsgUT = dao.getMessageById(msgUT.getId());
 	    Message returnMsgUL = dao.getMessageById(msgUL.getId());
-	    System.out.println("daoTest::initDaoTest() -> initial msgUW location " + msgUW.getLocation());
-	    System.out.println("daoTest::initDaoTest() -> retuerned msgUW location " + returnMsgUW.getLocation());
+	    Common.d("daoTest::initDaoTest() -> initial msgUW location " + msgUW.getLocation());
+	    Common.d("daoTest::initDaoTest() -> retuerned msgUW location " + returnMsgUW.getLocation());
 	    assertTrue(returnMsgUW.getLocation().toString().compareTo(msgUW.getLocation().toString()) == 0);
 	    assertTrue(returnMsgUT.getLocation().toString().compareTo(msgUT.getLocation().toString()) == 0);
 	    assertTrue(returnMsgUL.getLocation().toString().compareTo(msgUL.getLocation().toString()) == 0);
@@ -55,7 +55,7 @@ public class DaoTest {
 		jedis.del(Constants.key_idGenerator);
 		jedis.del(Constants.key_recents);
 		assertNull(jedis.get(Constants.key_idGenerator));
-	    assertTrue(dao.getEverything().size() == 0);
+	    assertTrue(DaoBasic.getWholeDatabase().size() == 0);
 	}
 	
 	@Test

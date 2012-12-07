@@ -40,14 +40,14 @@ public class DaoService{
             return null;
         }
         if (checkExistance(message.getId()) ){
-            System.out.println("@createMessage::***warning***id does exist, doing nothing");
+            Common.d("@createMessage::***warning***id does exist, doing nothing");
             return null;
         }
         if(DaoLocation.checkExistance(message)){
-            System.out.println("@createMessage::***warning***id does exist in location, doing nothing");
+            Common.d("@createMessage::***warning***id does exist in location, doing nothing");
             return null;
         }
-        System.out.println("@createSchedule::id does not exist, creating message with id: " + message.getId());
+        Common.d("@createSchedule::id does not exist, creating message with id: " + message.getId());
         DaoLocation.addMessageToSchool(message);
         dao.addMessageToDatabase(message);
         return message;
@@ -95,7 +95,7 @@ public class DaoService{
     }
 
     public Set<String> getEverything(){
-        return dao.getEverything();  
+        return DaoBasic.getWholeDatabase();  
     }
 
     public List<Message> generalGontactInfoSearch(String contactInfoPiece){
@@ -283,7 +283,7 @@ public class DaoService{
     }
 
     public void clearDatabase(){
-        DaoMessage.clearDatabase();
+        DaoBasic.clearDatabase();
     }
 
 

@@ -38,8 +38,8 @@ public class DaoServiceTest {
         Message returnMsgUW = daoService.getMessageById(msgUW.getId());
         Message returnMsgUT = daoService.getMessageById(msgUT.getId());
         Message returnMsgUL = daoService.getMessageById(msgUL.getId());
-        System.out.println("daoServiceTest::initDaoTest() -> initial msgUW location " + msgUW.getLocation());
-        System.out.println("daoServiceTest::initDaoTest() -> retuerned msgUW location " + returnMsgUW.getLocation());
+        Common.d("daoServiceTest::initDaoTest() -> initial msgUW location " + msgUW.getLocation());
+        Common.d("daoServiceTest::initDaoTest() -> retuerned msgUW location " + returnMsgUW.getLocation());
         assertTrue(returnMsgUW.getLocation().toString().compareTo(msgUW.getLocation().toString()) == 0);
         assertTrue(returnMsgUT.getLocation().toString().compareTo(msgUT.getLocation().toString()) == 0);
         assertTrue(returnMsgUL.getLocation().toString().compareTo(msgUL.getLocation().toString()) == 0);

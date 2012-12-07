@@ -70,7 +70,7 @@ public class PrimarySearch extends ServerResource{
 			date = new SimpleDateFormat("yyyy MM dd").parse(dateString);
 		} catch (ParseException e1) {
 			e1.printStackTrace();
-			System.out.println("PrimarySearch:: @Get date string parse error: dateString: " + dateString);
+			Common.d("PrimarySearch:: @Get date string parse error: dateString: " + dateString);
 		};
 		
 		//main search part, first calls searchByLocation to get location-based messages, then test if each message matches target type and if it is on target day
@@ -94,11 +94,11 @@ public class PrimarySearch extends ServerResource{
 		setStatus(Status.SUCCESS_OK);
 		
 		try {
-			System.out.println(result.getText() );
+			Common.d(result.getText() );
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("@Get::resources::primarySearch query parameters: location: " + locationString + " date " + dateString);
+		Common.d("@Get::resources::primarySearch query parameters: location: " + locationString + " date " + dateString);
 		
 		/*set the response header*/
 		Form responseHeaders = addHeader((Form) getResponse().getAttributes().get("org.restlet.http.headers")); 

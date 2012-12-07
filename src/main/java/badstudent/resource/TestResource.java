@@ -60,7 +60,7 @@ public class TestResource extends ServerResource{
 		setStatus(Status.SUCCESS_OK);
 		
 		try {
-			System.out.println(result.getText() );
+			Common.d(result.getText() );
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

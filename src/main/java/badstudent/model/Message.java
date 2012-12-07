@@ -9,7 +9,7 @@ import java.util.List;
 
 import badstudent.common.Common;
 import badstudent.common.Constants;
-import badstudent.database.DaoMessage;
+import badstudent.database.DaoBasic;
 import badstudent.mappings.MappingManager;
 
 /**
@@ -235,7 +235,7 @@ public class Message{
 
     private void generateId(){
         String newId = Constants.key_message_prefix + extend(this.email).substring(0,3) + "-" +
-                extend(this.phone).substring(this.phone.length()-3) + "-" + extend(this.qq).substring(this.qq.length()-3) + "-" + extend(this.twitter).substring(this.twitter.length()-3)  + "-" + extend(this.selfDefined).substring(this.selfDefined.length()-3) + "-" + this.type + "-" + DaoMessage.generateId() ;
+                extend(this.phone).substring(this.phone.length()-3) + "-" + extend(this.qq).substring(this.qq.length()-3) + "-" + extend(this.twitter).substring(this.twitter.length()-3)  + "-" + extend(this.selfDefined).substring(this.selfDefined.length()-3) + "-" + this.type + "-" + DaoBasic.generateId() ;
         this.id = newId;
         Common.d(newId);
     }

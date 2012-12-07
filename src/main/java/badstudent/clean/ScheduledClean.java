@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 
 import java.util.Date;
 
+import badstudent.common.Common;
+
 public class ScheduledClean {
 
     private final Scheduler scheduler = new Scheduler();
@@ -23,12 +25,12 @@ public class ScheduledClean {
                 cleanOldSchedules();
             }
             private void cleanOldSchedules() {
-                System.out.println("cleaning old schedules at time: " + dateFormat.format(new Date()));
+                Common.d("cleaning old schedules at time: " + dateFormat.format(new Date()));
                 Clean clean = new Clean();
                 clean.cleanSchedules();
             }
         }, new DailyIterator(hourOfDay, minute, second));
-        System.out.println("ScheduledClean:: clean scheduled at " + hourOfDay + ":" + minute + ":" + second);
+        Common.d("ScheduledClean:: clean scheduled at " + hourOfDay + ":" + minute + ":" + second);
     }
 
 }

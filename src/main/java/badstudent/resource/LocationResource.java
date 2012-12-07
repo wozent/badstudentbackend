@@ -100,11 +100,11 @@ public class LocationResource extends ServerResource{
 		setStatus(Status.SUCCESS_OK);
 		
 		try {
-			System.out.println(result.getText() );
+			Common.d(result.getText() );
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		System.out.println("@Get::resources::LocationResource query parameters: province " + province + "city" + city);
+		Common.d("@Get::resources::LocationResource query parameters: province " + province + "city" + city);
 		
 		
 		/*set the response header*/

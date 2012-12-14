@@ -19,8 +19,6 @@ import badstudent.mappings.*;
 
 public class MessageResourceId extends ServerResource{
 
-    DaoService daoService = new DaoService();
-
     //this parseJSON parses received json into messages
     //it assumes that an id is present
     private Message parseJSON(Representation entity){
@@ -70,8 +68,8 @@ public class MessageResourceId extends ServerResource{
         Common.d(id);
         JSONObject jsonObject = null;
         try {
-        	Common.d(daoService.getMessageById(id).toString());
-            jsonObject = new JSONObject(daoService.getMessageById(id));
+        	Common.d(DaoService.getMessageById(id).toString());
+            jsonObject = new JSONObject(DaoService.getMessageById(id));
             jsonObject.remove("messageIdentifier");
 
         } catch (Exception e1) {
@@ -101,11 +99,11 @@ public class MessageResourceId extends ServerResource{
         Representation result = null;
         Message message = parseJSON(entity);
         
-        if (message != null && authMatch(message, daoService.getMessageById(id))){
+        if (message != null && authMatch(message, DaoService.getMessageById(id))){
             //auth-POST session ends, restore authCode to -1
         	message.restoreAuthCode();
         	//if available, update the message, before the password is changed to the goofy password
-            daoService.updateMessage(message, id);
+            DaoService.updateMessage(message, id);
             
             //goofy password sent to front end instead of real password
             message.setPassword(Message.goofyPasswordTrickHackers);
@@ -137,10 +135,10 @@ public class MessageResourceId extends ServerResource{
         
         try{
         	 int authCode = Integer.parseInt(authCodeString);
-        	 Message message = daoService.getMessageById(id);
+        	 Message message = DaoService.getMessageById(id);
         	 //check for authCode
              if (message.getAuthCode() == authCode && authCode != -1){
-            	 boolean exist = daoService.deleteMessage(id);
+            	 boolean exist = DaoService.deleteMessage(id);
                  
                  if (!exist){
                      setStatus(Status.CLIENT_ERROR_CONFLICT );

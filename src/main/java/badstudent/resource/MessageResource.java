@@ -22,8 +22,6 @@ import badstudent.mappings.*;
 
 public class MessageResource extends ServerResource{
 
-	private DaoService daoService = new DaoService();
-
 	/*set the response header to allow for CORS*/
 	public static Form addHeader(Form responseHeaders){
 		if (responseHeaders == null) { 
@@ -127,7 +125,7 @@ public class MessageResource extends ServerResource{
 			e.printStackTrace();
 		}*/
 		
-		List<Message> merge = daoService.multipeSearch(phone, email, qq, twitter, selfDefined);	
+		List<Message> merge = DaoService.multipeSearch(phone, email, qq, twitter, selfDefined);	
 		
 		JSONArray jsonArray = new JSONArray(merge);
 		
@@ -168,7 +166,7 @@ public class MessageResource extends ServerResource{
 		Representation result =  null;
 		//if available, add the message
 		if (message != null){
-			daoService.createMessage(message);
+			DaoService.createMessage(message);
 			
 
 			Common.d("@Post::resources::createMessage: available: " + message.getUserName() + message.getPassword());

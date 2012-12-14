@@ -26,8 +26,6 @@ import badstudent.model.*;
 
 public class AuthResource extends ServerResource{
 
-	private DaoService daoService = new DaoService();
-
 	/*set the response header to allow for CORS*/
 	public static Form addHeader(Form responseHeaders){
 		if (responseHeaders == null) { 
@@ -56,7 +54,7 @@ public class AuthResource extends ServerResource{
 		String id = (String)this.getRequestAttributes().get("id");
 		JSONObject jsonObject = null;
 		
-		Message message = daoService.getMessageById(id);
+		Message message = DaoService.getMessageById(id);
 		
 		if (message != null){
 			try {
@@ -66,7 +64,7 @@ public class AuthResource extends ServerResource{
 	        		//set an authentication code, also update data model in DB
 	        		message.setAuthCode(authCodeGenerator());
 	        		
-	        		daoService.updateMessage(message, id);
+	        		DaoService.updateMessage(message, id);
 	        		jsonObject = new JSONObject(message);
 	            	jsonObject.remove("messageIdentifier");
 	        	}

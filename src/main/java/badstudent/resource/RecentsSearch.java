@@ -25,8 +25,6 @@ import badstudent.model.*;
 
 public class RecentsSearch extends ServerResource{
 
-	private DaoService daoService = new DaoService();
-
 	/*set the response header to allow for CORS*/
 	public static Form addHeader(Form responseHeaders){
 		if (responseHeaders == null) { 
@@ -45,7 +43,7 @@ public class RecentsSearch extends ServerResource{
 		//main search part, first calls searchByLocation to get location-based messages, then test if each message is on target day
 		List<Message> searchResult = null;
 		
-		searchResult = daoService.getRecents();
+		searchResult = DaoService.getRecents();
 		
 		JSONArray jsonArray = new JSONArray(searchResult);
 		

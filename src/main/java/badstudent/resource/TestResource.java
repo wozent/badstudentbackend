@@ -25,8 +25,6 @@ import badstudent.model.*;
 
 public class TestResource extends ServerResource{
 
-	private DaoService daoService = new DaoService();
-
 	/*set the response header to allow for CORS*/
 	public static Form addHeader(Form responseHeaders){
 		if (responseHeaders == null) { 
@@ -42,7 +40,7 @@ public class TestResource extends ServerResource{
 	
 	@Get
 	public Representation searchMessages() {
-		List<Message> searchResult = daoService.getAllMessages();
+		List<Message> searchResult = DaoService.getAllMessages();
 		
 		JSONArray jsonArray = new JSONArray(searchResult);
 		

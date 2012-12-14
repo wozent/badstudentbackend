@@ -25,8 +25,6 @@ import badstudent.model.*;
 
 public class PrimarySearch extends ServerResource{
 
-	private DaoService daoService = new DaoService();
-
 	/*set the response header to allow for CORS*/
 	public static Form addHeader(Form responseHeaders){
 		if (responseHeaders == null) { 
@@ -74,9 +72,9 @@ public class PrimarySearch extends ServerResource{
 		};
 		
 		//main search part, first calls searchByLocation to get location-based messages, then test if each message matches target type and if it is on target day
-		List<Message> searchResult = daoService.searchByLocation(location, null, null);
-		searchResult = daoService.searchByType(type, searchResult, null);
-		searchResult = daoService.searchByDate(date, searchResult, null);
+		List<Message> searchResult = DaoService.searchByLocation(location, null, null);
+		searchResult = DaoService.searchByType(type, searchResult, null);
+		searchResult = DaoService.searchByDate(date, searchResult, null);
 		
 		JSONArray jsonArray = new JSONArray(searchResult);
 		

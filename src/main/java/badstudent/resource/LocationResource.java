@@ -27,8 +27,6 @@ import badstudent.model.*;
 
 public class LocationResource extends ServerResource{
 
-	private DaoService daoService = new DaoService();
-
 	/*set the response header to allow for CORS*/
 	public static Form addHeader(Form responseHeaders){
 		if (responseHeaders == null) { 

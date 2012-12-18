@@ -76,6 +76,11 @@ public class PrimarySearch extends ServerResource{
 		searchResult = DaoService.searchByType(type, searchResult, null);
 		searchResult = DaoService.searchByDate(date, searchResult, null);
 		
+		/*clear the content upon returning search results*/
+		for (int i = 0; i < searchResult.size(); i++){
+			searchResult.get(i).setContent("");
+		}
+		
 		JSONArray jsonArray = new JSONArray(searchResult);
 		
 		try{

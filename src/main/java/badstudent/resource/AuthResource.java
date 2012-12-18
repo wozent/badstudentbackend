@@ -51,7 +51,7 @@ public class AuthResource extends ServerResource{
 	public Representation authentication() {
 		//get query parameter _password
 		String password = getQuery().getValues("password");
-		String id = (String)this.getRequestAttributes().get("id");
+		String id = getQuery().getValues("id");
 		JSONObject jsonObject = null;
 		
 		Message message = DaoService.getMessageById(id);
@@ -70,6 +70,7 @@ public class AuthResource extends ServerResource{
 	        	}
 	        	else{
 	        		Common.d("AuthResource:: authentication: received password: " + password + " expected password: " + message.toString());
+	        		setStatus(Status.CLIENT_ERROR_UNAUTHORIZED);
 	        	}
 
 	        } catch (Exception e1) {

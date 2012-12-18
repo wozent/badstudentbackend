@@ -43,6 +43,7 @@ public class MessageService extends Application {
 		String authResourcePrefix = "/auth";
 		router.attach(applicationPrefix + versionPrefix + authResourcePrefix, AuthResource.class);
 		
+		//  API for all-message-display test: /api/badstudent/test
 		String testPrefix = "/test";
 		router.attach(applicationPrefix + testPrefix, TestResource.class);
 		

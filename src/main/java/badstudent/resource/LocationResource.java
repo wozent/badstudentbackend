@@ -84,14 +84,14 @@ public class LocationResource extends ServerResource{
 
 		
 		JSONArray jsonArray = new JSONArray(searchResult);
-		try{
+		/*try{
 			for (int i = 0; i < jsonArray.length(); i++){
 				jsonArray.getJSONObject(i).remove("messageIdentifier");
 			}
 		}
 		catch (JSONException e){
 			e.printStackTrace();
-		}
+		}*/
 		
 		Representation result = new JsonRepresentation(jsonArray);
 		//set status

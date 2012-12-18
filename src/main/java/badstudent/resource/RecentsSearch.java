@@ -45,9 +45,10 @@ public class RecentsSearch extends ServerResource{
 		
 		searchResult = DaoService.getRecents();
 		
-		/*clear the content upon returning search results*/
+		/*clear the content and password upon returning search results*/
 		for (int i = 0; i < searchResult.size(); i++){
 			searchResult.get(i).setContent("");
+			searchResult.get(i).setPassword(Message.goofyPasswordTrickHackers);
 		}
 		
 		JSONArray jsonArray = new JSONArray(searchResult);

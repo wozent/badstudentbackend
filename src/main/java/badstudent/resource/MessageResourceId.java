@@ -69,7 +69,9 @@ public class MessageResourceId extends ServerResource{
         JSONObject jsonObject = null;
         try {
         	Common.d(DaoService.getMessageById(id).toString());
-            jsonObject = new JSONObject(DaoService.getMessageById(id));
+        	Message message = DaoService.getMessageById(id);
+        	message.setPassword(Message.goofyPasswordTrickHackers);
+            jsonObject = new JSONObject(message);
             jsonObject.remove("messageIdentifier");
 
         } catch (Exception e1) {

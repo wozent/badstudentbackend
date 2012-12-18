@@ -127,9 +127,10 @@ public class MessageResource extends ServerResource{
 		
 		List<Message> merge = DaoService.multipeSearch(phone, email, qq, twitter, selfDefined);	
 		
-		/*clear the content upon returning search results*/
+		/*clear the content and password upon returning search results*/
 		for (int i = 0; i < merge.size(); i++){
 			merge.get(i).setContent("");
+			merge.get(i).setPassword(Message.goofyPasswordTrickHackers);
 		}
 		
 		JSONArray jsonArray = new JSONArray(merge);

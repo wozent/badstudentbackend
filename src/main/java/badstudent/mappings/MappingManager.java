@@ -65,14 +65,15 @@ public class MappingManager {
     // populating purpose
     public static Set<String> getAllSchools(String province, String city) {
         MappingBase cityMapping = getCityMappings(province, city);
-        if (cityMapping == null)
+        if (cityMapping == null){
             return null;
+        }
         Set<String> retVal = new HashSet<String>();
         for (String region : cityMapping.getAllSubArea()) {
             MappingBase regionMapping = cityMapping.getSubAreaMappings(region);
-            if (regionMapping == null)
-                continue;
-            retVal.addAll(regionMapping.getAllSubArea());
+            if (regionMapping != null){
+                retVal.addAll(regionMapping.getAllSubArea());
+            }
         }
         return retVal;
     }

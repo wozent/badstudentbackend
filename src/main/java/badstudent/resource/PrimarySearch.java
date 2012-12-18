@@ -30,7 +30,7 @@ public class PrimarySearch extends ServerResource{
 		if (responseHeaders == null) { 
 			responseHeaders = new Form(); 
 			responseHeaders.add("Access-Control-Allow-Origin", "*");
-			responseHeaders.add("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");
+			responseHeaders.add("Access-Control-Allow-Methods", "GET, OPTIONS");
 			responseHeaders.add("Access-Control-Allow-Headers", "Content-Type");
 			return responseHeaders;
 		}

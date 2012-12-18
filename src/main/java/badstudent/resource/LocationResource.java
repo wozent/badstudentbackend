@@ -32,7 +32,7 @@ public class LocationResource extends ServerResource{
 		if (responseHeaders == null) { 
 			responseHeaders = new Form(); 
 			responseHeaders.add("Access-Control-Allow-Origin", "*");
-			responseHeaders.add("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");
+			responseHeaders.add("Access-Control-Allow-Methods", "GET, OPTIONS");
 			responseHeaders.add("Access-Control-Allow-Headers", "Content-Type");
 			return responseHeaders;
 		}
@@ -54,7 +54,7 @@ public class LocationResource extends ServerResource{
 		String city = getQuery().getValues("city");
 		List<String> searchResult = null;
 		
-		if (province != null && province.compareTo("") != 0 && city != null && city.compareTo("") != 0){
+		if (!Common.isEntryNull(province) && !Common.isEntryNull(city)){
 			try{
 				Set<String> schools = MappingManager.getAllSchools(province, city);
 				searchResult = new ArrayList<String>(schools);
@@ -64,7 +64,7 @@ public class LocationResource extends ServerResource{
 				Common.d("invalid GETSCHOOL location query with parameter province: " + province + " city: " + city);
 			}
 		}
-		else if (province != null && province.compareTo("") != 0){
+		else if (!Common.isEntryNull(province)){
 			try{
 				Set<String> cities = MappingManager.getAllCity(province);
 				searchResult = new ArrayList<String>(cities);
@@ -74,7 +74,7 @@ public class LocationResource extends ServerResource{
 				Common.d("invalid GETCITY location query with parameter province: " + province + " city: " + city);
 			}
 		}
-		else if (province == null || province.compareTo("")== 0){
+		else if (Common.isEntryNull(province) && Common.isEntryNull(city)){
 			Set<String> provinces = MappingManager.getAllProvince();
 			searchResult = new ArrayList<String>(provinces);
 		}
@@ -102,7 +102,7 @@ public class LocationResource extends ServerResource{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		Common.d("@Get::resources::LocationResource query parameters: province " + province + "city" + city);
+		Common.d("@Get::resources::LocationResource query parameters: province " + province + " city         " + city);
 		
 		
 		/*set the response header*/

@@ -33,4 +33,14 @@ public class Common {
         }
         return retVal;
     }
+    
+    public static boolean isEntryNull(String entry){
+        if(entry==null){
+            return true;
+        }
+        if(entry.equals("")){
+            return true;
+        }
+        return false;
+    }
 }

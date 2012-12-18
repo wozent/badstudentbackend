@@ -1,9 +1,5 @@
 package badstudent.dao.test;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import org.junit.Test;
 
 import badstudent.common.Common;
@@ -13,16 +9,9 @@ public class MappingManagerTest {
     
     @Test
     public void normalFunctionTest(){
-        //MappingManager.getAllProvince();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy MM dd");
-        Date d = null;
-        try {
-            d = sdf.parse("2012 12 6");
-        } catch (ParseException e) {
-            e.printStackTrace();
+        for(String val : MappingManager.getAllSchools("江苏省","南京市")){
+            Common.d_Chinese(val);
         }
-        Common.d(""+Common.getCurrentDate().toString());
-        Common.d(""+d.equals(Common.getCurrentDate()));
     }
 
 }

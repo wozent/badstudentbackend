@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import badstudent.common.Common;
 import badstudent.common.Constants;
+import badstudent.database.DaoBasic;
 import badstudent.dbservice.DaoService;
 import badstudent.model.Location;
 import badstudent.model.Message;
@@ -15,6 +16,7 @@ public class SampleData {
     
     @Test
     public void CreatMessageTest(){
+        DaoBasic.clearDatabase();
         Location vaildLocation = new Location("江苏省 南京市 南京农业大学");
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy MM dd");  
         String today = formatter.format(new Date());

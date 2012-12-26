@@ -1,7 +1,10 @@
 package badstudent.dao.test;
 
+import static org.junit.Assert.*;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -12,7 +15,7 @@ import badstudent.dbservice.DaoService;
 import badstudent.model.Location;
 import badstudent.model.Message;
 
-public class SampleData {
+public class GetRecentsTest {
     
     @Test
     public void CreatMessageTest(){
@@ -27,6 +30,9 @@ public class SampleData {
                 "randomContent", "user2@random.com", "2269891233", "1145633459", "@user2", "randomself", 20, Constants.type_help);
         DaoService.createMessage(msg1);
         DaoService.createMessage(msg2);
-        DaoBasic.clearDatabase();
+        
+        List<Message> searchResult = DaoService.getRecents();
+        assertTrue(searchResult.size() == 2);
+        //DaoBasic.clearDatabase();
     }
 }

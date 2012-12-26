@@ -61,6 +61,7 @@ public class RecentsSearch extends ServerResource{
 		catch (JSONException e){
 			e.printStackTrace();
 		}
+		Common.d("recentSearchRestules: " + jsonArray.toString());
 		
 		Representation result = new JsonRepresentation(jsonArray);
 		//set status

@@ -33,6 +33,6 @@ public class GetRecentsTest {
         
         List<Message> searchResult = DaoService.getRecents();
         assertTrue(searchResult.size() == 2);
-        //DaoBasic.clearDatabase();
+        DaoBasic.clearDatabase();
     }
 }

@@ -1,28 +1,20 @@
 package badstudent.mappings.江苏省.南京市;
 
 import badstudent.mappings.MappingBase;
-import badstudent.mappings.江苏省.南京市.栖霞区.栖霞区Mappings;
-import badstudent.mappings.江苏省.南京市.玄武区.玄武区Mappings;
-public class 南京市Mappings extends MappingBase {
-    private final String 白下区 = "白下区";
-    private final String 秦淮区 = "秦淮区";
-    private final String 建邺区 = "建邺区";
-    private final String 下关区 = "下关区";
-    private final String 鼓楼区 = "鼓楼区";
-    private final String 雨花台区 = "雨花台区";
-    private final String 栖霞区 = "栖霞区";
-    private final String 江宁区 = "江宁区";
-    private final String 浦口区 = "浦口区";
-    private final String 六合区 = "六合区";
-    private final String 溧水县 = "溧水县";
-    private final String 高淳县 = "高淳县";
+import badstudent.mappings.江苏省.南京市.仙林大学城.仙林大学城Mappings;
+import badstudent.mappings.江苏省.南京市.南京区.南京区Mappings;
+import badstudent.mappings.江苏省.南京市.江宁大学城.江宁大学城Mappings;
+import badstudent.mappings.江苏省.南京市.江浦大学城.江浦大学城Mappings;
 
+public class 南京市Mappings extends MappingBase {
 
     @Override
     protected void initMappings() {
-        subAreaMappings.put("玄武区",new 玄武区Mappings());
-        subAreaMappings.put("栖霞区",new 栖霞区Mappings());
-        //TODO:Missing data.Remove constants.
+        subAreaMappings.put("南京区",new 南京区Mappings());
+        subAreaMappings.put("江宁大学城",new 江宁大学城Mappings());
+        subAreaMappings.put("江浦大学城",new 江浦大学城Mappings());
+        subAreaMappings.put("仙林大学城",new 仙林大学城Mappings());
+
     }
 
 }

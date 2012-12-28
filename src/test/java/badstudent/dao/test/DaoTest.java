@@ -19,15 +19,15 @@ public class DaoTest {
 	
 	@Test
 	public void initDaoTest(){
-		Location locationUW = new Location("江苏省", "南京市", "南京农业大学");
+		Location locationUW = new Location("江苏省", "南京市", "南京财经大学仙林校区");
 	    Message msgUW = new Message("Simon","lol","2012 12 21","2012 12 31",30,locationUW,1,"looking for girlfriend","simon@uwaterloo.ca",
 	            "519xxxxxx","123456789","twit","SimonJiang", 19.99, 1);
 	    DaoMessage.addMessageToDatabase(msgUW);
-	    Location locationUL = new Location("江苏省", "南京市", "南京农业大学");
+	    Location locationUL = new Location("江苏省", "南京市", "南京财经大学仙林校区");
 	    Message msgUL = new Message("Simon","lol","2012 12 22","2012 12 32",30,locationUL,0,"looking for girlfriend","simon@uwaterloo.ca",
 	            "519xxxxxx","123456789","twit","SimonJiang", 19.99, 0);
 	    DaoMessage.addMessageToDatabase(msgUL);
-	    Location locationUT = new Location("江苏省", "南京市", "南京农业大学");
+	    Location locationUT = new Location("江苏省", "南京市", "南京财经大学仙林校区");
 	    Message msgUT = new Message("Simon","lol","2012 12 23","2012 12 33",30,locationUT,2,"looking for girlfriend","simon@uwaterloo.ca",
 	            "519xxxxxx","123456789","twit","SimonJiang", 19.99, -1);
 	    DaoMessage.addMessageToDatabase(msgUT);

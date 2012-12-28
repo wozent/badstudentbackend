@@ -19,15 +19,15 @@ public class DaoServiceTest {
     
     @Test
     public void initDaoTest(){
-        Location locationUW = new Location("江苏省", "南京市", "南京农业大学");
+        Location locationUW = new Location("江苏省", "南京市", "南京财经大学仙林校区");
         Message msgUW = new Message("Simon","lol","2012 12 21","2012 12 31",30,locationUW,1,"looking for girlfriend","simon@uwaterloo.ca",
                 "519xxxxxx","123456789","twit","SimonJiang", 19.99, 1);
         DaoService.createMessage(msgUW);
-        Location locationUL = new Location("江苏省", "南京市", "南京农业大学");
+        Location locationUL = new Location("江苏省", "南京市", "南京财经大学仙林校区");
         Message msgUL = new Message("Simon","lol","2012 12 22","2012 12 31",30,locationUL,1,"looking for girlfriend","simon@uwaterloo.ca",
                 "519xxxxxx","123456789","twit","SimonJiang", 19.99, 0);
         DaoService.createMessage(msgUL);
-        Location locationUT = new Location("江苏省", "南京市", "南京农业大学");
+        Location locationUT = new Location("江苏省", "南京市", "南京财经大学仙林校区");
         Message msgUT = new Message("Simon","lol","2012 12 23","2012 12 31",30,locationUT,2,"looking for girlfriend","simon@uwaterloo.ca",
                 "519xxxxxx","123456789","twit","SimonJiang", 19.99, -1);
         DaoService.createMessage(msgUT);
@@ -111,7 +111,7 @@ public class DaoServiceTest {
     public void updateMessageTest() {
 
         //here "test" is the original roomNumber
-        Location locationUW = new Location("江苏省", "南京市", "南京农业大学");
+        Location locationUW = new Location("江苏省", "南京市", "南京财经大学仙林校区");
         Message message = new Message("Simon","lol","2012 12 21","2012 12 31",30,locationUW,1,"looking for girlfriend","simon@uwaterloo.ca",
                 "519xxxxxx","123456789","twit","SimonJiang", 19.99, 1);
         DaoService.createMessage(message);
@@ -179,15 +179,15 @@ public class DaoServiceTest {
     @Test
     public void SearchMessageTest(){
         jedis.del(Constants.key_idGenerator);
-        Location locationUW = new Location("江苏省", "南京市", "南京农业大学");
+        Location locationUW = new Location("江苏省", "南京市", "南京财经大学仙林校区");
         Message msgUW = new Message("Simon","lol","2012 12 21","2012 12 31",30,locationUW,1,"looking for girlfriend","simon@uwaterloo.ca",
                 "519xxxxxx","123456789","test","SimonJiang", 19.99, 1);
         DaoService.createMessage(msgUW);
-        Location locationUL = new Location("江苏省", "南京市", "南京农业大学");
+        Location locationUL = new Location("江苏省", "南京市", "南京财经大学仙林校区");
         Message msgUL = new Message("Simon","lol","2012 12 22","2012 12 32",30,locationUL,0,"looking for girlfriend","simon@uwaterloo.ca",
                 "519xxxxxx","123456788","twit","test", 19.99, 0);
         DaoService.createMessage(msgUL);
-        Location locationUT = new Location("江苏省", "南京市", "南京农业大学");
+        Location locationUT = new Location("江苏省", "南京市", "南京财经大学仙林校区");
         Message msgUT = new Message("Simon","lol","2012 12 23","2012 12 33",30,locationUT,2,"looking for girlfriend","mic@uwaterloo.ca",
                 "516xxxxxx","123456789","twit","SimonJian", 19.99, -1);
         DaoService.createMessage(msgUT);

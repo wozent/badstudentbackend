@@ -106,6 +106,9 @@ public class MappingManager {
         }
         if(!isLocationVaild(location)){
             Common.d("Location is not vaild.");
+            Common.d(""+location.getSchool());
+            Common.d(""+location.getProvince());
+            Common.d(""+location.getCity());
             return null;
         }
         for(String region : getAllRegion(location.getProvince(), location.getCity())){

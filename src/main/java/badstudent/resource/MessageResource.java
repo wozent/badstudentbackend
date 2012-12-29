@@ -153,7 +153,7 @@ public class MessageResource extends ServerResource{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		Common.d("@Get::resources:searchMessages: query parameters: phone " + phone + " email " + email + " qq " + qq + " selfDefined" + selfDefined);
+		Common.d("@Get::resources:searchMessages: query parameters: phone " + phone + " email " + email + " qq " + qq +  "twitter " + twitter + " selfDefined" + selfDefined);
 		
 		/*set the response header*/
 		Form responseHeaders = addHeader((Form) getResponse().getAttributes().get("org.restlet.http.headers")); 

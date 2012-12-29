@@ -80,7 +80,7 @@ public class Message{
         this.password = "defaultPassword";
         this.startDate = new Date();
         this.endDate = new Date();
-        this.location = new Location("江苏省 南京市 东南大学");
+        this.location = new Location("江苏省 南京市 南京大学仙林校区");
         this.gender = Constants.geneder_both;
         this.content = "defaultContent";
         this.email = "defaultEmail@default.com";
@@ -100,7 +100,7 @@ public class Message{
         this.password = "defaultPassword";
         this.startDate = new Date();
         this.endDate = new Date();
-        this.location = new Location("江苏省 南京市 东南大学");
+        this.location = new Location("江苏省 南京市 南京大学仙林校区");
         this.gender = Constants.geneder_both;
         this.content = "defaultContent";
         this.email = "defaultEmail@default.com";

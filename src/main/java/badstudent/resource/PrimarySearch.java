@@ -1,6 +1,7 @@
 package badstudent.resource;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -40,10 +41,21 @@ public class PrimarySearch extends ServerResource{
 	
 	@Get
 	public Representation searchMessages() {
+		Common.d("PrimarySearch::receving GET request");
 		//get query parameter _location _date
 		String locationString = getQuery().getValues("location");
 		String dateString = getQuery().getValues("date");
 		String typeString = getQuery().getValues("type");
+		
+		/*chinese characters in query parameter*/
+		try {
+			locationString = java.net.URLDecoder.decode(getQuery().getValues("location"),"utf-8");
+			Common.d(locationString);
+		} catch (UnsupportedEncodingException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		
 		int type = -1;
 		Location location = null;
 		

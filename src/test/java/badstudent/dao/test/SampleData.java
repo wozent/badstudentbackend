@@ -17,7 +17,7 @@ public class SampleData {
     @Test
     public void CreatMessageTest(){
         DaoBasic.clearDatabase();
-        Location vaildLocation = new Location("江苏省 南京市 南京农业大学");
+        Location vaildLocation = new Location("江苏省 南京市 南京财经大学仙林校区");
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy MM dd");  
         String today = formatter.format(new Date());
         Common.d(today);
@@ -27,6 +27,6 @@ public class SampleData {
                 "randomContent", "user2@random.com", "2269891233", "1145633459", "@user2", "randomself", 20, Constants.type_help);
         DaoService.createMessage(msg1);
         DaoService.createMessage(msg2);
-        DaoBasic.clearDatabase();
+        //DaoBasic.clearDatabase();
     }
 }

@@ -18,7 +18,7 @@ public class 天津区Mappings extends MappingBase {
         subAreaMappings.put("天津外国语大学",null);
         subAreaMappings.put("天津财经大学",null);
         subAreaMappings.put("天津商业大学",null);
-
+        subAreaMappings.put("河北工业大学",null);
     }
 
 }

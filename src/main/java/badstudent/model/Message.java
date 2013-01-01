@@ -240,8 +240,8 @@ public class Message{
     	String extTwitter = extend(this.twitter);
     	String extSelfDefined = extend(this.selfDefined);
         String newId = Constants.key_message_prefix + extEmail.substring(0,3) + "-" +
-                extPhone.substring(this.phone.length()-3) + 
-                "-" + extQq.substring(this.qq.length()-3) + "-" + extTwitter.substring(this.twitter.length()-3)  + "-" + extSelfDefined.substring(this.selfDefined.length()-3) + "-" + this.type + "-" + DaoBasic.generateId() ;
+                extPhone.substring(extPhone.length()-3) + 
+                "-" + extQq.substring(extQq.length()-3) + "-" + extTwitter.substring(extTwitter.length()-3)  + "-" + extSelfDefined.substring(extSelfDefined.length()-3) + "-" + this.type + "-" + DaoBasic.generateId() ;
         this.id = newId;
         Common.d(newId);
     }

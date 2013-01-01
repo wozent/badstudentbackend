@@ -1,6 +1,7 @@
 package badstudent.resource;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.representation.Representation;
@@ -64,9 +65,16 @@ public class MessageResourceId extends ServerResource{
 
     @Get 
     public Representation getCurrentMessagesById() {
-        String id = (String)this.getRequestAttributes().get("id");
+        String id = "";
+        try {
+			id = java.net.URLDecoder.decode((String)this.getRequestAttributes().get("id"),"utf-8");
+		} catch (UnsupportedEncodingException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
         Common.d(id);
         JSONObject jsonObject = null;
+        
         try {
         	Common.d(DaoService.getMessageById(id).toString());
         	Message message = DaoService.getMessageById(id);

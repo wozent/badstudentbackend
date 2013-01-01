@@ -1,6 +1,7 @@
 package badstudent.resource;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -110,20 +111,22 @@ public class MessageResource extends ServerResource{
 	@Get
 	public Representation searchMessages() {
 		//get query parameter _phone _email _qq _selfDefined
-		String phone = getQuery().getValues("phone");
-		String email = getQuery().getValues("email");
-		String qq = getQuery().getValues("qq");
-		String twitter = getQuery().getValues("twitter");
-		String selfDefined = getQuery().getValues("selfDefined");
+		String phone = "";
+		String email = "";
+		String qq = "";
+		String twitter = "";
+		String selfDefined = "";
 		
-		/*String queryType = getQuery().getValues("type");
-		try{
-			int type = Integer.parseInt(queryType);
+		try {
+			phone = java.net.URLDecoder.decode(getQuery().getValues("phone"),"utf-8");
+			email = java.net.URLDecoder.decode(getQuery().getValues("email"),"utf-8");
+			qq = java.net.URLDecoder.decode(getQuery().getValues("qq"),"utf-8");
+			twitter = java.net.URLDecoder.decode(getQuery().getValues("twitter"),"utf-8");
+			selfDefined = java.net.URLDecoder.decode(getQuery().getValues("selfDefined"),"utf-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
-		catch (NumberFormatException e){
-			Common.d("MessageResource::@GET  NumberFormatException with queryType: " + queryType);
-			e.printStackTrace();
-		}*/
 		
 		List<Message> merge = DaoService.multipeSearch(phone, email, qq, twitter, selfDefined);	
 		

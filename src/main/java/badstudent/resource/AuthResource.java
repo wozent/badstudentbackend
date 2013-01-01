@@ -1,6 +1,7 @@
 package badstudent.resource;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -52,6 +53,12 @@ public class AuthResource extends ServerResource{
 		//get query parameter _password
 		String password = getQuery().getValues("password");
 		String id = getQuery().getValues("id");
+		try {
+			id = java.net.URLDecoder.decode(getQuery().getValues("id"),"utf-8");
+		} catch (UnsupportedEncodingException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		JSONObject jsonObject = null;
 		
 		Message message = DaoService.getMessageById(id);
@@ -69,7 +76,7 @@ public class AuthResource extends ServerResource{
 	            	jsonObject.remove("messageIdentifier");
 	        	}
 	        	else{
-	        		Common.d("AuthResource:: authentication: received password: " + password + " expected password: " + message.toString());
+	        		Common.d("AuthResource:: authentication: received password: " + password + " expected password: " + message.getPassword());
 	        		setStatus(Status.CLIENT_ERROR_UNAUTHORIZED);
 	        	}
 

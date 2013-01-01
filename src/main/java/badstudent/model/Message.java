@@ -128,19 +128,19 @@ public class Message{
         this.gender = gender;
         this.content = content;
         if(email.length()<3){
-            email = email + "   ";
+            email = email;
         }
         if(phone.length()<3){
-            phone = phone + "   ";
+            phone = phone;
         }
         if(qq.length()<3){
-            qq = qq + "   ";
+            qq = qq;
         }
         if(twitter.length()<3){
-            twitter = twitter + "   ";
+            twitter = twitter;
         }
         if(selfDefined.length()<3){
-            selfDefined = selfDefined + "   ";
+            selfDefined = selfDefined;
         }
         this.email = email;
         this.phone = phone;
@@ -234,16 +234,25 @@ public class Message{
     }
 
     private void generateId(){
-        String newId = Constants.key_message_prefix + extend(this.email).substring(0,3) + "-" +
-                extend(this.phone).substring(this.phone.length()-3) + "-" + extend(this.qq).substring(this.qq.length()-3) + "-" + extend(this.twitter).substring(this.twitter.length()-3)  + "-" + extend(this.selfDefined).substring(this.selfDefined.length()-3) + "-" + this.type + "-" + DaoBasic.generateId() ;
+    	String extEmail = extend(this.email);
+    	String extPhone = extend(this.phone);
+    	String extQq = extend(this.qq);
+    	String extTwitter = extend(this.twitter);
+    	String extSelfDefined = extend(this.selfDefined);
+        String newId = Constants.key_message_prefix + extEmail.substring(0,3) + "-" +
+                extPhone.substring(this.phone.length()-3) + 
+                "-" + extQq.substring(this.qq.length()-3) + "-" + extTwitter.substring(this.twitter.length()-3)  + "-" + extSelfDefined.substring(this.selfDefined.length()-3) + "-" + this.type + "-" + DaoBasic.generateId() ;
         this.id = newId;
         Common.d(newId);
     }
     
     private String extend(String shitYouAreTooShort){
-    	if (shitYouAreTooShort.length() < 3){
-    		for (int i = 0; i < 3 - shitYouAreTooShort.length(); i++){
-    			shitYouAreTooShort.concat(" ");
+    	Common.d("extend" + shitYouAreTooShort);
+    	int length = shitYouAreTooShort.length();
+    	if ( length < 3){
+    		for (int i = 0; i < 3 - length; i++){
+    			shitYouAreTooShort += ("x");
+    			Common.d("extend::" + shitYouAreTooShort);
     		}
     	}
     	return shitYouAreTooShort;  //Michael, solving first world male problems once for all!!

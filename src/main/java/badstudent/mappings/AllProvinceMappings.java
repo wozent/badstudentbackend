@@ -2,7 +2,10 @@ package badstudent.mappings;
 
 import badstudent.mappings.上海.上海Mappings;
 import badstudent.mappings.云南省.云南省Mappings;
+import badstudent.mappings.内蒙古自治区.内蒙古自治区Mappings;
 import badstudent.mappings.北京.北京Mappings;
+import badstudent.mappings.台湾.台湾Mappings;
+import badstudent.mappings.吉林省.吉林省Mappings;
 import badstudent.mappings.四川省.四川省Mappings;
 import badstudent.mappings.天津.天津Mappings;
 import badstudent.mappings.宁夏回族自治区.宁夏回族自治区Mappings;
@@ -20,20 +23,19 @@ import badstudent.mappings.浙江省.浙江省Mappings;
 import badstudent.mappings.海南省.海南省Mappings;
 import badstudent.mappings.湖北省.湖北省Mappings;
 import badstudent.mappings.湖南省.湖南省Mappings;
+import badstudent.mappings.澳门.澳门Mappings;
 import badstudent.mappings.甘肃省.甘肃省Mappings;
 import badstudent.mappings.福建省.福建省Mappings;
 import badstudent.mappings.西藏自治区.西藏自治区Mappings;
 import badstudent.mappings.贵州省.贵州省Mappings;
+import badstudent.mappings.辽宁省.辽宁省Mappings;
 import badstudent.mappings.重庆.重庆Mappings;
 import badstudent.mappings.陕西省.陕西省Mappings;
 import badstudent.mappings.青海省.青海省Mappings;
+import badstudent.mappings.香港.香港Mappings;
+import badstudent.mappings.黑龙江省.黑龙江省Mappings;
 
 public class AllProvinceMappings extends MappingBase {
-
-    private final String 黑龙江省 = "黑龙江省";
-    private final String 吉林省 = "吉林省";
-    private final String 辽宁省 = "辽宁省";
-    private final String 内蒙古省 = "内蒙古省";
 
     @Override
     protected void initMappings() {
@@ -64,7 +66,13 @@ public class AllProvinceMappings extends MappingBase {
         subAreaMappings.put("湖北省", new 湖北省Mappings());
         subAreaMappings.put("湖南省", new 湖南省Mappings());
         subAreaMappings.put("陕西省", new 陕西省Mappings());
-        //TODO:Missing Data. remove constants
+        subAreaMappings.put("内蒙古自治区", new 内蒙古自治区Mappings());
+        subAreaMappings.put("台湾", new 台湾Mappings());
+        subAreaMappings.put("吉林省", new 吉林省Mappings());
+        subAreaMappings.put("澳门", new 澳门Mappings());
+        subAreaMappings.put("辽宁省", new 辽宁省Mappings());
+        subAreaMappings.put("香港", new 香港Mappings());
+        subAreaMappings.put("黑龙江省", new 黑龙江省Mappings());
     }
 
 }

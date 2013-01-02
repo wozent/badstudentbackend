@@ -37,7 +37,7 @@ public class MessageResourceId extends ServerResource{
         Message message = null;
         try {
             message = new Message(jsonMessage.getString("id"),jsonMessage.getString("userName"), jsonMessage.getString("password"),
-                    jsonMessage.getString("startdate"),jsonMessage.getString("endDate"),
+                    jsonMessage.getString("startDate"),jsonMessage.getString("endDate"),
                     jsonMessage.getInt("courseLengthInMinutes"),new Location(jsonMessage.getString("location")),
                     jsonMessage.getInt("gender"),jsonMessage.getString("content"),
                     jsonMessage.getString("email"),jsonMessage.getString("phone"),
@@ -141,6 +141,8 @@ public class MessageResourceId extends ServerResource{
     public Representation deleteMessage() {
     	//get query parameter _authCode
     	String authCodeString = getQuery().getValues("authCode");
+    	
+    	Common.d("DELETE::authCodeString: " + authCodeString);
         String id = (String)this.getRequestAttributes().get("id");
         
         try{

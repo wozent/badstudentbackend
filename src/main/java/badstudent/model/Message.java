@@ -168,7 +168,7 @@ public class Message{
         this.location = location;
         this.gender = gender;
         this.content = content;
-        if(email.length()<3){
+        /*if(email.length()<3){
             email = email + "   ";
         }
         if(phone.length()<3){
@@ -182,7 +182,7 @@ public class Message{
         }
         if(selfDefined.length()<3){
             selfDefined = selfDefined + "   ";
-        }
+        }*/
         this.email = email;
         this.phone = phone;
         this.qq = qq;
@@ -208,7 +208,7 @@ public class Message{
         this.location = location;
         this.gender = gender;
         this.content = content;
-        if(email.length()<3){
+        /*if(email.length()<3){
             email = email + "   ";
         }
         if(phone.length()<3){
@@ -222,7 +222,7 @@ public class Message{
         }
         if(selfDefined.length()<3){
             selfDefined = selfDefined + "   ";
-        }
+        }*/
         this.email = email;
         this.phone = phone;
         this.qq = qq;
@@ -234,11 +234,11 @@ public class Message{
     }
 
     private void generateId(){
-    	String extEmail = extend(this.email);
-    	String extPhone = extend(this.phone);
-    	String extQq = extend(this.qq);
-    	String extTwitter = extend(this.twitter);
-    	String extSelfDefined = extend(this.selfDefined);
+    	String extEmail = Common.extend(this.email);
+    	String extPhone = Common.extend(this.phone);
+    	String extQq = Common.extend(this.qq);
+    	String extTwitter = Common.extend(this.twitter);
+    	String extSelfDefined = Common.extend(this.selfDefined);
         String newId = Constants.key_message_prefix + extEmail.substring(0,3) + "-" +
                 extPhone.substring(extPhone.length()-3) + 
                 "-" + extQq.substring(extQq.length()-3) + "-" + extTwitter.substring(extTwitter.length()-3)  + "-" + extSelfDefined.substring(extSelfDefined.length()-3) + "-" + this.type + "-" + DaoBasic.generateId() ;
@@ -246,17 +246,6 @@ public class Message{
         Common.d(newId);
     }
     
-    private String extend(String shitYouAreTooShort){
-    	Common.d("extend" + shitYouAreTooShort);
-    	int length = shitYouAreTooShort.length();
-    	if ( length < 3){
-    		for (int i = 0; i < 3 - length; i++){
-    			shitYouAreTooShort += ("x");
-    			Common.d("extend::" + shitYouAreTooShort);
-    		}
-    	}
-    	return shitYouAreTooShort;  //Michael, solving first world male problems once for all!!
-    }
     
     //test if this message is on the same day as target date
     public boolean sameDay(Date date){

@@ -92,7 +92,8 @@ public class DaoService{
     public static Set<String> getEverything(){
         return DaoBasic.getWholeDatabase();  
     }
-
+    
+    /**test before use**/
     public static List<Message> generalGontactInfoSearch(String contactInfoPiece){
         List<Message> matchedMessages = new ArrayList<Message>();
         if(contactInfoPiece == null || contactInfoPiece.length()<3){
@@ -115,10 +116,11 @@ public class DaoService{
 
     public static List<Message> emailInfoSearch(String emailInfoPiece){
         List<Message> matchedMessages = new ArrayList<Message>();
-        if(emailInfoPiece == null || emailInfoPiece.length()<3){
+        if(emailInfoPiece == null || emailInfoPiece.compareTo("") == 0){
             return matchedMessages;
         }
-        Set<String> keys = DaoMessage.getPartialIds(emailInfoPiece.substring(0,3));
+        String signature = Common.extend(emailInfoPiece);
+        Set<String> keys = DaoMessage.getPartialIds(signature.substring(0,3));
         for (String key : keys) {
             if (key.indexOf(emailInfoPiece.substring(0,3), 7) != -1){
                 Message testMessage = DaoMessage.getMessageById(key);
@@ -133,10 +135,11 @@ public class DaoService{
 
     public static List<Message> phoneInfoSearch(String phoneInfoPiece){
         List<Message> matchedMessages = new ArrayList<Message>();
-        if(phoneInfoPiece == null || phoneInfoPiece.length()<3){
+        if(phoneInfoPiece == null || phoneInfoPiece.compareTo("") == 0){
             return matchedMessages;
         }
-        Set<String> keys = DaoMessage.getPartialIds(phoneInfoPiece.substring(phoneInfoPiece.length()-3));
+        String signature = Common.extend(phoneInfoPiece);
+        Set<String> keys = DaoMessage.getPartialIds(signature.substring(signature.length()-3));
         for (String key : keys) {
             if (key.indexOf(phoneInfoPiece.substring(phoneInfoPiece.length()-3), 7) != -1){
                 Message testMessage = DaoMessage.getMessageById(key);
@@ -151,10 +154,11 @@ public class DaoService{
 
     public static List<Message> qqInfoSearch(String qqInfoPiece){
         List<Message> matchedMessages = new ArrayList<Message>();
-        if(qqInfoPiece == null || qqInfoPiece.length()<3){
+        if(qqInfoPiece == null || qqInfoPiece.compareTo("") == 0){
             return matchedMessages;
         }
-        Set<String> keys = DaoMessage.getPartialIds(qqInfoPiece.substring(qqInfoPiece.length() -3));
+        String signature = Common.extend(qqInfoPiece);
+        Set<String> keys = DaoMessage.getPartialIds(signature.substring(signature.length() -3));
         for (String key : keys) {
             if (key.indexOf(qqInfoPiece.substring(qqInfoPiece.length() -3), 7) != -1){
                 Message testMessage = DaoMessage.getMessageById(key);
@@ -169,10 +173,11 @@ public class DaoService{
 
     public static List<Message> twitterInfoSearch(String twitterInfoPiece){
         List<Message> matchedMessages = new ArrayList<Message>();
-        if(twitterInfoPiece == null || twitterInfoPiece.length()<3){
+        if(twitterInfoPiece == null || twitterInfoPiece.compareTo("") == 0){
             return matchedMessages;
         }
-        Set<String> keys = DaoMessage.getPartialIds(twitterInfoPiece.substring(twitterInfoPiece.length() -3));
+        String signature = Common.extend(twitterInfoPiece);
+        Set<String> keys = DaoMessage.getPartialIds(signature.substring(signature.length() -3));
         for (String key : keys) {
             if (key.indexOf(twitterInfoPiece.substring(twitterInfoPiece.length() -3), 7) != -1){
                 Message testMessage = DaoMessage.getMessageById(key);
@@ -188,10 +193,11 @@ public class DaoService{
 
     public static List<Message> selfDefinedInfoSearch(String selfDefinedInfoPiece){
         List<Message> matchedMessages = new ArrayList<Message>();
-        if(selfDefinedInfoPiece == null || selfDefinedInfoPiece.length()<3){
+        if(selfDefinedInfoPiece == null || selfDefinedInfoPiece.compareTo("") == 0){
             return matchedMessages;
         }
-        Set<String> keys = DaoMessage.getPartialIds(selfDefinedInfoPiece.substring(selfDefinedInfoPiece.length() -3));
+        String signature = Common.extend(selfDefinedInfoPiece);
+        Set<String> keys = DaoMessage.getPartialIds(signature.substring(signature.length() -3));
         for (String key : keys) {
             if (key.indexOf(selfDefinedInfoPiece.substring(selfDefinedInfoPiece.length() -3), 7) != -1){
                 Message testMessage = DaoMessage.getMessageById(key);

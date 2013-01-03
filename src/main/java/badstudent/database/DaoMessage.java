@@ -51,6 +51,56 @@ public class DaoMessage{
 		}
 		return true;
 	}
+	
+	/*double check why lrm did not work, current way too inefficient*/
+	public static long updateRecents(String id, String newJsonMessage){
+		List<Message> messages = getRecents();
+		boolean found = false;
+		int i = 0;
+		while (i < messages.size() && found == false){
+			if (messages.get(i).getId().compareTo(id) == 0){
+				messages.remove(i);
+				found = true;
+			}
+			i++;
+		}
+		long result =  jedis.lrem(Constants.key_recents, 0, "");//remove all elements
+		for (i = 0; i < 10; i++){
+			jedis.lpop(Constants.key_recents);
+		}
+		for (i = 0; i < messages.size(); i++){
+			String jsonMessage = new JSONSerializer().serialize(messages.get(i));
+			jedis.lpush(Constants.key_recents, jsonMessage);
+		}
+		jedis.lpush(Constants.key_recents, newJsonMessage);
+		return result;
+	}
+	
+	/*double check why lrm did not work, current way too inefficient*/
+	public static long deleteRecents(String id){
+		List<Message> messages = getRecents();
+		boolean found = false;
+		int i = 0;
+		while (i < messages.size() && found == false){
+			if (messages.get(i).getId().compareTo(id) == 0){
+				messages.remove(i);
+				found = true;
+			}
+			i++;
+		}
+		long result =  jedis.lrem(Constants.key_recents, 0, "");//remove all elements
+		for (i = 0; i < 10; i++){
+			jedis.lpop(Constants.key_recents);
+		}
+		for (i = 0; i < messages.size(); i++){
+			String jsonMessage = new JSONSerializer().serialize(messages.get(i));
+			jedis.lpush(Constants.key_recents, jsonMessage);
+		}
+		return result;
+		/*Common.d("deleteRecents::trying to delete recents message with id: " + id);
+		String jsonMessage = jedis.get(id);
+		return jedis.lrem(Constants.key_recents, 1, jsonMessage);*/
+	}
 
 	public static Message addMessageToDatabase(Message message){
 		try {
@@ -70,6 +120,7 @@ public class DaoMessage{
 		Message oldMessage = getMessageById(messageId);
 		if (oldMessage != null){
 			String jsonMessage = new JSONSerializer().serialize(message);
+			updateRecents(messageId, jsonMessage);
 			jedis.set(message.getId(), jsonMessage);
 		}
 		else{
@@ -80,6 +131,8 @@ public class DaoMessage{
 	}
 
 	public static boolean deleteMessageFromDatabase(String messageId) {
+		long result = deleteRecents(messageId);
+		Common.d("deleteMessage::delete result: " + result);
 	    return 1==jedis.del(messageId);
 	}
 

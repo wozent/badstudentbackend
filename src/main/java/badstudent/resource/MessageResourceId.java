@@ -60,7 +60,7 @@ public class MessageResourceId extends ServerResource{
     public boolean authMatch(Message receivedMessage, Message dbMessage){
     	boolean authCodeMatch = (receivedMessage.getAuthCode() == dbMessage.getAuthCode()) && (receivedMessage.getAuthCode() != -1);
     	boolean passwordMatch = (receivedMessage.getPassword().compareTo(dbMessage.getPassword()) == 0);
-    	return  (authCodeMatch == passwordMatch);
+    	return  authCodeMatch == true && (authCodeMatch == passwordMatch);
     }
 
     @Get 
@@ -140,7 +140,8 @@ public class MessageResourceId extends ServerResource{
     @Delete
     public Representation deleteMessage() {
     	//get query parameter _authCode
-    	String authCodeString = getQuery().getValues("authCode");
+    	Form headers = (Form) getRequestAttributes().get("org.restlet.http.headers");
+    	String authCodeString = headers.getFirstValue("authCode");
     	
     	Common.d("DELETE::authCodeString: " + authCodeString);
         String id = (String)this.getRequestAttributes().get("id");

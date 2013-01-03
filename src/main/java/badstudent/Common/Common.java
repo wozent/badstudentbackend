@@ -45,12 +45,11 @@ public class Common {
     }
     
     public static String extend(String shitYouAreTooShort){
-    	Common.d("extend" + shitYouAreTooShort);
+    	Common.d("extend::" + shitYouAreTooShort);
     	int length = shitYouAreTooShort.length();
     	if ( length < 3){
     		for (int i = 0; i < 3 - length; i++){
     			shitYouAreTooShort += ("x");
-    			Common.d("extend::" + shitYouAreTooShort);
     		}
     	}
     	return shitYouAreTooShort; 

@@ -55,6 +55,8 @@ public class DaoService{
         }
         if(checkExistance(oldMessageId) && DaoLocation.checkExistance(getMessageById(oldMessageId))){
             Common.d("@updateMessage::id exist, updating message with id: " + oldMessageId);
+            DaoLocation.deleteMessageFromSchool(getMessageById(oldMessageId));
+            DaoLocation.addMessageToSchool(newMessage);
             return DaoMessage.updateMessageInDatabase(newMessage);
         }else{
             Common.d("@updateSchedule::***warning***id does not exist, abort.");

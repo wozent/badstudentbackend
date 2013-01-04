@@ -143,8 +143,8 @@ public class MessageResourceId extends ServerResource{
     	Form headers = (Form) getRequestAttributes().get("org.restlet.http.headers");
     	String authCodeString = headers.getFirstValue("authCode");
     	
-    	Common.d("DELETE::authCodeString: " + authCodeString);
         String id = (String)this.getRequestAttributes().get("id");
+        Common.d("DELETE::authCodeString: " + authCodeString + " expected: " + DaoService.getMessageById(id).getAuthCode());
         
         try{
         	 int authCode = Integer.parseInt(authCodeString);

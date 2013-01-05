@@ -268,8 +268,9 @@ public class DaoService{
             }
         }
         //this is very dangeous in terms of time complexity, should be improved in the future
+        
         if (merge.size() == 0){
-        	Set<String> allKeys = DaoMessage.getPartialIds("");
+        	Set<String> allKeys = DaoMessage.getPartialIds("*");
             for (String key : allKeys) {
                 Message testMessage = DaoMessage.getMessageById(key);
 

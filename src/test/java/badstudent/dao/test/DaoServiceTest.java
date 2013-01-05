@@ -19,16 +19,17 @@ public class DaoServiceTest {
     
     @Test
     public void initDaoTest(){
+        String date = "2013 1 5";
         Location locationUW = new Location("江苏省", "南京市", "南京财经大学仙林校区");
-        Message msgUW = new Message("Simon","lol","2012 12 21","2012 12 31",30,locationUW,1,"looking for girlfriend","simon@uwaterloo.ca",
+        Message msgUW = new Message("Simon","lol",date,date,30,locationUW,1,"looking for girlfriend","simon@uwaterloo.ca",
                 "519xxxxxx","123456789","twit","SimonJiang", 19.99, 1);
         DaoService.createMessage(msgUW);
         Location locationUL = new Location("江苏省", "南京市", "南京财经大学仙林校区");
-        Message msgUL = new Message("Simon","lol","2012 12 22","2012 12 31",30,locationUL,1,"looking for girlfriend","simon@uwaterloo.ca",
+        Message msgUL = new Message("Simon","lol",date,date,30,locationUL,1,"looking for girlfriend","simon@uwaterloo.ca",
                 "519xxxxxx","123456789","twit","SimonJiang", 19.99, 0);
         DaoService.createMessage(msgUL);
         Location locationUT = new Location("江苏省", "南京市", "南京财经大学仙林校区");
-        Message msgUT = new Message("Simon","lol","2012 12 23","2012 12 31",30,locationUT,2,"looking for girlfriend","simon@uwaterloo.ca",
+        Message msgUT = new Message("Simon","lol",date,date,30,locationUT,2,"looking for girlfriend","simon@uwaterloo.ca",
                 "519xxxxxx","123456789","twit","SimonJiang", 19.99, -1);
         DaoService.createMessage(msgUT);
 

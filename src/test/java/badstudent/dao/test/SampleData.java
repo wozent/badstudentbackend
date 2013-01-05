@@ -16,7 +16,7 @@ public class SampleData {
     
     @Test
     public void CreatMessageTest(){
-        DaoBasic.clearDatabase();
+        //DaoBasic.clearDatabase();
         Location vaildLocation = new Location("江苏省 南京市 南京财经大学仙林校区");
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy MM dd");  
         String today = formatter.format(new Date());

@@ -268,25 +268,29 @@ public class DaoService{
             }
         }
         //this is very dangeous in terms of time complexity, should be improved in the future
-        
         if (merge.size() == 0){
+    	   boolean searchPhone = (phone != null && phone.compareTo("") != 0);
+           boolean searchEmail = (email != null && email.compareTo("") != 0);
+           boolean searchQq = (qq != null && qq.compareTo("") != 0);
+           boolean searchTwitter = (twitter != null && twitter.compareTo("") != 0);
+           boolean searchSelfDefined = (selfDefined != null && selfDefined.compareTo("") != 0);
         	Set<String> allKeys = DaoMessage.getPartialIds("*");
             for (String key : allKeys) {
                 Message testMessage = DaoMessage.getMessageById(key);
 
-                if (testMessage.getEmail().equalsIgnoreCase(email)){
+                if (searchEmail && testMessage.getEmail().equalsIgnoreCase(email)){
                     merge.add(testMessage);
                 }
-                else if (testMessage.getPhone().equalsIgnoreCase(phone)){
+                else if (searchPhone && testMessage.getPhone().equalsIgnoreCase(phone)){
                     merge.add(testMessage);
                 }
-                else if (testMessage.getQq().equalsIgnoreCase(qq)){
+                else if (searchQq && testMessage.getQq().equalsIgnoreCase(qq)){
                     merge.add(testMessage);
                 }
-                else if (testMessage.getTwitter().equalsIgnoreCase(twitter)){
+                else if (searchTwitter && testMessage.getTwitter().equalsIgnoreCase(twitter)){
                     merge.add(testMessage);
                 }
-                else if (testMessage.getSelfDefined().equalsIgnoreCase(selfDefined)){
+                else if (searchSelfDefined && testMessage.getSelfDefined().equalsIgnoreCase(selfDefined)){
                     merge.add(testMessage);
                 }
                 

@@ -59,7 +59,7 @@ public class DaoService{
             DaoLocation.addMessageToSchool(newMessage);
             return DaoMessage.updateMessageInDatabase(newMessage);
         }else{
-            Common.d("@updateSchedule::***warning***id does not exist, abort.");
+            Common.d("@updateMessage::***warning***id does not exist, abort.");
             return null;
         }
     }
@@ -124,7 +124,7 @@ public class DaoService{
         String signature = Common.extend(emailInfoPiece);
         Set<String> keys = DaoMessage.getPartialIds(signature.substring(0,3));
         for (String key : keys) {
-            if (key.indexOf(emailInfoPiece.substring(0,3), 7) != -1){
+            if (key.indexOf(signature.substring(0,3), 7) != -1){
                 Message testMessage = DaoMessage.getMessageById(key);
                 if (testMessage.getEmail().equalsIgnoreCase(emailInfoPiece)){
                     matchedMessages.add(testMessage);
@@ -143,7 +143,7 @@ public class DaoService{
         String signature = Common.extend(phoneInfoPiece);
         Set<String> keys = DaoMessage.getPartialIds(signature.substring(signature.length()-3));
         for (String key : keys) {
-            if (key.indexOf(phoneInfoPiece.substring(phoneInfoPiece.length()-3), 7) != -1){
+            if (key.indexOf(signature.substring(signature.length()-3), 7) != -1){
                 Message testMessage = DaoMessage.getMessageById(key);
                 if (testMessage.getPhone().equalsIgnoreCase(phoneInfoPiece)){
                     matchedMessages.add(testMessage);
@@ -162,7 +162,7 @@ public class DaoService{
         String signature = Common.extend(qqInfoPiece);
         Set<String> keys = DaoMessage.getPartialIds(signature.substring(signature.length() -3));
         for (String key : keys) {
-            if (key.indexOf(qqInfoPiece.substring(qqInfoPiece.length() -3), 7) != -1){
+            if (key.indexOf(signature.substring(signature.length()-3), 7) != -1){
                 Message testMessage = DaoMessage.getMessageById(key);
                 if (testMessage.getQq().equalsIgnoreCase(qqInfoPiece)){
                     matchedMessages.add(testMessage);
@@ -181,7 +181,7 @@ public class DaoService{
         String signature = Common.extend(twitterInfoPiece);
         Set<String> keys = DaoMessage.getPartialIds(signature.substring(signature.length() -3));
         for (String key : keys) {
-            if (key.indexOf(twitterInfoPiece.substring(twitterInfoPiece.length() -3), 7) != -1){
+            if (key.indexOf(signature.substring(signature.length()-3), 7) != -1){
                 Message testMessage = DaoMessage.getMessageById(key);
                 if (testMessage.getTwitter().equalsIgnoreCase(twitterInfoPiece)){
                     matchedMessages.add(testMessage);
@@ -201,7 +201,7 @@ public class DaoService{
         String signature = Common.extend(selfDefinedInfoPiece);
         Set<String> keys = DaoMessage.getPartialIds(signature.substring(signature.length() -3));
         for (String key : keys) {
-            if (key.indexOf(selfDefinedInfoPiece.substring(selfDefinedInfoPiece.length() -3), 7) != -1){
+            if (key.indexOf(signature.substring(signature.length()-3), 7) != -1){
                 Message testMessage = DaoMessage.getMessageById(key);
                 if (testMessage.getSelfDefined().equalsIgnoreCase(selfDefinedInfoPiece)){
                     matchedMessages.add(testMessage);
@@ -214,13 +214,15 @@ public class DaoService{
 
     public static List<Message> multipeSearch(String phone, String email, String qq, String twitter ,String selfDefined){
         List<Message> merge = new ArrayList<Message>();
+        List<String> idTable = new ArrayList<String>();
 
         //adding each of the search results into the merge List
         if(phone != null && phone.compareTo("") != 0){
             List<Message> searchByPhone = phoneInfoSearch(phone);
             for (int i = 0; i < searchByPhone.size(); i++){
                 Message temp = searchByPhone.get(i);
-                if (!merge.contains(temp)){
+                if (!idTable.contains(temp.getId())){
+                	idTable.add(temp.getId());
                     merge.add(temp);
                 }
             }
@@ -229,7 +231,8 @@ public class DaoService{
             List<Message> searchByEmail = emailInfoSearch(email);
             for (int i = 0; i < searchByEmail.size(); i++){
                 Message temp = searchByEmail.get(i);
-                if (!merge.contains(temp)){
+                if (!idTable.contains(temp.getId())){
+                	idTable.add(temp.getId());
                     merge.add(temp);
                 }
             }
@@ -238,7 +241,8 @@ public class DaoService{
             List<Message> searchByQq = qqInfoSearch(qq);
             for (int i = 0; i < searchByQq.size(); i++){
                 Message temp = searchByQq.get(i);
-                if (!merge.contains(temp)){
+                if (!idTable.contains(temp.getId())){
+                	idTable.add(temp.getId());
                     merge.add(temp);
                 }
             }
@@ -247,7 +251,8 @@ public class DaoService{
             List<Message> searchBytwitter = twitterInfoSearch(twitter);
             for (int i = 0; i < searchBytwitter.size(); i++){
                 Message temp = searchBytwitter.get(i);
-                if (!merge.contains(temp)){
+                if (!idTable.contains(temp.getId())){
+                	idTable.add(temp.getId());
                     merge.add(temp);
                 }
             }
@@ -256,11 +261,36 @@ public class DaoService{
             List<Message> searchBySelfDefined = selfDefinedInfoSearch(selfDefined);
             for (int i = 0; i < searchBySelfDefined.size(); i++){
                 Message temp = searchBySelfDefined.get(i);
-                if (!merge.contains(temp)){
+                if (!idTable.contains(temp.getId())){
+                	idTable.add(temp.getId());
                     merge.add(temp);
                 }
             }
-        }	
+        }
+        //this is very dangeous in terms of time complexity, should be improved in the future
+        if (merge.size() == 0){
+        	Set<String> allKeys = DaoMessage.getPartialIds("");
+            for (String key : allKeys) {
+                Message testMessage = DaoMessage.getMessageById(key);
+
+                if (testMessage.getEmail().equalsIgnoreCase(email)){
+                    merge.add(testMessage);
+                }
+                else if (testMessage.getPhone().equalsIgnoreCase(phone)){
+                    merge.add(testMessage);
+                }
+                else if (testMessage.getQq().equalsIgnoreCase(qq)){
+                    merge.add(testMessage);
+                }
+                else if (testMessage.getTwitter().equalsIgnoreCase(twitter)){
+                    merge.add(testMessage);
+                }
+                else if (testMessage.getSelfDefined().equalsIgnoreCase(selfDefined)){
+                    merge.add(testMessage);
+                }
+                
+            }
+        }
 
         return merge;
     }

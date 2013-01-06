@@ -41,20 +41,20 @@ public class PrimarySearch extends ServerResource{
 	
 	@Get
 	public Representation searchMessages() {
-		Common.d("PrimarySearch::receving GET request");
 		//get query parameter _location _date
 		String locationString = getQuery().getValues("location");
 		String dateString = getQuery().getValues("date");
 		String typeString = getQuery().getValues("type");
+		Common.d("PrimarySearch::receving GET request location: " + locationString);
 		
 		/*chinese characters in query parameter*/
 		try {
 			locationString = java.net.URLDecoder.decode(getQuery().getValues("location"),"utf-8");
-			Common.d(locationString);
 		} catch (UnsupportedEncodingException e2) {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
+		Common.d("PrimarySearch::receving GET request location: " + locationString);
 		
 		int type = -1;
 		Location location = null;

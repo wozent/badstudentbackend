@@ -105,7 +105,13 @@ public class MessageResourceId extends ServerResource{
     //authCode must not equal to initial authCode -1
     @Put 
     public Representation updateMessage(Representation entity) {
-        String id = (String)this.getRequestAttributes().get("id");
+        String id = "";
+		try {
+			id = java.net.URLDecoder.decode((String)this.getRequestAttributes().get("id"), "utf-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         Representation result = null;
         Message message = parseJSON(entity);
         
@@ -141,9 +147,16 @@ public class MessageResourceId extends ServerResource{
     public Representation deleteMessage() {
     	//get query parameter _authCode
     	Form headers = (Form) getRequestAttributes().get("org.restlet.http.headers");
-    	String authCodeString = headers.getFirstValue("authCode");
+    	String authCodeString = "";
+    	String id = "";
+		try {
+			authCodeString = java.net.URLDecoder.decode(headers.getFirstValue("authCode"), "utf-8");
+			id = java.net.URLDecoder.decode((String)this.getRequestAttributes().get("id"), "utf-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
     	
-        String id = (String)this.getRequestAttributes().get("id");
         Common.d("DELETE::authCodeString: " + authCodeString + " expected: " + DaoService.getMessageById(id).getAuthCode());
         
         try{

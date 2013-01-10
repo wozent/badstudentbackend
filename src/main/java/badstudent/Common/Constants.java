@@ -13,6 +13,7 @@ public class Constants {
     public static final String key_idGenerator = "idGenerator";
     public static final String key_province = "province";
     public static final String key_recents = "recentMessages";
+    public static final String key_infoChanged = "infoChanged";
     
 }
  

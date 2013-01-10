@@ -215,9 +215,15 @@ public class DaoService{
     public static List<Message> multipeSearch(String phone, String email, String qq, String twitter ,String selfDefined){
         List<Message> merge = new ArrayList<Message>();
         List<String> idTable = new ArrayList<String>();
+        
+        boolean checkPhone = phone != null && phone.compareTo("") != 0;
+        boolean checkEmail = email != null && email.compareTo("") != 0;
+        boolean checkQq = qq != null && qq.compareTo("") != 0;
+        boolean checkTwitter = twitter != null && twitter.compareTo("") != 0;
+        boolean checkSelfDefined = selfDefined != null && selfDefined.compareTo("") != 0;
 
         //adding each of the search results into the merge List
-        if(phone != null && phone.compareTo("") != 0){
+        if(checkPhone){
             List<Message> searchByPhone = phoneInfoSearch(phone);
             for (int i = 0; i < searchByPhone.size(); i++){
                 Message temp = searchByPhone.get(i);
@@ -227,7 +233,7 @@ public class DaoService{
                 }
             }
         }
-        if (email != null && email.compareTo("") != 0){
+        if (checkEmail){
             List<Message> searchByEmail = emailInfoSearch(email);
             for (int i = 0; i < searchByEmail.size(); i++){
                 Message temp = searchByEmail.get(i);
@@ -237,7 +243,7 @@ public class DaoService{
                 }
             }
         }
-        if (qq != null && qq.compareTo("") != 0){
+        if (checkQq){
             List<Message> searchByQq = qqInfoSearch(qq);
             for (int i = 0; i < searchByQq.size(); i++){
                 Message temp = searchByQq.get(i);
@@ -247,7 +253,7 @@ public class DaoService{
                 }
             }
         }
-        if (twitter != null && twitter.compareTo("") != 0){
+        if (checkTwitter){
             List<Message> searchBytwitter = twitterInfoSearch(twitter);
             for (int i = 0; i < searchBytwitter.size(); i++){
                 Message temp = searchBytwitter.get(i);
@@ -257,7 +263,7 @@ public class DaoService{
                 }
             }
         }
-        if (selfDefined != null && selfDefined.compareTo("") != 0){
+        if (checkSelfDefined){
             List<Message> searchBySelfDefined = selfDefinedInfoSearch(selfDefined);
             for (int i = 0; i < searchBySelfDefined.size(); i++){
                 Message temp = searchBySelfDefined.get(i);
@@ -267,33 +273,24 @@ public class DaoService{
                 }
             }
         }
-        //this is very dangeous in terms of time complexity, should be improved in the future
-        if (merge.size() == 0){
-    	   boolean searchPhone = (phone != null && phone.compareTo("") != 0);
-           boolean searchEmail = (email != null && email.compareTo("") != 0);
-           boolean searchQq = (qq != null && qq.compareTo("") != 0);
-           boolean searchTwitter = (twitter != null && twitter.compareTo("") != 0);
-           boolean searchSelfDefined = (selfDefined != null && selfDefined.compareTo("") != 0);
-        	Set<String> allKeys = DaoMessage.getPartialIds("*");
-            for (String key : allKeys) {
-                Message testMessage = DaoMessage.getMessageById(key);
-
-                if (searchEmail && testMessage.getEmail().equalsIgnoreCase(email)){
-                    merge.add(testMessage);
-                }
-                else if (searchPhone && testMessage.getPhone().equalsIgnoreCase(phone)){
-                    merge.add(testMessage);
-                }
-                else if (searchQq && testMessage.getQq().equalsIgnoreCase(qq)){
-                    merge.add(testMessage);
-                }
-                else if (searchTwitter && testMessage.getTwitter().equalsIgnoreCase(twitter)){
-                    merge.add(testMessage);
-                }
-                else if (searchSelfDefined && testMessage.getSelfDefined().equalsIgnoreCase(selfDefined)){
-                    merge.add(testMessage);
-                }
-                
+        
+        List<String> infoChangedIds = DaoMessage.getInfoChanged();
+        for (int i = 0; i < infoChangedIds.size(); i++){
+        	Message testMessage = DaoMessage.getMessageById(infoChangedIds.get(i));
+            if (checkEmail && testMessage.getEmail().equalsIgnoreCase(email)){
+                merge.add(testMessage);
+            }
+            else if (checkPhone && testMessage.getPhone().equalsIgnoreCase(phone)){
+                merge.add(testMessage);
+            }
+            else if (checkQq && testMessage.getQq().equalsIgnoreCase(qq)){
+                merge.add(testMessage);
+            }
+            else if (checkTwitter && testMessage.getTwitter().equalsIgnoreCase(twitter)){
+                merge.add(testMessage);
+            }
+            else if (checkSelfDefined && testMessage.getSelfDefined().equalsIgnoreCase(selfDefined)){
+                merge.add(testMessage);
             }
         }
 

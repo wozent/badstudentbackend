@@ -37,6 +37,53 @@ public class DaoMessage{
 		return messages;
 	}
 	
+	public static List<String> getInfoChanged(){
+		//return the list of id of contact-info-updated messages
+		long listSize = jedis.llen(Constants.key_infoChanged);
+		List<String> infoChangedIds = jedis.lrange(Constants.key_infoChanged, 0, listSize - 1);
+		return infoChangedIds;
+	}
+	
+	public static boolean addInfoChanged(String id){
+		List<String> ids = getInfoChanged();
+		boolean found = false;
+		int i = 0;
+		while (i < ids.size() && found == false){
+			if (ids.get(i).compareTo(id) == 0){
+				ids.remove(i);
+				found = true;
+			}
+			i++;
+		}
+		if (!found){
+			jedis.lpush(Constants.key_infoChanged, id);
+		}
+		
+		return true;
+	}
+	
+	public static long deleteInfoChanged(String id){
+		List<String> ids = getInfoChanged();
+		boolean found = false;
+		int i = 0;
+		while (i < ids.size() && found == false){
+			if (ids.get(i).compareTo(id) == 0){
+				ids.remove(i);
+				found = true;
+			}
+			i++;
+		}
+		long result =  jedis.lrem(Constants.key_infoChanged, 0, "");//remove all elements
+		for (i = 0; i < jedis.llen(Constants.key_infoChanged); i++){
+			jedis.lpop(Constants.key_infoChanged);
+		}
+		for (i = 0; i < ids.size(); i++){
+			jedis.lpush(Constants.key_infoChanged, ids.get(i));
+		}
+		
+		return result;
+	}
+	
 	public static boolean addRecents(String jsonMessage){
 		try {
 			//push this message to the top of the recentMessage list
@@ -121,6 +168,9 @@ public class DaoMessage{
 		if (oldMessage != null){
 			String jsonMessage = new JSONSerializer().serialize(message);
 			updateRecents(messageId, jsonMessage);
+			if (Common.infoHasChanged(message, oldMessage)){
+				addInfoChanged(messageId);
+			}
 			jedis.set(message.getId(), jsonMessage);
 		}
 		else{
@@ -132,7 +182,8 @@ public class DaoMessage{
 
 	public static boolean deleteMessageFromDatabase(String messageId) {
 		long result = deleteRecents(messageId);
-		Common.d("deleteMessage::delete result: " + result);
+		long secondResult = deleteInfoChanged(messageId);
+		Common.d("deleteMessage::delete result: " + result + " " + secondResult);
 	    return 1==jedis.del(messageId);
 	}
 

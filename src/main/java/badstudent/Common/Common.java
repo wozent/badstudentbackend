@@ -54,4 +54,24 @@ public class Common {
     	}
     	return shitYouAreTooShort; 
     }
+
+	public static boolean infoHasChanged(Message message, Message oldMessage) {
+		if (!(message.getEmail() == null && oldMessage.getEmail() == null) || (message.getEmail() != null && oldMessage.getEmail() != null && message.getEmail().compareTo(oldMessage.getEmail()) == 0)){
+			return true;
+		}
+		if (!(message.getPhone() == null && oldMessage.getPhone() == null) || (message.getPhone() != null && oldMessage.getPhone() != null && message.getPhone().compareTo(oldMessage.getPhone()) == 0)){
+			return true;
+		}
+		if (!(message.getQq() == null && oldMessage.getQq() == null) || (message.getQq() != null && oldMessage.getQq() != null && message.getQq().compareTo(oldMessage.getQq()) == 0)){
+			return true;
+		}
+		if (!(message.getTwitter() == null && oldMessage.getTwitter() == null) || (message.getTwitter() != null && oldMessage.getTwitter() != null && message.getTwitter().compareTo(oldMessage.getTwitter()) == 0)){
+			return true;
+		}
+		if (!(message.getSelfDefined() == null && oldMessage.getSelfDefined() == null) || (message.getSelfDefined() != null && oldMessage.getSelfDefined() != null && message.getSelfDefined().compareTo(oldMessage.getSelfDefined()) == 0)){
+			return true;
+		}
+		
+		return false;
+	}
 }

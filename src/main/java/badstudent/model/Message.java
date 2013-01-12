@@ -91,6 +91,7 @@ public class Message{
         this.price = 0.0;
         this.type = Constants.type_ask;
         this.authCode = -1;
+        this.courseLengthInMinutes = 1;
     }
 
     //this constructor is used for testing purposes and potentially @Options HTTP calls only, please ignore it for any other usages
@@ -110,6 +111,7 @@ public class Message{
         this.selfDefined = "dafultselfDefiend";
         this.price = 0.0;
         this.type = Constants.type_ask;
+        this.courseLengthInMinutes = 1;
         this.authCode = -1;
     }
 

@@ -145,6 +145,7 @@ public class MessageResourceId extends ServerResource{
     //now front end sending delete must expose authCode as a parameter, must not equal to initial authCode -1
     @Delete
     public Representation deleteMessage() {
+    	Common.d("entering Delete request");
     	//get query parameter _authCode
     	Form headers = (Form) getRequestAttributes().get("org.restlet.http.headers");
     	String authCodeString = "";
@@ -210,8 +211,10 @@ public class MessageResourceId extends ServerResource{
         } 
 
         //send anything back will be fine, browser just expects a response
-        Message message = new Message("options");
+        Message message = new Message();
         Representation result = new JsonRepresentation(message);
+        Common.d("exiting Options request");
+        setStatus(Status.SUCCESS_OK);
         return result;
     }
 

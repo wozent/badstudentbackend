@@ -30,6 +30,8 @@ public class MessageResource extends ServerResource{
 			responseHeaders.add("Access-Control-Allow-Origin", "*");
 			responseHeaders.add("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");
 			responseHeaders.add("Access-Control-Allow-Headers", "Content-Type");
+			responseHeaders.add("Access-Control-Allow-Headers", "authCode");
+			responseHeaders.add("Access-Control-Allow-Headers", "origin, x-requested-with, content-type, authCode");
 			return responseHeaders;
 		}
 		return null;
@@ -198,7 +200,7 @@ public class MessageResource extends ServerResource{
 
 	
 	
-	//needed here since backbone will try to send OPTIONS before PPOST
+	//needed here since backbone will try to send OPTIONS before POST
 	@Options
 	public Representation takeOptions(Representation entity) {
 		/*set the response header*/
@@ -208,10 +210,10 @@ public class MessageResource extends ServerResource{
 		} 
 
 		//send anything back will be fine, browser only expects a response
-		Message message = new Message("options");
+		Message message = new Message();
 		Representation result = new JsonRepresentation(message);
 
-		return result;
+		return null;
 	}
 
 

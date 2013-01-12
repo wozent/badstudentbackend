@@ -277,19 +277,19 @@ public class DaoService{
         List<String> infoChangedIds = DaoMessage.getInfoChanged();
         for (int i = 0; i < infoChangedIds.size(); i++){
         	Message testMessage = DaoMessage.getMessageById(infoChangedIds.get(i));
-            if (checkEmail && testMessage.getEmail().equalsIgnoreCase(email)){
+            if (checkEmail && email.equalsIgnoreCase(testMessage.getEmail())){
                 merge.add(testMessage);
             }
-            else if (checkPhone && testMessage.getPhone().equalsIgnoreCase(phone)){
+            else if (checkPhone && phone.equalsIgnoreCase(testMessage.getPhone())){
                 merge.add(testMessage);
             }
-            else if (checkQq && testMessage.getQq().equalsIgnoreCase(qq)){
+            else if (checkQq && qq.equalsIgnoreCase(testMessage.getQq())){
                 merge.add(testMessage);
             }
-            else if (checkTwitter && testMessage.getTwitter().equalsIgnoreCase(twitter)){
+            else if (checkTwitter && twitter.equalsIgnoreCase(testMessage.getTwitter())){
                 merge.add(testMessage);
             }
-            else if (checkSelfDefined && testMessage.getSelfDefined().equalsIgnoreCase(selfDefined)){
+            else if (checkSelfDefined && selfDefined.equalsIgnoreCase(testMessage.getSelfDefined())){
                 merge.add(testMessage);
             }
         }

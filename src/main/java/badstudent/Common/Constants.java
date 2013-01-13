@@ -8,7 +8,7 @@ public class Constants {
     public static final int geneder_male = 0;
     public static final int geneder_female = 1;
     public static final int geneder_both = 2;
-    public static final int max_recents = 10;
+    public static final int max_recents = 4;
     public static final String key_message_prefix = "message-";
     public static final String key_idGenerator = "idGenerator";
     public static final String key_province = "province";

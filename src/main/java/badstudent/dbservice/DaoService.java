@@ -277,21 +277,23 @@ public class DaoService{
         List<String> infoChangedIds = DaoMessage.getInfoChanged();
         for (int i = 0; i < infoChangedIds.size(); i++){
         	Message testMessage = DaoMessage.getMessageById(infoChangedIds.get(i));
-            if (checkEmail && email.equalsIgnoreCase(testMessage.getEmail())){
-                merge.add(testMessage);
-            }
-            else if (checkPhone && phone.equalsIgnoreCase(testMessage.getPhone())){
-                merge.add(testMessage);
-            }
-            else if (checkQq && qq.equalsIgnoreCase(testMessage.getQq())){
-                merge.add(testMessage);
-            }
-            else if (checkTwitter && twitter.equalsIgnoreCase(testMessage.getTwitter())){
-                merge.add(testMessage);
-            }
-            else if (checkSelfDefined && selfDefined.equalsIgnoreCase(testMessage.getSelfDefined())){
-                merge.add(testMessage);
-            }
+        	if (testMessage != null){
+        		if (checkEmail && testMessage.getEmail()!= null && email.equalsIgnoreCase(testMessage.getEmail())){
+                    merge.add(testMessage);
+                }
+                else if (checkPhone && testMessage.getPhone()!= null && phone.equalsIgnoreCase(testMessage.getPhone())){
+                    merge.add(testMessage);
+                }
+                else if (checkQq && testMessage.getQq()!= null && qq.equalsIgnoreCase(testMessage.getQq())){
+                    merge.add(testMessage);
+                }
+                else if (checkTwitter && testMessage.getTwitter()!= null && twitter.equalsIgnoreCase(testMessage.getTwitter())){
+                    merge.add(testMessage);
+                }
+                else if (checkSelfDefined && testMessage.getSelfDefined()!= null && selfDefined.equalsIgnoreCase(testMessage.getSelfDefined())){
+                    merge.add(testMessage);
+                }
+        	}
         }
 
         return merge;

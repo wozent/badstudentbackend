@@ -112,7 +112,7 @@ public class DaoMessage{
 			i++;
 		}
 		long result =  jedis.lrem(Constants.key_recents, 0, "");//remove all elements
-		for (i = 0; i < 10; i++){
+		for (i = 0; i < Constants.max_recents; i++){
 			jedis.lpop(Constants.key_recents);
 		}
 		for (i = 0; i < messages.size(); i++){
@@ -136,7 +136,7 @@ public class DaoMessage{
 			i++;
 		}
 		long result =  jedis.lrem(Constants.key_recents, 0, "");//remove all elements
-		for (i = 0; i < 10; i++){
+		for (i = 0; i < Constants.max_recents; i++){
 			jedis.lpop(Constants.key_recents);
 		}
 		for (i = 0; i < messages.size(); i++){
